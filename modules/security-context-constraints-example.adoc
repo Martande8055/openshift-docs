@@ -107,7 +107,7 @@ range fields, as it does not provide this range. In the end, a container will
 have `runAsUser` equal to the first value of the range that is
 hard to predict because every project has different ranges.
 
-.With explicit `runAsUser` setting
+.With explicit `runAsUser` setting....
 [source,yaml]
 ----
 apiVersion: v1
