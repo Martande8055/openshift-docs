@@ -7,14 +7,15 @@
 [id="troubleshooting-monitoring-issues_{context}"]
 = Determining why user-defined project metrics are unavailable
 
-If metrics are not displaying when monitoring user-defined projects, follow these steps to troubleshoot the issue.
+[role="_abstract"]
+You can determine why user-defined project metrics are unavailable by checking metric endpoints, verifying monitor configurations, and validating service-to-pod label matching.
 
 .Procedure
 
 . Query the metric name and verify that the project is correct:
-.. From the *Developer* perspective in the web console, select *Observe* -> *Metrics*.
+.. In the *Developer* perspective of the web console, click *Observe* and go to the *Metrics* tab.
 .. Select the project that you want to view metrics for in the *Project:* list.
-.. Choose a query from the *Select query* list, or run a custom PromQL query by selecting *Show PromQL*.
+.. Select an existing query from the *Select query* list, or run a custom query by adding a PromQL query to the *Expression* field.
 +
 The metrics are displayed in a chart.
 +
@@ -46,7 +47,7 @@ version{version="v0.1.0"} 1
 +
 An invalid output indicates that there is a problem with the corresponding application.
 
-. If you are using a `PodMonitor` CRD, verify that the `PodMonitor` CRD is configured to point to the correct pods using label matching. For more information, see the Prometheus Operator documentation.
+. If you are using a `PodMonitor` CRD, verify that the `PodMonitor` CRD is configured to point to the correct pods using label matching.
 . If you are using a `ServiceMonitor` CRD, and if the `/metrics` endpoint of the pod is showing metric data, follow these steps to verify the configuration:
 .. Verify that the service is pointed to the correct `/metrics` endpoint. The service `labels` in this output must match the services monitor `labels` and the `/metrics` endpoint defined by the service in the subsequent steps.
 +
@@ -59,9 +60,9 @@ $ oc get service
 [source,terminal]
 ----
 apiVersion: v1
-kind: Service <1>
+kind: Service
 metadata:
-  labels: <2>
+  labels:
     app: prometheus-example-app
   name: prometheus-example-app
   namespace: ns1
@@ -76,8 +77,12 @@ spec:
   type: ClusterIP
 ----
 +
-<1> Specifies that this is a service API.
-<2> Specifies the labels that are being used for this service.
+--
+where:
+
+`kind`:: Specifies an API type. This example shows a service API.
+`metadata.labels`:: Specifies the labels that are used for this service.
+--
 
 .. Query the `serviceIP`, `port`, and `/metrics` endpoints to see if the same metrics from the `curl` command you ran on the pod previously:
 ... Run the following command to find the service IP:
@@ -105,7 +110,7 @@ Valid metrics are returned in the following example.
 # TYPE version gauge
 version{version="v0.1.0"} 1
 ----
-.. Use label matching to verify that the `ServiceMonitor` object is configured to point to the desired service. To do this, compare the `Service` object from the `oc get service` output to the `ServiceMonitor` object from the `oc get servicemonitor` output. The labels must match for the metrics to be displayed.
+.. Use label matching to verify that the `ServiceMonitor` object is configured to point to the required service. To do this, compare the `Service` object from the `oc get service` output to the `ServiceMonitor` object from the `oc get servicemonitor` output. The labels must match for the metrics to be displayed.
 +
 For example, from the previous steps, notice how the `Service` object has the `app: prometheus-example-app` label and the `ServiceMonitor` object has the same `app: prometheus-example-app` match label.
-. If everything looks valid and the metrics are still unavailable, please contact the support team for further help.
+. If the configuration is valid and metrics remain unavailable, contact the support team.

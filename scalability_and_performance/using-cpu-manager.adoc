@@ -2,10 +2,11 @@
 [id='using-cpu-manager']
 = Using CPU Manager and Topology Manager
 include::_attributes/common-attributes.adoc[]
-:context: using-cpu-manager-and-topology_manager
+:context: using-cpu-manager-and-topology-manager
 
 toc::[]
 
+[role="_abstract"]
 CPU Manager manages groups of CPUs and constrains workloads to specific CPUs.
 
 CPU Manager is useful for workloads that have some of these attributes:
@@ -31,3 +32,8 @@ include::modules/topology-manager-policies.adoc[leveloffset=+1]
 include::modules/setting-up-topology-manager.adoc[leveloffset=+1]
 
 include::modules/pod-interactions-with-topology-manager.adoc[leveloffset=+1]
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:../scalability_and_performance/using-cpu-manager.adoc#topology-manager-policies_using-cpu-manager-and-topology-manager[Topology Manager policies]

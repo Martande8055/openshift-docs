@@ -7,6 +7,7 @@
 [id="determining-why-prometheus-is-consuming-disk-space_{context}"]
 = Determining why Prometheus is consuming a lot of disk space
 
+[role="_abstract"]
 Developers can create labels to define attributes for metrics in the form of key-value pairs. The number of potential key-value pairs corresponds to the number of possible values for an attribute. An attribute that has an unlimited number of potential values is called an unbound attribute. For example, a `customer_id` attribute is unbound because it has an infinite number of possible values.
 
 Every assigned key-value pair has a unique time series. The use of many unbound attributes in labels can result in an exponential increase in the number of time series created. This can impact Prometheus performance and can consume a lot of disk space.
@@ -34,11 +35,11 @@ endif::openshift-dedicated,openshift-rosa[]
 ifdef::openshift-dedicated,openshift-rosa[]
 * You have access to the cluster as a user with the `dedicated-admin` role.
 endif::openshift-dedicated,openshift-rosa[]
-* You have installed the OpenShift CLI (`oc`).
+* You have installed the {oc-first}.
 
 .Procedure
 
-. In the *Administrator* perspective, navigate to *Observe* -> *Metrics*.
+. In the {product-title} web console, go to *Observe* -> *Metrics*.
 
 . Enter a Prometheus Query Language (PromQL) query in the *Expression* field.
 The following example queries help to identify high cardinality metrics that might result in high disk space consumption:
@@ -75,7 +76,7 @@ endif::openshift-dedicated,openshift-rosa[]
 +
 [source,terminal]
 ----
-$ HOST=$(oc -n openshift-monitoring get route prometheus-k8s -ojsonpath={.status.ingress[].host})
+$ HOST=$(oc -n openshift-monitoring get route prometheus-k8s -ojsonpath='{.status.ingress[].host}')
 ----
 +
 .. Extract an authentication token by running the following command:

@@ -8,7 +8,8 @@
 :pygments-style: emacs
 :icons: font
 
-Delete external authentication providers by using the ROSA CLI.
+[role="_abstract"]
+You can delete external authentication providers from a cluster by using the {rosa-cli-first}.
 
 .Procedure
 

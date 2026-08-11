@@ -2,14 +2,14 @@
 //
 // scalability_and_performance/scaling-worker-latency-profiles.adoc
 
-
 :_mod-docs-content-type: PROCEDURE
 [id="nodes-cluster-worker-latency-profiles-examining_{context}"]
-= Example steps for displaying resulting values of workerLatencyProfile
+= Displaying resulting values of worker latency profile
 
-You can display the values in the `workerLatencyProfile` with the following commands.
+[role="_abstract"]
+You can run specific commands to display the values for the worker latency profile. You can then check the displayed values for information accuracy.
 
-.Verification
+.Procedure
 
 . Check the `default-not-ready-toleration-seconds` and `default-unreachable-toleration-seconds` fields output by the Kube API Server:
 +
@@ -41,19 +41,27 @@ node-monitor-grace-period:
 - 40s
 ----
 
-. Check the `nodeStatusUpdateFrequency` value from the Kubelet. Set the directory `/host` as the root directory within the debug shell. By changing the root directory to `/host`, you can run binaries contained in the host’s executable paths:
+. Check the `nodeStatusUpdateFrequency` value from the Kubelet by entering the following command. Set the directory `/host` as the root directory within the debug shell. By changing the root directory to `/host`, you can run binaries contained in the executable paths of the host.
 +
 [source,terminal]
 ----
-$ oc debug node/<worker-node-name>
+$ oc debug node/<compute_node_name>
+----
++
+[source,terminal]
+----
 $ chroot /host
+----
++
+[source,terminal]
+----
 # cat /etc/kubernetes/kubelet.conf|grep nodeStatusUpdateFrequency
 ----
 +
 .Example output
 [source,terminal]
 ----
-  “nodeStatusUpdateFrequency”: “10s”
+“nodeStatusUpdateFrequency”: “10s”
 ----
-
++
 These outputs validate the set of timing variables for the Worker Latency Profile.

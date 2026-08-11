@@ -2,9 +2,11 @@
 //
 // * operators/understanding/olm/olm-understanding-operatorgroups.adoc
 
+:_mod-docs-content-type: CONCEPT
 [id="olm-operatorgroups-intersection_{context}"]
 = Operator group intersection
 
+[role="_abstract"]
 Two Operator groups are said to have _intersecting provided APIs_ if the intersection of their target namespace sets is not an empty set and the intersection of their provided API sets, defined by `olm.providedAPIs` annotations, is not an empty set.
 
 A potential issue is that Operator groups with intersecting provided APIs can compete for the same resources in the set of intersecting namespaces.
@@ -14,9 +16,8 @@ A potential issue is that Operator groups with intersecting provided APIs can co
 When checking intersection rules, an Operator group namespace is always included as part of its selected target namespaces.
 ====
 
-[discrete]
 [id="olm-operatorgroups-intersection-rules_{context}"]
-=== Rules for intersection
+== Rules for intersection
 
 Each time an active member CSV synchronizes, OLM queries the cluster for the set of intersecting provided APIs between the Operator group of the CSV and all others. OLM then checks if that set is an empty set:
 

@@ -6,9 +6,11 @@
 [id="kmm-install-older-version_{context}"]
 = Installing the Kernel Module Management Operator on earlier versions of {product-title}
 
+[role="_abstract"]
+As a cluster administrator, you can install the Kernel Module Management (KMM) Operator by using the OpenShift CLI.
+
 The KMM Operator is supported on {product-title} 4.12 and later.
 For version 4.10 and earlier, you must create a new `SecurityContextConstraint` object and bind it to the Operator's `ServiceAccount`.
-As a cluster administrator, you can install the Kernel Module Management (KMM) Operator by using the OpenShift CLI.
 
 .Prerequisites
 
@@ -106,12 +108,11 @@ metadata:
   name: kernel-module-management
   namespace: openshift-kmm
 spec:
-  channel: release-1.0
+  channel: stable
   installPlanApproval: Automatic
   name: kernel-module-management
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: kernel-module-management.v1.0.0
 ----
 
 .. Create the subscription object by running the following command:
@@ -130,7 +131,8 @@ $ oc create -f kmm-sub.yaml
 $ oc get -n openshift-kmm deployments.apps kmm-operator-controller
 ----
 +
-.Example output
+Example output:
++
 [source,terminal]
 ----
 NAME                              READY UP-TO-DATE  AVAILABLE AGE

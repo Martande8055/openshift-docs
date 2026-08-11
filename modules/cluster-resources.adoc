@@ -2,21 +2,22 @@
 [id="support-cluster-resources_{context}"]
 = Interacting with your cluster resources
 
-You can interact with cluster resources by using the OpenShift CLI (`oc`) tool in {product-title}. The cluster resources that you see after running the `oc api-resources` command can be edited.
+[role="_abstract"]
+To view and edit the global configuration of your {product-title} cluster, use the {oc-first} to query and change cluster resources.
 
 .Prerequisites
 
-ifndef::openshift-rosa,openshift-dedicated[]
+ifndef::openshift-rosa,openshift-rosa-hcp,openshift-dedicated[]
 * You have access to the cluster as a user with the `cluster-admin` role.
-endif::openshift-rosa,openshift-dedicated[]
-ifdef::openshift-rosa,openshift-dedicated[]
+endif::openshift-rosa,openshift-rosa-hcp,openshift-dedicated[]
+ifdef::openshift-rosa,openshift-rosa-hcp,openshift-dedicated[]
 * You have access to the cluster as a user with the `dedicated-admin` role.
-endif::openshift-rosa,openshift-dedicated[]
+endif::openshift-rosa,openshift-rosa-hcp,openshift-dedicated[]
 * You have access to the web console or you have installed the `oc` CLI tool.
 
 .Procedure
 
-. To see which configuration Operators have been applied, run the following command:
+. To check which configuration Operators apply to your cluster, run the following command:
 +
 [source,terminal]
 ----

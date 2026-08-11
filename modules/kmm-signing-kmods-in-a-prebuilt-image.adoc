@@ -6,7 +6,8 @@
 [id="kmm-signing-kmods-in-a-prebuilt-image_{context}"]
 = Signing kmods in a pre-built image
 
-Use this procedure if you have a pre-built image, such as an image either distributed by a hardware vendor or built elsewhere.
+[role="_abstract"]
+To sign kernel modules in a vendor-supplied or externally built image on {product-title}, you can configure a `Module` custom resource with unsigned and signed container image references and key secrets.
 
 The following YAML file adds the public/private key-pair as secrets with the required key names - `key` for the private key, `cert` for the public key. The cluster then pulls down the `unsignedImage` image, opens it, signs the kernel modules listed in `filesToSign`, adds them back, and pushes the resulting image as `containerImage`.
 
@@ -53,7 +54,6 @@ spec:
   selector:
     kubernetes.io/arch: amd64
 ----
-
 <1> The name of the kmod to load.
 <2> The name of the container image. For example, `quay.io/myuser/my-driver:<kernelversion`.
 <3> The name of the unsigned image. For example, `quay.io/myuser/my-driver:<kernelversion`.

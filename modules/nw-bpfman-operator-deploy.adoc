@@ -6,6 +6,9 @@
 [id="nw-bpfman-operator-deploy_{context}"]
 = Deploying a containerized eBPF program
 
+[role="_abstract"]
+To run custom networking or security logic on your cluster nodes, you can deploy containerized eBPF programs. You can use containerized eBPF programs to monitor kernel events and manage network traffic efficiently at the node level.
+
 As a cluster administrator, you can deploy an eBPF program to nodes on your cluster. In this procedure, a sample containerized eBPF program is installed in the `go-xdp-counter` namespace.
 
 .Prerequisites
@@ -82,26 +85,12 @@ go-xdp-counter-example   xdp_stats         {}             ReconcileSuccess
 $ oc logs <pod_name> -n go-xdp-counter
 ----
 +
-Replace `<pod_name>` with the name of a XDP program pod, such as `go-xdp-counter-ds-4m9cw`.
+Replace `<pod_name>` with the name of an XDP program pod, such as `go-xdp-counter-ds-4m9cw`.
 +
 .Example output
 [source,text]
 ----
 2024/08/13 15:20:06 15016 packets received
 2024/08/13 15:20:06 93581579 bytes received
-
-2024/08/13 15:20:09 19284 packets received
-2024/08/13 15:20:09 99638680 bytes received
-
-2024/08/13 15:20:12 23522 packets received
-2024/08/13 15:20:12 105666062 bytes received
-
-2024/08/13 15:20:15 27276 packets received
-2024/08/13 15:20:15 112028608 bytes received
-
-2024/08/13 15:20:18 29470 packets received
-2024/08/13 15:20:18 112732299 bytes received
-
-2024/08/13 15:20:21 32588 packets received
-2024/08/13 15:20:21 113813781 bytes received
+...
 ----

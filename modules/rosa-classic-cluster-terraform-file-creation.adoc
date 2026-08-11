@@ -2,11 +2,11 @@
 //
 // * rosa_install_access_delete_clusters/rosa-classic-creating-a-cluster-quickly-terraform.adoc
 
-:_content-type: PROCEDURE
-
+:_mod-docs-content-type: PROCEDURE
 [id="rosa-classic-cluster-terraform-file-creation_{context}"]
 = Creating your Terraform files locally
 
+[role="_abstract"]
 After you set up your link:https://console.redhat.com/openshift/token/rosa[offline {cluster-manager-first} token], you need to create the Terraform files locally to build your cluster. You can create these files by using the following code templates.
 
 .Procedure
@@ -36,7 +36,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 4.20.0"
+      version = ">= 4.22.0"
     }
     rhcs = {
       version = ">= 1.6.2"
@@ -101,8 +101,8 @@ module "rosa-classic" {
   multi_az               = var.multi_az
   create_account_roles   = true
   create_operator_roles  = true
-# Optional: Configure a cluster administrator user <.>
-# 
+# Optional: Configure a cluster administrator user \
+#
 # Option 1: Default cluster-admin user
 # Create an administrator user (cluster-admin) and automatically
 # generate a password by uncommenting the following parameter:
@@ -114,12 +114,16 @@ module "rosa-classic" {
 # by uncommenting and editing the values of the following parameters:
 #  admin_credentials_username = <username>
 #  admin_credentials_password = <password>
-    
+
   depends_on = [time_sleep.wait_60_seconds]
 }
 EOF
 ----
-<.> Optional: Create an administrator user during cluster creation by uncommenting the appropriate parameters and editing their values.
++
+[NOTE]
+====
+You can optionally create an administrator user during cluster creation by uncommenting the appropriate parameters in the `main.tf` file and editing their values.
+====
 
 . Create the `variables.tf` file by running the following command:
 +

@@ -6,7 +6,10 @@
 [id="install-sno-requirements-for-installing-on-a-single-node_{context}"]
 = Requirements for installing OpenShift on a single node
 
-Installing {product-title} on a single node alleviates some of the requirements for high availability and large scale clusters. However, you must address the following requirements:
+[role="_abstract"]
+Installing {product-title} on a single node alleviates some of the requirements for high availability and large scale clusters. However, you must still address several requirements.
+
+The following requirements must be met:
 
 * *Administration host:* You must have a computer to prepare the ISO, to create the USB boot drive, and to monitor the installation.
 +
@@ -23,7 +26,7 @@ ISO is not required for {ibm-z-name} installations.
 * *CPU Architecture:* Installing {product-title} on a single node supports `x86_64`, `arm64`,`ppc64le`, and `s390x` CPU architectures.
 
 * *Supported platforms:*
-Installing {product-title} on a single node is supported on bare metal and link:https://access.redhat.com/articles/973163[Certified third-party hypervisors]. In most cases, you must specify the `platform.none: {}` parameter in the `install-config.yaml` configuration file. The following list shows the only exceptions and the corresponding parameter to specify in the `install-config.yaml` configuration file:
+Installing {product-title} on a single node is supported on bare metal and Certified third-party hypervisors. See "Certified Hypervisors and Guest Operating Systems" for more information. In most cases, you must specify the `platform.none: {}` parameter in the `install-config.yaml` configuration file. The following list shows the only exceptions and the corresponding parameter to specify in the `install-config.yaml` configuration file:
 ** {aws-first}, where you use `platform=aws`
 ** {gcp-first}, where you use `platform=gcp`
 ** {azure-first}, where you use `platform=azure`
@@ -32,17 +35,25 @@ Installing {product-title} on a single node is supported on bare metal and link:
 .Minimum resource requirements
 [options="header"]
 |====
-|Profile|vCPU|Memory|Storage
-|Minimum|8 vCPUs|16 GB of RAM| 120 GB
+|Profile|Compute|Memory|Storage
+|Minimum|4 vCPUs|16 GB of RAM| 120 GB
 |====
++
+[IMPORTANT]
+====
+Running {sno} on 4 vCPUs leaves very little "headroom" for user applications, and creates a high risk of resource contention and performance degradation.
+
+To ensure cluster stability at this threshold, you must take steps to minimize the total resource footprint of the cluster, such as limiting the amount of workloads running on the cluster or limiting cluster capabilities.
+For more information, see "Cluster capabilities".
+
+Otherwise, it is recommended to provide more compute resources to the cluster.
+====
 +
 [NOTE]
 ====
-One vCPU equals one physical core. However, if you enable simultaneous multithreading (SMT), or Hyper-Threading, use the following formula to calculate the number of vCPUs that represent one physical core:
+One vCPU generally equals one physical core. However, if you enable simultaneous multithreading (SMT), or Hyper-Threading, each CPU thread counts as a vCPU.
 
-* (threads per core × cores) × sockets = vCPUs
-
-* Adding Operators during the installation process might increase the minimum resource requirements.
+Adding Operators during the installation process might increase the minimum resource requirements.
 ====
 +
 The server must have a Baseboard Management Controller (BMC) when booting with virtual media.

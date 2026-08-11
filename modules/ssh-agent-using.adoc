@@ -40,12 +40,7 @@
 // * installing/installing_aws/installing-restricted-networks-aws.adoc
 // * installing/installing_bare_metal/upi/installing-restricted-networks-bare-metal.adoc
 // * installing/installing_platform_agnostic/installing-platform-agnostic.adoc
-// * installing/installing_ibm_z/installing-ibm-z.adoc
-// * installing/installing_ibm_z/installing-restricted-networks-ibm-z.adoc
-// * installing/installing_ibm_z/installing-ibm-z-kvm.adoc
-// * installing/installing_ibm_z/installing-restricted-networks-ibm-z-kvm.adoc
-// * installing/installing_ibm_z/installing-ibm-z-lpar.adoc
-// * installing/installing_ibm_z/installing-restricted-networks-ibm-z-lpar.adoc
+// * installing/installing_ibm_z/upi-ibm-z-preparing-to-install.adoc
 // * installing/installing_ibm_z/installing-ibm-power.adoc
 // * installing/installing_nutanix/installing-nutanix-installer-provisioned.adoc
 // * installing/installing-restricted-networks-nutanix-installer-provisioned.adoc
@@ -102,22 +97,7 @@ endif::[]
 ifeval::["{context}" == "installing-openstack-installer"]
 :osp:
 endif::[]
-ifeval::["{context}" == "installing-ibm-z"]
-:ibm-z:
-endif::[]
-ifeval::["{context}" == "installing-ibm-z-kvm"]
-:ibm-z:
-endif::[]
-ifeval::["{context}" == "installing-ibm-z-lpar"]
-:ibm-z:
-endif::[]
-ifeval::["{context}" == "installing-restricted-networks-ibm-z"]
-:ibm-z:
-endif::[]
-ifeval::["{context}" == "installing-restricted-networks-ibm-z-kvm"]
-:ibm-z:
-endif::[]
-ifeval::["{context}" == "installing-restricted-networks-ibm-z-lpar"]
+ifeval::["{context}" == "upi-ibm-z-preparing-to-install"]
 :ibm-z:
 endif::[]
 ifeval::["{context}" == "installing-platform-agnostic"]
@@ -134,9 +114,10 @@ endif::[]
 [id="ssh-agent-using_{context}"]
 = Generating a key pair for cluster node SSH access
 
+[role="_abstract"]
 During an {product-title} installation, you can provide an SSH public key to the installation program. The key is passed to the {op-system-first} nodes through their Ignition config files and is used to authenticate SSH access to the nodes. The key is added to the `~/.ssh/authorized_keys` list for the `core` user on each node, which enables password-less authentication.
 
-After the key is passed to the nodes, you can use the key pair to SSH in to the {op-system} nodes as the user `core`. To access the nodes through SSH, the private key identity must be managed by SSH for your local user.
+The key is added to the `~/.ssh/authorized_keys` list for the `core` user on each node, which enables password-less authentication. After the key is passed to the nodes, you can use the key pair to SSH in to the {op-system} nodes as the user `core`. To access the nodes through SSH, the private key identity must be managed by SSH for your local user.
 
 If you want to SSH in to your cluster nodes to perform installation debugging or disaster recovery, you must provide the SSH public key during the installation process. The `./openshift-install gather` command also requires the SSH public key to be in place on the cluster nodes.
 
@@ -148,9 +129,7 @@ Do not skip this procedure in production environments, where disaster recovery a
 ifndef::osp,ibm-z[]
 [NOTE]
 ====
-You must use a local key, not one that you configured with platform-specific
-approaches such as
-link:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html[AWS key pairs].
+You must use a local key, not one that you configured with platform-specific approaches.
 ====
 endif::[]
 
@@ -168,9 +147,9 @@ endif::openshift-origin[]
 +
 [source,terminal]
 ----
-$ ssh-keygen -t ed25519 -N '' -f <path>/<file_name> <1>
+$ ssh-keygen -t ed25519 -N '' -f <path>/<file_name>
 ----
-<1> Specify the path and file name, such as `~/.ssh/id_ed25519`, of the new SSH key. If you have an existing key pair, ensure your public key is in the your `~/.ssh` directory.
+Specifies the path and file name, such as `~/.ssh/id_ed25519`, of the new SSH key. If you have an existing key pair, ensure your public key is in the your `~/.ssh` directory.
 +
 ifndef::ibm-power-vs[]
 [NOTE]
@@ -224,9 +203,9 @@ endif::ibm-power-vs[]
 +
 [source,terminal]
 ----
-$ ssh-add <path>/<file_name> <1>
+$ ssh-add <path>/<file_name>
 ----
-<1> Specify the path and file name for your SSH private key, such as `~/.ssh/id_ed25519`
+Specifies the path and file name for your SSH private key, such as `~/.ssh/id_ed25519`
 +
 .Example output
 [source,terminal]
@@ -289,22 +268,7 @@ endif::[]
 ifeval::["{context}" == "installing-openstack-installer"]
 :!osp:
 endif::[]
-ifeval::["{context}" == "installing-ibm-z"]
-:!ibm-z:
-endif::[]
-ifeval::["{context}" == "installing-ibm-z-kvm"]
-:!ibm-z:
-endif::[]
-ifeval::["{context}" == "installing-ibm-z-lpar"]
-:!ibm-z:
-endif::[]
-ifeval::["{context}" == "installing-restricted-networks-ibm-z"]
-:!ibm-z:
-endif::[]
-ifeval::["{context}" == "installing-restricted-networks-ibm-z-kvm"]
-:!ibm-z:
-endif::[]
-ifeval::["{context}" == "installing-restricted-networks-ibm-z-lpar"]
+ifeval::["{context}" == "upi-ibm-z-preparing-to-install"]
 :!ibm-z:
 endif::[]
 ifeval::["{context}" == "installing-platform-agnostic"]

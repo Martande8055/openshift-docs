@@ -1,11 +1,12 @@
 // Module included in the following assemblies:
 //
-// * virt/virtual_machines/advanced_vm_management/virt-schedule-vms.adoc
+// * virt/managing_vms/cpu_models/virt-schedule-vms.adoc
 
 :_mod-docs-content-type: PROCEDURE
 [id="virt-setting-policy-attributes_{context}"]
 = Setting a policy attribute and CPU feature
 
+[role="_abstract"]
 You can set a policy attribute and CPU feature for each virtual machine (VM) to ensure that it is scheduled on a node according to policy and feature. The CPU feature that you set is verified to ensure that it is supported by the host CPU or emulated by the hypervisor.
 
 .Procedure
@@ -24,8 +25,8 @@ spec:
       domain:
         cpu:
           features:
-            - name: apic <1>
-              policy: require <2>
+            - name: apic
+              policy: require
 ----
-<1> Name of the CPU feature for the VM.
-<2> Policy attribute for the VM.
+** `spec.template.spec.domain.cpu.features.name` defines the name of the CPU feature for the VM.
+** `spec.template.spec.domain.cpu.features.policy` defines the policy attribute for the VM.

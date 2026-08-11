@@ -6,16 +6,14 @@ include::_attributes/common-attributes.adoc[]
 
 toc::[]
 
-The Machine Config Daemon is a part of the Machine Config Operator. It runs on every node in the cluster. The Machine Config Daemon manages configuration changes and updates on each of the nodes.
+[role="_abstract"]
+The Machine Config Daemon, part of the Machine Config Operator, runs on every node in the cluster to manage configuration changes and updates on each of the nodes.
 
 include::modules/machine-config-daemon-metrics-understanding.adoc[leveloffset=+1]
 
 [role="_additional-resources"]
 .Additional resources
-ifndef::openshift-rosa,openshift-dedicated[]
-* xref:../observability/monitoring/monitoring-overview.adoc#monitoring-overview[Monitoring overview]
+* link:https://docs.redhat.com/en/documentation/monitoring_stack_for_red_hat_openshift/latest/html/about_monitoring/about-ocp-monitoring[About {product-title} monitoring]
+ifndef::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
 * xref:../support/gathering-cluster-data.adoc#gathering-cluster-data[Gathering data about your cluster]
-endif::openshift-rosa,openshift-dedicated[]
-ifdef::openshift-rosa,openshift-dedicated[]
-* xref:../observability/monitoring/monitoring-overview.adoc#monitoring-overview[Understanding the monitoring stack]
-endif::openshift-rosa,openshift-dedicated[]
+endif::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]

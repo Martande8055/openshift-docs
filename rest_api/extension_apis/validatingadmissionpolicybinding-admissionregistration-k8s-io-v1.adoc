@@ -89,7 +89,7 @@ The supported actions values are:
 
 "Warn" specifies that a validation failure is reported to the request client in HTTP Warning headers, with a warning code of 299. Warnings can be sent both for allowed or denied admission responses.
 
-"Audit" specifies that a validation failure is included in the published audit event for the request. The audit event will contain a `validation.policy.admission.k8s.io/validation_failure` audit annotation with a value containing the details of the validation failures, formatted as a JSON list of objects, each with the following fields: - message: The validation failure message string - policy: The resource name of the ValidatingAdmissionPolicy - binding: The resource name of the ValidatingAdmissionPolicyBinding - expressionIndex: The index of the failed validations in the ValidatingAdmissionPolicy - validationActions: The enforcement actions enacted for the validation failure Example audit annotation: `"validation.policy.admission.k8s.io/validation_failure": "[{"message": "Invalid value", {"policy": "policy.example.com", {"binding": "policybinding.example.com", {"expressionIndex": "1", {"validationActions": ["Audit"]}]"`
+"Audit" specifies that a validation failure is included in the published audit event for the request. The audit event will contain a `validation.policy.admission.k8s.io/validation_failure` audit annotation with a value containing the details of the validation failures, formatted as a JSON list of objects, each with the following fields: - message: The validation failure message string - policy: The resource name of the ValidatingAdmissionPolicy - binding: The resource name of the ValidatingAdmissionPolicyBinding - expressionIndex: The index of the failed validations in the ValidatingAdmissionPolicy - validationActions: The enforcement actions enacted for the validation failure Example audit annotation: `"validation.policy.admission.k8s.io/validation_failure": "[{\"message\": \"Invalid value\", {\"policy\": \"policy.example.com\", {\"binding\": \"policybinding.example.com\", {\"expressionIndex\": \"1\", {\"validationActions\": [\"Audit\"]}]"`
 
 Clients should expect to handle additional values by ignoring any values not recognized.
 
@@ -242,7 +242,13 @@ Depending on the enclosing object, subresources might not be allowed. Required.
 
 | `scope`
 | `string`
-| scope specifies the scope of this rule. Valid values are "Cluster", "Namespaced", and "*" "Cluster" means that only cluster-scoped resources will match this rule. Namespace API objects are cluster-scoped. "Namespaced" means that only namespaced resources will match this rule. "*" means that there are no scope restrictions. Subresources match the scope of their parent resource. Default is "*".
+| scope specifies the scope of this rule. Valid values are "Cluster", "Namespaced", and "\*" "Cluster" means that only cluster-scoped resources will match this rule. Namespace API objects are cluster-scoped. "Namespaced" means that only namespaced resources will match this rule. "\*" means that there are no scope restrictions. Subresources match the scope of their parent resource. Default is "\*".
+
+
+Possible enum values:
+ - `"*"` means that all scopes are included.
+ - `"Cluster"` means that scope is limited to cluster-scoped objects. Namespace objects are cluster-scoped.
+ - `"Namespaced"` means that scope is limited to namespaced objects.
 
 |===
 === .spec.matchResources.resourceRules
@@ -303,7 +309,13 @@ Depending on the enclosing object, subresources might not be allowed. Required.
 
 | `scope`
 | `string`
-| scope specifies the scope of this rule. Valid values are "Cluster", "Namespaced", and "*" "Cluster" means that only cluster-scoped resources will match this rule. Namespace API objects are cluster-scoped. "Namespaced" means that only namespaced resources will match this rule. "*" means that there are no scope restrictions. Subresources match the scope of their parent resource. Default is "*".
+| scope specifies the scope of this rule. Valid values are "Cluster", "Namespaced", and "\*" "Cluster" means that only cluster-scoped resources will match this rule. Namespace API objects are cluster-scoped. "Namespaced" means that only namespaced resources will match this rule. "\*" means that there are no scope restrictions. Subresources match the scope of their parent resource. Default is "\*".
+
+
+Possible enum values:
+ - `"*"` means that all scopes are included.
+ - `"Cluster"` means that scope is limited to cluster-scoped objects. Namespace objects are cluster-scoped.
+ - `"Namespaced"` means that scope is limited to namespaced objects.
 
 |===
 === .spec.paramRef
@@ -453,7 +465,7 @@ Description::
 | Parameter | Type | Description
 | `body`
 | xref:../extension_apis/validatingadmissionpolicybinding-admissionregistration-k8s-io-v1.adoc#validatingadmissionpolicybinding-admissionregistration-k8s-io-v1[`ValidatingAdmissionPolicyBinding`] schema
-| 
+|
 |===
 
 .HTTP responses
@@ -608,7 +620,7 @@ Description::
 | Parameter | Type | Description
 | `body`
 | xref:../extension_apis/validatingadmissionpolicybinding-admissionregistration-k8s-io-v1.adoc#validatingadmissionpolicybinding-admissionregistration-k8s-io-v1[`ValidatingAdmissionPolicyBinding`] schema
-| 
+|
 |===
 
 .HTTP responses

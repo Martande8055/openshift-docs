@@ -6,23 +6,19 @@
 [id="virt-applying-node-place-rules_{context}"]
 = Applying node placement rules
 
-ifndef::openshift-rosa,openshift-dedicated[]
-You can apply node placement rules by editing a `Subscription`, `HyperConverged`, or `HostPathProvisioner` object using the command line.
-endif::openshift-rosa,openshift-dedicated[]
-ifdef::openshift-rosa,openshift-dedicated[]
-You can apply node placement rules by editing a `HyperConverged` or `HostPathProvisioner` object using the command line.
-endif::openshift-rosa,openshift-dedicated[]
+[role="_abstract"]
+You can apply node placement rules to ensure that virtualization components run on the most suitable nodes for your workload requirements. You can apply node placement rules by editing {VirtProductName} objects.
 
 .Prerequisites
 
-* The `oc` CLI tool is installed.
+* You have installed the {oc-first}.
 * You are logged in with cluster administrator permissions.
 
 .Procedure
 
 . Edit the object in your default editor by running the following command:
 +
-[source,terminal]
+[source,terminal,subs="attributes+"]
 ----
 $ oc edit <resource_type> <resource_name> -n {CNVNamespace}
 ----

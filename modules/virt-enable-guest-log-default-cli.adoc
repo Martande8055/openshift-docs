@@ -4,9 +4,14 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="virt-enable-guest-log-default-cli_{context}"]
-= Enabling default access to VM guest system logs with the CLI
+= Enabling default access to guest system logs with the CLI
 
-You can enable default access to VM guest system logs by editing the `HyperConverged` custom resource (CR).
+[role="_abstract"]
+To troubleshoot issues more easily, you can enable default access to virtual machine (VM) guest system logs by editing the `HyperConverged` custom resource (CR).
+
+.Prerequisites
+
+* You have installed the {oc-first}.
 
 .Procedure
 
@@ -14,19 +19,22 @@ You can enable default access to VM guest system logs by editing the `HyperConve
 +
 [source,terminal,subs="attributes+"]
 ----
-$ oc edit hyperconverged kubevirt-hyperconverged -n {CNVNamespace}
+$ oc edit {HCOCliKind} kubevirt-hyperconverged -n {CNVNamespace}
 ----
 
 . Update the `disableSerialConsoleLog` value. For example:
 +
 [source,yaml]
 ----
+apiVersion: hco.kubevirt.io/v1
 kind: HyperConverged
 metadata:
   name: kubevirt-hyperconverged
 spec:
-  virtualMachineOptions:
-    disableSerialConsoleLog: true <1>
+  virtualization:
+    virtualMachineOptions:
+      disableSerialConsoleLog: true
 #...
 ----
-<1> Set the value of `disableSerialConsoleLog` to `false` if you want serial console access to be enabled on VMs by default.
++
+Set the value of `disableSerialConsoleLog` to `false` if you want serial console access to be enabled on VMs by default.

@@ -7,6 +7,7 @@
 [id="hcp-cco-verify-aws-sts_{context}"]
 = Verifying the CCO installation in a hosted cluster on {aws-short}
 
+[role="_abstract"]
 You can verify that the Cloud Credential Operator (CCO) is running correctly in your hosted control plane.
 
 .Prerequisites
@@ -19,7 +20,9 @@ You can verify that the Cloud Credential Operator (CCO) is running correctly in 
 +
 [source,terminal]
 ----
-$ oc get cloudcredentials <hosted_cluster_name> -n <hosted_cluster_namespace> -o=jsonpath={.spec.credentialsMode}
+$ oc get cloudcredentials <hosted_cluster_name> \
+  -n <hosted_cluster_namespace> \
+  -o=jsonpath={.spec.credentialsMode}
 ----
 +
 .Expected output
@@ -32,7 +35,8 @@ Manual
 +
 [source,terminal]
 ----
-$ oc get authentication cluster --kubeconfig <hosted_cluster_name>.kubeconfig -o jsonpath --template '{.spec.serviceAccountIssuer }'
+$ oc get authentication cluster --kubeconfig <hosted_cluster_name>.kubeconfig \
+  -o jsonpath --template '{.spec.serviceAccountIssuer }'
 ----
 +
 .Example output

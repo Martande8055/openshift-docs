@@ -6,6 +6,7 @@
 [id="installing-wmco-using-web-console_{context}"]
 = Installing the Windows Machine Config Operator using the web console
 
+[role="_abstract"]
 You can use the {product-title} web console to install the Windows Machine Config Operator (WMCO).
 
 [NOTE]
@@ -15,7 +16,7 @@ Dual NIC is not supported on WMCO-managed Windows instances.
 
 .Procedure
 
-. From the *Administrator* perspective in the {product-title} web console, navigate to the *Operators -> OperatorHub* page.
+. From the *Administrator* perspective in the {product-title} web console, navigate to the *Ecosystem* -> *Software Catalog* page.
 
 . Use the *Filter by keyword* box to search for `Windows Machine Config Operator` in the catalog. Click the *Windows Machine Config Operator* tile.
 
@@ -36,9 +37,9 @@ Dual NIC is not supported on WMCO-managed Windows instances.
 * The *Automatic* strategy allows Operator Lifecycle Manager (OLM) to automatically update the Operator when a new version is available.
 +
 * The *Manual* strategy requires a user with appropriate credentials to approve the Operator update.
-
++
 //TODO add image of Installation page when official Operator is available.
-
++
 . Click *Install*. The WMCO is now listed on the *Installed Operators* page.
 +
 [NOTE]

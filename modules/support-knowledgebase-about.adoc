@@ -5,9 +5,18 @@
 // * service_mesh/v2x/ossm-troubleshooting-istio.adoc
 // * osd_architecture/osd-support.adoc
 // * microshift_support/microshift-getting-support.adoc
+// * edge_computing/day_2_core_cnf_clusters/troubleshooting/telco-troubleshooting-intro.adoc
 
 :_mod-docs-content-type: CONCEPT
 [id="support-knowledgebase-about_{context}"]
-= About the Red Hat Knowledgebase
+= About the Red{nbsp}Hat Knowledgebase
 
-The link:https://access.redhat.com/knowledgebase[Red Hat Knowledgebase] provides rich content aimed at helping you make the most of Red Hat's products and technologies. The Red Hat Knowledgebase consists of articles, product documentation, and videos outlining best practices on installing, configuring, and using Red Hat products. In addition, you can search for solutions to known issues, each providing concise root cause descriptions and remedial steps.
+[role="_abstract"]
+The Red{nbsp}Hat Knowledgebase helps you get the most from Red{nbsp}Hat products and technologies.
+
+It includes articles, product documentation, and videos that outline best practices for installing, configuring, and using Red{nbsp}Hat products. You can also search for solutions to known issues. Each solution has a root cause description and steps to fix the problem.
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://access.redhat.com/knowledgebase[Red{nbsp}Hat Knowledgebase]

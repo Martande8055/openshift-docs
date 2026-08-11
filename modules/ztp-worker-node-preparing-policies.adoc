@@ -4,9 +4,10 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="ztp-additional-worker-policies-{policy-gen-cr}_{context}"]
-= Using {policy-gen-cr} CRs to apply worker node policies to worker nodes
+= Using {policy-gen-cr} CRs to apply worker node policies to the worker node
 
-You can create policies for worker nodes using `{policy-gen-cr}` CRs.
+[role="_abstract"]
+You can create policies for the additional worker node by using `{policy-gen-cr}` CRs.
 
 .Procedure
 
@@ -20,7 +21,7 @@ ifeval::["{policy-gen-cr}" == "PolicyGenerator"]
 include::snippets/pg-ztp-worker-node-preparing-policies.adoc[]
 endif::[]
 
-A generic `MachineConfig` CR is used to configure workload partitioning on the worker node. You can generate the content of `crio` and `kubelet` configuration files.
+You can generate the content of `crio` and `kubelet` configuration files.
 --
 
 . Add the created policy template to the Git repository monitored by the ArgoCD `policies` application.

@@ -1,10 +1,21 @@
 :_mod-docs-content-type: ASSEMBLY
+ifndef::openshift-rosa[]
 [id="architecture"]
 = {product-title} architecture
+endif::openshift-rosa[]
+ifdef::openshift-rosa[]
+[id="architecture"]
+= {product-title}
+endif::openshift-rosa[]
 include::_attributes/common-attributes.adoc[]
+include::_attributes/attributes-openshift-dedicated.adoc[]
 :context: architecture
 
 toc::[]
+
+[role="_abstract"]
+Understand the architecture of the {product-title} and Kubernetes so that you can learn how to effectively develop and run containerized applications. 
+Containerized applications offer many advantages over using traditional deployment methods.
 
 include::modules/architecture-platform-introduction.adoc[leveloffset=+1]
 
@@ -13,6 +24,7 @@ include::modules/architecture-kubernetes-introduction.adoc[leveloffset=+2]
 include::modules/architecture-container-application-benefits.adoc[leveloffset=+2]
 
 include::modules/architecture-platform-benefits.adoc[leveloffset=+2]
+
 ////
 == User facing components
 * Workloads (Deployments, Jobs, ReplicaSets, etc)

@@ -6,7 +6,8 @@
 [id="cert-manager-remove-resources-console_{context}"]
 = Removing {cert-manager-operator} resources
 
-Once you have uninstalled the {cert-manager-operator}, you have the option to eliminate its associated resources from your cluster.
+[role="_abstract"]
+After you uninstall the {cert-manager-operator}, you can delete its associated resources from your cluster.
 
 .Prerequisites
 
@@ -38,19 +39,26 @@ $ oc delete deployment -n cert-manager -l app.kubernetes.io/instance=cert-manage
 
 . Optional: Remove the custom resource definitions (CRDs) that were installed by the {cert-manager-operator}:
 
+.. Remove the finalizers from the `CertManager` custom resource (CR) by running the following command:
++
+[source,terminal]
+----
+$ oc patch certmanagers.operator cluster --type=merge -p='{"metadata":{"finalizers":null}}'
+----
+
 .. Navigate to *Administration* -> *CustomResourceDefinitions*.
 
 .. Enter `certmanager` in the *Name* field to filter the CRDs.
 
 .. Click the Options menu {kebab} next to each of the following CRDs, and select *Delete Custom Resource Definition*:
-
-*** `Certificate`
-*** `CertificateRequest`
-*** `CertManager` (`operator.openshift.io`)
-*** `Challenge`
-*** `ClusterIssuer`
-*** `Issuer`
-*** `Order`
++
+* `Certificate`
+* `CertificateRequest`
+* `CertManager` (`operator.openshift.io`)
+* `Challenge`
+* `ClusterIssuer`
+* `Issuer`
+* `Order`
 
 . Optional: Remove the `cert-manager-operator` namespace.
 .. Navigate to *Administration* -> *Namespaces*.

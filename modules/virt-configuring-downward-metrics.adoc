@@ -3,10 +3,11 @@
 // * virt/monitoring/virt-exposing-downward-metrics.adoc
 
 :_mod-docs-content-type: PROCEDURE
-[id="virt-configuring-downward-metrics_virt-using-downward-metrics_{context}"]
+[id="virt-configuring-downward-metrics_{context}"]
 = Configuring a downward metrics device
 
-You enable the capturing of downward metrics for a host VM by creating a configuration file that includes a `downwardMetrics` device. Adding this device establishes that the metrics are exposed through a `virtio-serial` port.
+[role="_abstract"]
+You can enable the capturing of downward metrics for a host VM by creating a configuration file that includes a `downwardMetrics` device. Adding this device establishes that the metrics are exposed through a `virtio-serial` port.
 
 .Prerequisites
 
@@ -16,7 +17,6 @@ You enable the capturing of downward metrics for a host VM by creating a configu
 
 * Edit or create a YAML file that includes a `downwardMetrics` device, as shown in the following example:
 +
-.Example downwardMetrics configuration file
 [source,yaml]
 ----
 apiVersion: kubevirt.io/v1
@@ -35,12 +35,9 @@ spec:
           namespace: openshift-virtualization-os-images
         storage:
           resources: {}
-          storageClassName: hostpath-csi-basic
   instancetype:
     name: u1.medium
-  preference:
-    name: fedora
-  running: true
+  runStrategy: Always
   template:
     metadata:
       labels:
@@ -48,7 +45,7 @@ spec:
     spec:
       domain:
         devices:
-          downwardMetrics: {} <1>
+          downwardMetrics: {}
       subdomain: headless
       volumes:
         - dataVolume:
@@ -59,9 +56,10 @@ spec:
               #cloud-config
               chpasswd:
                 expire: false
-              password: '<password>' <2>
+              password: '<password>'
               user: fedora
           name: cloudinitdisk
 ----
-<1> The `downwardMetrics` device.
-<2> The password for the `fedora` user.
++
+* `spec.domain.devices.downwardMetrics` defines the `downwardMetrics` device.
+* `spec.volumes.cloudInitNoCloud.userdata.password` defines the password for the `fedora` user.

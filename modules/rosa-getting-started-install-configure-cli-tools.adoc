@@ -2,49 +2,37 @@
 //
 // * rosa_getting_started/rosa-getting-started.adoc
 // * rosa_getting_started/rosa-quickstart-guide-ui.adoc
+// * rosa_hcp/rosa-hcp-quickstart-guide.adoc
+// * rosa_planning/rosa-sts-setting-up-environment.adoc
 
-:_mod-docs-content-type: PROCEDURE
-[id="rosa-getting-started-install-configure-cli-tools_{context}"]
-= Installing and configuring the required CLI tools
-
-ifeval::["{context}" == "rosa-getting-started"]
-:getting-started:
-endif::[]
-ifeval::["{context}" == "rosa-quickstart"]
+ifeval::["{context}" == "rosa-hcp-quickstart-guide"]
 :quickstart:
 endif::[]
 
-Use the following steps to install and configure
-ifdef::quickstart[]
-the AWS and {product-title} (ROSA) CLI tools
-endif::[]
-ifdef::getting-started[]
-AWS, {product-title} (ROSA), and OpenShift CLI tools
-endif::[]
-on your workstation.
+:_mod-docs-content-type: PROCEDURE
+[id="rosa-getting-started-install-configure-cli-tools_{context}"]
+= Install and configure the required CLI tools
 
-ifdef::getting-started[]
+[role="_abstract"]
+Several command-line interface (CLI) tools are required to deploy and work with your cluster.
+
 .Prerequisites
 
 * You have an AWS account.
-* You created a Red{nbsp}Hat account.
-+
-[NOTE]
-====
-You can create a Red{nbsp}Hat account by navigating to link:https://console.redhat.com[console.redhat.com] and selecting *Register for a Red{nbsp}Hat account*.
-====
-endif::[]
+* You have a Red{nbsp}Hat account.
 
 .Procedure
 
+. Log in to your Red{nbsp}Hat and AWS accounts to access the download page for each required tool.
+.. Log in to your Red{nbsp}Hat account at link:https://console.redhat.com[console.redhat.com].
+.. Log in to your AWS account at link:https://aws.amazon.com[aws.amazon.com].
 . Install and configure the latest AWS CLI (`aws`).
-.. Follow the link:https://aws.amazon.com/cli/[AWS Command Line Interface] documentation to install and configure the AWS CLI for your operating system.
-+
-Specify your `aws_access_key_id`, `aws_secret_access_key`, and `region` in the `.aws/credentials` file. See link:https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html[AWS Configuration basics] in the AWS documentation.
+.. Install the AWS CLI by following the link:https://aws.amazon.com/cli/[AWS Command Line Interface] documentation appropriate for your workstation.
+.. Configure the AWS CLI by specifying your `aws_access_key_id`, `aws_secret_access_key`, and `region` in the `.aws/credentials` file. For more information, see link:https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html[AWS Configuration basics] in the AWS documentation.
 +
 [NOTE]
 ====
-You can optionally use the `AWS_DEFAULT_REGION` environment variable to set the default AWS region.
+Optional: Use the `AWS_DEFAULT_REGION` environment variable to set the default AWS region.
 ====
 .. Query the AWS API to verify if the AWS CLI is installed and configured correctly:
 +
@@ -53,85 +41,82 @@ You can optionally use the `AWS_DEFAULT_REGION` environment variable to set the 
 $ aws sts get-caller-identity  --output text
 ----
 +
-.Example output
+For example:
++
 [source,terminal]
 ----
 <aws_account_id>    arn:aws:iam::<aws_account_id>:user/<username>  <aws_user_id>
 ----
-
-. Install and configure the latest ROSA CLI (`rosa`).
-.. Download the latest version of the ROSA CLI for your operating system from the link:https://console.redhat.com/openshift/downloads[*Downloads*] page on the {cluster-manager-first} {hybrid-console-second}.
++
+. Install and configure the latest {rosa-cli}.
+.. Navigate to link:https://console.redhat.com/openshift/downloads[*Downloads*].
+.. Find *Red Hat OpenShift Service on AWS command line interface (`rosa`)* in the list of tools and click *Download*.
++
+The `rosa-linux.tar.gz` file is downloaded to your default download location.
 .. Extract the `rosa` binary file from the downloaded archive. The following example extracts the binary from a Linux tar archive:
 +
 [source,terminal]
 ----
 $ tar xvf rosa-linux.tar.gz
 ----
-.. Add `rosa` to your path. In the following example, the `/usr/local/bin` directory is included in the path of the user:
+.. Move the `rosa` binary file to a directory in your execution path. In the following example, the `/usr/local/bin` directory is included in the path of the user:
 +
 [source,terminal]
 ----
 $ sudo mv rosa /usr/local/bin/rosa
 ----
-.. Verify if the ROSA CLI is installed correctly by querying the `rosa` version:
+.. Verify that the {rosa-cli} is installed correctly by querying the `rosa` version:
 +
 [source,terminal]
 ----
 $ rosa version
 ----
 +
-.Example output
-[source,terminal]
+For example:
++
+[source,terminal,subs="attributes+"]
 ----
-1.2.15
-Your ROSA CLI is up to date.
+1.2.47
+Your {rosa-cli} is up to date.
 ----
-ifdef::getting-started[]
-+
-.. Optional: Enable tab completion for the ROSA CLI. With tab completion enabled, you can press the `Tab` key twice to automatically complete subcommands and receive command suggestions.
-+
-`rosa` tab completion is available for different shell types. The following example enables persistent tab completion for Bash on a Linux host. The command generates a `rosa` tab completion configuration file for Bash and saves it to the `/etc/bash_completion.d/` directory:
-+
-[source,terminal]
-----
-# rosa completion bash > /etc/bash_completion.d/rosa
-----
-+
-You must open a new terminal to activate the configuration.
-+
-[NOTE]
-====
-For steps to configure `rosa` tab completion for different shell types, see the help menu by running `rosa completion --help`.
-====
-endif::[]
-.. Log in to your Red{nbsp}Hat account by using the ROSA CLI:
+
+. Log in to the {rosa-cli} using an offline access token.
+.. Run the login command:
 +
 [source,terminal]
 ----
 $ rosa login
 ----
 +
-.Example output
+For example:
++
 [source,terminal]
 ----
 To login to your Red Hat account, get an offline access token at https://console.redhat.com/openshift/token/rosa
 ? Copy the token and paste it here:
 ----
+.. Navigate to the URL listed in the command output to view your offline access token.
+.. Enter the offline access token at the command-line prompt to log in.
 +
-Go to the URL listed in the command output to obtain an offline access token. Specify the token at the CLI prompt to log in.
+[source,terminal]
+----
+? Copy the token and paste it here: *******************
+[full token length omitted]
+----
 +
 [NOTE]
 ====
-You can subsequently specify the offline access token by using the `--token="<offline_access_token>"` argument when you run the `rosa login` command.
+In the future you can specify the offline access token by using the `--token="<offline_access_token>"` argument when you run the `rosa login` command.
 ====
-.. Verify if you are logged in successfully and check your credentials:
+.. Verify that you are logged in and confirm that your credentials are correct before proceeding:
 +
 [source,terminal]
 ----
 $ rosa whoami
 ----
 +
-.Example output
+For example:
++
 [source,terminal]
 ----
 AWS Account ID:               <aws_account_number>
@@ -146,12 +131,10 @@ OCM Organization ID:          <org_id>
 OCM Organization Name:        Your organization
 OCM Organization External ID: <external_org_id>
 ----
-+
-Check that the information in the output is correct before proceeding.
-
-ifdef::getting-started[]
 . Install and configure the latest OpenShift CLI (`oc`).
-.. Use the ROSA CLI to download the latest version of the `oc` CLI:
+.. Use the {rosa-cli} to download the `oc` CLI.
++
+The following command downloads the latest version of the CLI to the current working directory:
 +
 [source,terminal]
 ----
@@ -163,31 +146,44 @@ $ rosa download openshift-client
 ----
 $ tar xvf openshift-client-linux.tar.gz
 ----
-.. Add the `oc` binary to your path. In the following example, the `/usr/local/bin` directory is included in the path of the user:
+.. Move the `oc` binary to a directory in your execution path. In the following example, the `/usr/local/bin` directory is included in the path of the user:
 +
 [source,terminal]
 ----
 $ sudo mv oc /usr/local/bin/oc
 ----
-.. Verify if the `oc` CLI is installed correctly:
+.. Verify that the `oc` CLI is installed correctly:
 +
 [source,terminal]
 ----
 $ rosa verify openshift-client
 ----
 +
-.Example output
+For example:
++
 [source,terminal]
 ----
 I: Verifying whether OpenShift command-line tool is available...
-I: Current OpenShift Client Version: 4.9.12
+I: Current OpenShift Client Version: 4.17.3
 ----
-endif::[]
 
+.Verification
 
-ifeval::["{context}" == "rosa-getting-started"]
-:getting-started:
-endif::[]
-ifeval::["{context}" == "rosa-quickstart"]
-:quickstart:
+* Verify the installation of each CLI tool:
++
+[source,terminal]
+----
+$ rosa version
+$ aws --version
+$ oc version
+----
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html[AWS Command Line Interface documentation]
+* link:https://docs.openshift.com/container-platform/latest/cli_reference/openshift_cli/getting-started-cli.html[Getting started with the OpenShift CLI]
+
+ifeval::["{context}" == "rosa-hcp-quickstart-guide"]
+:!quickstart:
 endif::[]

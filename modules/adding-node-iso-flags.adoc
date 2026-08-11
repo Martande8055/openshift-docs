@@ -6,11 +6,13 @@
 [id="adding-node-iso-flags_{context}"]
 = Adding a node with command flags
 
+[role="_abstract"]
 You can add a single node to your cluster by using command flags to specify configurations for the new node.
 
 .Prerequisites
 
 * You have installed the OpenShift CLI (`oc`)
+* You have installed the Rsync utility
 * You have an active connection to your target cluster
 * You have a kubeconfig file available
 

@@ -6,6 +6,7 @@
 [id="ztp-recommended-cluster-mc-crs_{context}"]
 = Recommended cluster MachineConfig CRs for {sno} clusters
 
+[role="_abstract"]
 Check that the `MachineConfig` custom resources (CRs) that you extract from the `ztp-site-generate` container are applied in the cluster. The CRs can be found in the extracted `out/source-crs/extra-manifest/` folder.
 
 The following `MachineConfig` CRs from the `ztp-site-generate` container configure the cluster host:
@@ -26,11 +27,7 @@ a|`03-sctp-machine-config-master.yaml`
 `03-sctp-machine-config-worker.yaml`
 |Loads the SCTP kernel module. These `MachineConfig` CRs are optional and can be omitted if you do not require this kernel module.
 
-a|`05-kdump-config-master.yaml`
-
-`05-kdump-config-worker.yaml`
-
-`06-kdump-master.yaml`
+a|`06-kdump-master.yaml`
 
 `06-kdump-worker.yaml`
 |Configures kdump crash reporting for the cluster.
@@ -66,5 +63,5 @@ a|`extra-manifest/enable-cgroups-v1.yaml`
 
 [NOTE]
 ====
-In {product-title} 4.14 and later, you configure workload partitioning with the `cpuPartitioningMode` field in the `SiteConfig` CR.
+In {product-title} 4.14 and later, you configure workload partitioning with the `cpuPartitioningMode` field in the `ClusterInstance` CR.
 ====

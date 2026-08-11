@@ -4,33 +4,39 @@
 //
 
 :_mod-docs-content-type: PROCEDURE
-[id="virt-preventing-nvidia-operands-from-deploying-on-nodes_{context}"]
+[id="virt-preventing-nvidia-gpu-operands-from-deploying-on-nodes_{context}"]
 = Preventing NVIDIA GPU operands from deploying on nodes
 
-If you use the link:https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/contents.html[NVIDIA GPU Operator] in your cluster, you can apply the `nvidia.com/gpu.deploy.operands=false` label to nodes that you do not want to configure for GPU or vGPU operands. This label prevents the creation of the pods that configure GPU or vGPU operands and terminates the pods if they already exist.
+[role="_abstract"]
+If you use the link:https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/contents.html[NVIDIA GPU Operator] in your cluster, you can apply the `nvidia.com/gpu.deploy.operands=false` label to nodes that you do not want to configure for GPU or vGPU operands. This prevents the creation of the pods that configure GPU or vGPU operands and terminates existing pods.
 
 .Prerequisites
 
-* The OpenShift CLI (`oc`) is installed.
+* The {oc-first} is installed.
 
 .Procedure
 // Cannot label nodes in ROSA/OSD, but can edit machine pools
 * Label the node by running the following command:
-+
+
 ifndef::openshift-rosa,openshift-dedicated[]
-[source,terminal]
-----
-$ oc label node <node_name> nvidia.com/gpu.deploy.operands=false <1>
-----
-endif::openshift-rosa,openshift-dedicated[]
 +
-ifdef::openshift-rosa,openshift-dedicated[]
 [source,terminal]
 ----
-$ rosa edit machinepool --cluster=<cluster_name> <machinepool_ID> nvidia.com/gpu.deploy.operands=false <1>
+$ oc label node <node_name> nvidia.com/gpu.deploy.operands=false
+----
++
+where:
++
+`<node_name>`:: Specifies the name of a node where you do not want to install the NVIDIA GPU operands.
+endif::openshift-rosa,openshift-dedicated[]
+
+ifdef::openshift-rosa,openshift-dedicated[]
++
+[source,terminal]
+----
+$ rosa edit machinepool --cluster=<cluster_name> <machinepool_ID> nvidia.com/gpu.deploy.operands=false
 ----
 endif::openshift-rosa,openshift-dedicated[]
-<1> Replace `<node_name>` with the name of a node where you do not want to install the NVIDIA GPU operands.
 
 .Verification
 
@@ -50,8 +56,8 @@ $ oc describe node <node_name>
 $ oc get pods -n nvidia-gpu-operator
 ----
 +
-.Example output
-
+Example output:
++
 [source,terminal]
 ----
 NAME                             READY   STATUS        RESTARTS   AGE
@@ -71,8 +77,8 @@ nvidia-vfio-manager-zqtck        1/1     Terminating   0          9d
 $ oc get pods -n nvidia-gpu-operator
 ----
 +
-.Example output
-
+Example output:
++
 [source,terminal]
 ----
 NAME                             READY   STATUS    RESTARTS   AGE

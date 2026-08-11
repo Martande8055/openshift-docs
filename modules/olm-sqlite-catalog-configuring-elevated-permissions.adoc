@@ -6,10 +6,11 @@
 [id="olm-sqlite-catalog-elevated-privileges_{context}"]
 = Configuring catalogs to run with elevated permissions
 
-If you do not want to update your SQLite database catalog image or migrate your catalog to the file-based catalog format, you can perform the following actions to ensure your catalog source runs when the default pod security enforcement changes to restricted:
+[role="_abstract"]
+If you do not want to update your SQLite database catalog image or migrate your catalog to the file-based catalog format, you can set the catalog security mode to legacy and label the catalog source namespace for baseline or privileged pod security enforcement.
 
-* Manually set the catalog security mode to legacy in your catalog source definition. This action ensures your catalog runs with legacy permissions even if the default catalog security mode changes to restricted.
-* Label the catalog source namespace for baseline or privileged pod security enforcement.
+* Manually setting the catalog security mode to legacy in your catalog source definition ensures your catalog runs with legacy permissions even if the default catalog security mode changes to restricted.
+* Labeling the catalog source namespace for baseline or privileged pod security enforcement ensures your catalog runs with the elevated pod security admission standard.
 
 [NOTE]
 ====
@@ -19,12 +20,12 @@ The SQLite database catalog format is deprecated, but still supported by Red Hat
 .Prerequisites
 
 * You have a SQLite database catalog source.
-ifndef::openshift-dedicated,openshift-rosa[]
+ifndef::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
 * You have access to the cluster as a user with the `cluster-admin` role.
-endif::openshift-dedicated,openshift-rosa[]
-ifdef::openshift-dedicated,openshift-rosa[]
+endif::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
+ifdef::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
 * You have access to the cluster as a user with the `dedicated-admin` role.
-endif::openshift-dedicated,openshift-rosa[]
+endif::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
 * You have a target namespace that supports running pods with the elevated pod security admission standard of `baseline` or `privileged`.
 
 .Procedure
@@ -48,7 +49,11 @@ spec:
 +
 [TIP]
 ====
-In {product-title} {product-version}, the `spec.grpcPodConfig.securityContextConfig` field is set to `legacy` by default. In a future release of {product-title}, it is planned that the default setting will change to `restricted`. If your catalog cannot run under restricted enforcement, it is recommended that you manually set this field to `legacy`.
+In {product-title} 
+ifndef::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
+{product-version}, 
+endif::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
+the `spec.grpcPodConfig.securityContextConfig` field is set to `legacy` by default. In a future release of {product-title}, it is planned that the default setting will change to `restricted`. If your catalog cannot run under restricted enforcement, it is recommended that you manually set this field to `legacy`.
 ====
 
 . Edit your `<namespace>.yaml` file to add elevated pod security admission standards to your catalog source namespace, as shown in the following example:

@@ -2,12 +2,16 @@
 //
 // * windows_containers/scheduling-windows-workloads.adoc
 
+:_mod-docs-content-type: CONCEPT
 [id="wmco-supported-csi-drivers_{context}"]
 = Support for Windows CSI drivers
 
-{productwinc} installs link:https://github.com/kubernetes-csi/csi-proxy[CSI Proxy] on all Windows nodes in the cluster. CSI Proxy is a plug-in that enables CSI drivers to perform storage operations on the node. 
+[role="_abstract"]
+You can use the CSI PROXY plug-in to perform storage operations on the nodes in your cluster. 
 
-To use persistent storage with Windows workloads, you must deploy a specific Windows CSI driver daemon set, as described in your storage provider's documentation. By default, the WMCO does not automatically create the Windows CSI driver daemon set. See the list of link:https://kubernetes-csi.github.io/docs/drivers.html#production-drivers[production drivers] in the Kubernetes CSI Developer Documentation.
+{productwinc} installs CSI Proxy, which is a plug-in that enables CSI drivers for performing storage operations, on all Windows nodes in the cluster. For more information, see "CSI Proxy".
+
+To use persistent storage with Windows workloads, you must deploy a specific Windows CSI driver daemon set, as described in your storage provider's documentation. By default, the WMCO does not automatically create the Windows CSI driver daemon set. For more information, see the list of production drivers in the Kubernetes CSI Developer Documentation.
 
 [NOTE]
 ====

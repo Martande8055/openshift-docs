@@ -9,7 +9,8 @@
 [id="unauthenticated-users-cluster-role-bindings_{context}"]
 = Adding unauthenticated groups to cluster roles
 
-As a cluster administrator, you can add unauthenticated users to the following cluster roles in {product-title} by creating a cluster role binding. Unauthenticated users do not have access to non-public cluster roles. This should only be done in specific use cases when necessary.
+[role="_abstract"]
+Grant unauthenticated users access to specific cluster roles to enable features that require cluster access without authentication, such as external webhooks or automated token management.
 
 You can add unauthenticated users to the following cluster roles:
 

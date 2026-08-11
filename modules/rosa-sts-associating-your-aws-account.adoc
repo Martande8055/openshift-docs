@@ -5,7 +5,7 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="rosa-sts-associating-your-aws-account_{context}"]
-= Associating your AWS account with your Red{nbsp}Hat organization
+= Associate your AWS account with your Red{nbsp}Hat organization
 
 ifeval::["{context}" == "rosa-sts-creating-a-cluster-quickly"]
 :quick-install:
@@ -20,33 +20,34 @@ ifeval::["{context}" == "rosa-sts-creating-a-cluster-quickly"]
 :rosa-standalone:
 endif::[]
 
+[role="_abstract"]
 Before using {cluster-manager-first} on the {hybrid-console-url} to create
-ifdef::rosa-hcp[]
-{hcp-title} clusters
-endif::rosa-hcp[]
-ifndef::rosa-hcp[]
-{product-title} (ROSA) clusters
-endif::rosa-hcp[]
-that use the AWS Security Token Service (STS), create an {cluster-manager} IAM role and link it to your Red{nbsp}Hat organization. Then, create a user IAM role and link it to your Red{nbsp}Hat user account in the same Red{nbsp}Hat organization.
+ifdef::openshift-rosa[]
+{rosa-classic-short} 
+endif::openshift-rosa[]
+ifdef::openshift-rosa-hcp[]
+{rosa-short} 
+endif::openshift-rosa-hcp[]
+clusters that use the AWS Security Token Service (STS), create an {cluster-manager} IAM role and link it to your Red{nbsp}Hat organization. Then, create a user IAM role and link it to your Red{nbsp}Hat user account in the same Red{nbsp}Hat organization.
 
 ifdef::quick-install[]
 .Prerequisites
 
 ifdef::rosa-hcp[]
-* You have completed the AWS prerequisites for {hcp-title}.
+* You have completed the AWS prerequisites for {rosa-short}.
 endif::rosa-hcp[]
 ifndef::rosa-hcp[]
-* You have completed the AWS prerequisites for ROSA with STS.
+* You have completed the AWS prerequisites for {product-title} with STS.
 endif::rosa-hcp[]
 * You have available AWS service quotas.
-* You have enabled the ROSA service in the AWS Console.
-* You have installed and configured the latest ROSA CLI (`rosa`) on your installation host.
+* You have enabled the {product-title} service in the AWS Console.
+* You have installed and configured the latest {rosa-cli} (`rosa`) on your installation host.
 +
 [NOTE]
 ====
 To successfully install
 ifdef::rosa-hcp[]
-{hcp-title}
+{rosa-short}
 endif::rosa-hcp[]
 ifndef::rosa-hcp[]
 ROSA
@@ -65,7 +66,7 @@ endif::[]
 ====
 To enable automatic deployment of the cluster-specific Operator roles and the OpenID Connect (OIDC) provider using the {cluster-manager} {hybrid-console-second}, you must apply the administrative privileges to the role by choosing the _Admin OCM role_ command in the *Accounts and roles* step of creating a
 ifdef::rosa-hcp[]
-{hcp-title}
+{rosa-short}
 endif::rosa-hcp[]
 ifndef::rosa-hcp[]
 ROSA
@@ -77,14 +78,14 @@ cluster. For more information about the basic and administrative privileges for 
 ====
 If you choose the _Basic OCM role_ command in the *Accounts and roles* step of creating a
 ifdef::rosa-hcp[]
-{hcp-title}
+{rosa-short}
 endif::rosa-hcp[]
 ifndef::rosa-hcp[]
 ROSA
 endif::rosa-hcp[]
 cluster in the {cluster-manager} {hybrid-console-second}, you must deploy a
 ifdef::rosa-hcp[]
-{hcp-title}
+{rosa-short}
 endif::rosa-hcp[]
 ifndef::rosa-hcp[]
 ROSA
@@ -112,6 +113,23 @@ Select the default values at the prompts to quickly create and link the role.
 ====
 The Red{nbsp}Hat user account must exist in the Red{nbsp}Hat organization that is linked to your {cluster-manager} role.
 ====
+
+.Verification
+
+* Verify that the OCM role and user role were created:
++
+[source,terminal]
+----
+$ rosa list ocm-role
+$ rosa list user-role
+----
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://docs.openshift.com/rosa/rosa_install_access_delete_clusters/rosa-sts-aws-prereqs.html[AWS prerequisites for ROSA with STS]
+* link:https://docs.openshift.com/rosa/rosa_architecture/rosa-understanding.html[Understanding ROSA]
+* link:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html[IAM roles in AWS]
 
 ifeval::["{context}" == "rosa-sts-creating-a-cluster-quickly"]
 :quick-install:

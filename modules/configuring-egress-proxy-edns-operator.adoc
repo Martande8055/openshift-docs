@@ -6,6 +6,7 @@
 [id="nw-configuring-cluster-wide-proxy_{context}"]
 = Trusting the certificate authority of the cluster-wide proxy
 
+[role="_abstract"]
 You can configure the External DNS Operator to trust the certificate authority of the cluster-wide proxy.
 
 .Procedure
@@ -33,15 +34,10 @@ $ oc -n external-dns-operator patch subscription external-dns-operator --type='j
 
 .Verification
 
-* After the deployment of the External DNS Operator is completed, verify that the trusted CA environment variable is added to the `external-dns-operator` deployment by running the following command:
+* After deploying the External DNS Operator, verify that the trusted CA environment variable is added by running the following command. The output must show `trusted-ca` for the `external-dns-operator` deployment.
 +
 [source,terminal]
 ----
 $ oc -n external-dns-operator exec deploy/external-dns-operator -c external-dns-operator -- printenv TRUSTED_CA_CONFIGMAP_NAME
 ----
-+
-.Example output
-[source,terminal]
-----
-trusted-ca
-----
+

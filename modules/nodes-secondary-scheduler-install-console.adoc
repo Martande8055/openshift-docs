@@ -6,7 +6,8 @@
 [id="nodes-secondary-scheduler-install-console_{context}"]
 = Installing the {secondary-scheduler-operator}
 
-You can use the web console to install the {secondary-scheduler-operator-full}.
+[role="_abstract"]
+You can install the {secondary-scheduler-operator-full} through the {product-title} web console to configure a secondary scheduler.
 
 .Prerequisites
 
@@ -29,7 +30,7 @@ endif::openshift-rosa,openshift-dedicated[]
 // There are no metrics to collect for the secondary scheduler operator as of now, so no need to add the metrics label
 
 . Install the {secondary-scheduler-operator-full}.
-.. Navigate to *Operators* -> *OperatorHub*.
+.. Navigate to *Ecosystem* -> *Software Catalog*.
 .. Enter *{secondary-scheduler-operator-full}* into the filter box.
 .. Select the *{secondary-scheduler-operator-full}* and click *Install*.
 .. On the *Install Operator* page:
@@ -43,5 +44,5 @@ endif::openshift-rosa,openshift-dedicated[]
 
 .Verification
 
-. Navigate to *Operators* -> *Installed Operators*.
+. Navigate to *Ecosystem* -> *Installed Operators*.
 . Verify that *{secondary-scheduler-operator-full}* is listed with a *Status* of *Succeeded*.

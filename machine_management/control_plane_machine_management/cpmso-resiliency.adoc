@@ -6,6 +6,7 @@ include::_attributes/common-attributes.adoc[]
 
 toc::[]
 
+[role="_abstract"]
 You can use the control plane machine set to improve the resiliency of the control plane for your {product-title} cluster.
 
 [id="cpmso-failure-domains_{context}"]
@@ -15,6 +16,7 @@ When possible, the control plane machine set spreads the control plane machines 
 
 //Failure domain platform support and configuration
 include::modules/cpmso-failure-domains-provider.adoc[leveloffset=+2]
+
 [role="_additional-resources"]
 .Additional resources
 
@@ -37,12 +39,14 @@ include::modules/cpmso-failure-domains-balancing.adoc[leveloffset=+2]
 
 //Recovery of the failed control plane machines
 include::modules/cpmso-control-plane-recovery.adoc[leveloffset=+1]
+
 [role="_additional-resources"]
 .Additional resources
 * xref:../../machine_management/deploying-machine-health-checks.adoc#deploying-machine-health-checks[Deploying machine health checks]
 
 //Quorum protection with machine lifecycle hooks
 include::modules/machine-lifecycle-hook-deletion-etcd.adoc[leveloffset=+1]
+
 [role="_additional-resources"]
 .Additional resources
 * xref:../../machine_management/deleting-machine.adoc#machine-lifecycle-hook-deletion_deleting-machine[Lifecycle hooks for the machine deletion phase]

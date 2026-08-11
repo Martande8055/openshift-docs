@@ -11,9 +11,12 @@ toc::[]
 Description::
 +
 --
-Build configures the behavior of OpenShift builds for the entire cluster. This includes default settings that can be overridden in BuildConfig objects, and overrides which are applied to all builds. 
- The canonical name is "cluster" 
- Compatibility level 1: Stable within a major release for a minimum of 12 months or 3 minor releases (whichever is longer).
+Build configures the behavior of OpenShift builds for the entire cluster.
+This includes default settings that can be overridden in BuildConfig objects, and overrides which are applied to all builds.
+
+The canonical name is "cluster"
+
+Compatibility level 1: Stable within a major release for a minimum of 12 months or 3 minor releases (whichever is longer).
 --
 
 Type::
@@ -43,14 +46,14 @@ Required::
 
 | `spec`
 | `object`
-| Spec holds user-settable values for the build controller configuration
+| spec holds user-settable values for the build controller configuration
 
 |===
 === .spec
 Description::
 +
 --
-Spec holds user-settable values for the build controller configuration
+spec holds user-settable values for the build controller configuration
 --
 
 Type::
@@ -65,24 +68,32 @@ Type::
 
 | `additionalTrustedCA`
 | `object`
-| AdditionalTrustedCA is a reference to a ConfigMap containing additional CAs that should be trusted for image pushes and pulls during builds. The namespace for this config map is openshift-config. 
- DEPRECATED: Additional CAs for image pull and push should be set on image.config.openshift.io/cluster instead.
+| additionalTrustedCA is a reference to a ConfigMap containing additional CAs that
+should be trusted for image pushes and pulls during builds.
+The namespace for this config map is openshift-config.
+
+DEPRECATED: Additional CAs for image pull and push should be set on
+image.config.openshift.io/cluster instead.
 
 | `buildDefaults`
 | `object`
-| BuildDefaults controls the default information for Builds
+| buildDefaults controls the default information for Builds
 
 | `buildOverrides`
 | `object`
-| BuildOverrides controls override settings for builds
+| buildOverrides controls override settings for builds
 
 |===
 === .spec.additionalTrustedCA
 Description::
 +
 --
-AdditionalTrustedCA is a reference to a ConfigMap containing additional CAs that should be trusted for image pushes and pulls during builds. The namespace for this config map is openshift-config. 
- DEPRECATED: Additional CAs for image pull and push should be set on image.config.openshift.io/cluster instead.
+additionalTrustedCA is a reference to a ConfigMap containing additional CAs that
+should be trusted for image pushes and pulls during builds.
+The namespace for this config map is openshift-config.
+
+DEPRECATED: Additional CAs for image pull and push should be set on
+image.config.openshift.io/cluster instead.
 --
 
 Type::
@@ -106,7 +117,7 @@ Required::
 Description::
 +
 --
-BuildDefaults controls the default information for Builds
+buildDefaults controls the default information for Builds
 --
 
 Type::
@@ -121,12 +132,16 @@ Type::
 
 | `defaultProxy`
 | `object`
-| DefaultProxy contains the default proxy settings for all build operations, including image pull/push and source download. 
- Values can be overrode by setting the `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` environment variables in the build config's strategy.
+| defaultProxy contains the default proxy settings for all build operations, including image pull/push
+and source download.
+
+Values can be overrode by setting the `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` environment variables
+in the build config's strategy.
 
 | `env`
 | `array`
-| Env is a set of default environment variables that will be applied to the build if the specified variables do not exist on the build
+| env is a set of default environment variables that will be applied to the
+build if the specified variables do not exist on the build
 
 | `env[]`
 | `object`
@@ -134,12 +149,16 @@ Type::
 
 | `gitProxy`
 | `object`
-| GitProxy contains the proxy settings for git operations only. If set, this will override any Proxy settings for all git commands, such as git clone. 
- Values that are not set here will be inherited from DefaultProxy.
+| gitProxy contains the proxy settings for git operations only. If set, this will override
+any Proxy settings for all git commands, such as git clone.
+
+Values that are not set here will be inherited from DefaultProxy.
 
 | `imageLabels`
 | `array`
-| ImageLabels is a list of docker labels that are applied to the resulting image. User can override a default label by providing a label with the same name in their Build/BuildConfig.
+| imageLabels is a list of docker labels that are applied to the resulting image.
+User can override a default label by providing a label with the same name in their
+Build/BuildConfig.
 
 | `imageLabels[]`
 | `object`
@@ -147,15 +166,18 @@ Type::
 
 | `resources`
 | `object`
-| Resources defines resource requirements to execute the build.
+| resources defines resource requirements to execute the build.
 
 |===
 === .spec.buildDefaults.defaultProxy
 Description::
 +
 --
-DefaultProxy contains the default proxy settings for all build operations, including image pull/push and source download. 
- Values can be overrode by setting the `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` environment variables in the build config's strategy.
+defaultProxy contains the default proxy settings for all build operations, including image pull/push
+and source download.
+
+Values can be overrode by setting the `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` environment variables
+in the build config's strategy.
 --
 
 Type::
@@ -178,7 +200,8 @@ Type::
 
 | `noProxy`
 | `string`
-| noProxy is a comma-separated list of hostnames and/or CIDRs and/or IPs for which the proxy should not be used. Empty means unset and will not result in an env var.
+| noProxy is a comma-separated list of hostnames and/or CIDRs and/or IPs for which the proxy should not be used.
+Empty means unset and will not result in an env var.
 
 | `readinessEndpoints`
 | `array (string)`
@@ -186,18 +209,58 @@ Type::
 
 | `trustedCA`
 | `object`
-| trustedCA is a reference to a ConfigMap containing a CA certificate bundle. The trustedCA field should only be consumed by a proxy validator. The validator is responsible for reading the certificate bundle from the required key "ca-bundle.crt", merging it with the system default trust bundle, and writing the merged trust bundle to a ConfigMap named "trusted-ca-bundle" in the "openshift-config-managed" namespace. Clients that expect to make proxy connections must use the trusted-ca-bundle for all HTTPS requests to the proxy, and may use the trusted-ca-bundle for non-proxy HTTPS requests as well. 
- The namespace for the ConfigMap referenced by trustedCA is "openshift-config". Here is an example ConfigMap (in yaml): 
- apiVersion: v1 kind: ConfigMap metadata: name: user-ca-bundle namespace: openshift-config data: ca-bundle.crt: \| -----BEGIN CERTIFICATE----- Custom CA certificate bundle. -----END CERTIFICATE-----
+| trustedCA is a reference to a ConfigMap containing a CA certificate bundle.
+The trustedCA field should only be consumed by a proxy validator. The
+validator is responsible for reading the certificate bundle from the required
+key "ca-bundle.crt", merging it with the system default trust bundle,
+and writing the merged trust bundle to a ConfigMap named "trusted-ca-bundle"
+in the "openshift-config-managed" namespace. Clients that expect to make
+proxy connections must use the trusted-ca-bundle for all HTTPS requests to
+the proxy, and may use the trusted-ca-bundle for non-proxy HTTPS requests as
+well.
+
+The namespace for the ConfigMap referenced by trustedCA is
+"openshift-config". Here is an example ConfigMap (in yaml):
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: user-ca-bundle
+ namespace: openshift-config
+ data:
+   ca-bundle.crt: \|
+     -----BEGIN CERTIFICATE-----
+     Custom CA certificate bundle.
+     -----END CERTIFICATE-----
 
 |===
 === .spec.buildDefaults.defaultProxy.trustedCA
 Description::
 +
 --
-trustedCA is a reference to a ConfigMap containing a CA certificate bundle. The trustedCA field should only be consumed by a proxy validator. The validator is responsible for reading the certificate bundle from the required key "ca-bundle.crt", merging it with the system default trust bundle, and writing the merged trust bundle to a ConfigMap named "trusted-ca-bundle" in the "openshift-config-managed" namespace. Clients that expect to make proxy connections must use the trusted-ca-bundle for all HTTPS requests to the proxy, and may use the trusted-ca-bundle for non-proxy HTTPS requests as well. 
- The namespace for the ConfigMap referenced by trustedCA is "openshift-config". Here is an example ConfigMap (in yaml): 
- apiVersion: v1 kind: ConfigMap metadata: name: user-ca-bundle namespace: openshift-config data: ca-bundle.crt: \| -----BEGIN CERTIFICATE----- Custom CA certificate bundle. -----END CERTIFICATE-----
+trustedCA is a reference to a ConfigMap containing a CA certificate bundle.
+The trustedCA field should only be consumed by a proxy validator. The
+validator is responsible for reading the certificate bundle from the required
+key "ca-bundle.crt", merging it with the system default trust bundle,
+and writing the merged trust bundle to a ConfigMap named "trusted-ca-bundle"
+in the "openshift-config-managed" namespace. Clients that expect to make
+proxy connections must use the trusted-ca-bundle for all HTTPS requests to
+the proxy, and may use the trusted-ca-bundle for non-proxy HTTPS requests as
+well.
+
+The namespace for the ConfigMap referenced by trustedCA is
+"openshift-config". Here is an example ConfigMap (in yaml):
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: user-ca-bundle
+ namespace: openshift-config
+ data:
+   ca-bundle.crt: \|
+     -----BEGIN CERTIFICATE-----
+     Custom CA certificate bundle.
+     -----END CERTIFICATE-----
 --
 
 Type::
@@ -221,7 +284,8 @@ Required::
 Description::
 +
 --
-Env is a set of default environment variables that will be applied to the build if the specified variables do not exist on the build
+env is a set of default environment variables that will be applied to the
+build if the specified variables do not exist on the build
 --
 
 Type::
@@ -251,11 +315,20 @@ Required::
 
 | `name`
 | `string`
-| Name of the environment variable. Must be a C_IDENTIFIER.
+| Name of the environment variable.
+May consist of any printable ASCII characters except '='.
 
 | `value`
 | `string`
-| Variable references $(VAR_NAME) are expanded using the previously defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. "$$(VAR_NAME)" will produce the string literal "$(VAR_NAME)". Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+| Variable references $(VAR_NAME) are expanded
+using the previously defined environment variables in the container and
+any service environment variables. If a variable cannot be resolved,
+the reference in the input string will be unchanged. Double $$ are reduced
+to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e.
+"$$(VAR_NAME)" will produce the string literal "$(VAR_NAME)".
+Escaped references will never be expanded, regardless of whether the variable
+exists or not.
+Defaults to "".
 
 | `valueFrom`
 | `object`
@@ -285,11 +358,18 @@ Type::
 
 | `fieldRef`
 | `object`
-| Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+| Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`,
+spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+
+| `fileKeyRef`
+| `object`
+| FileKeyRef selects a key of the env file.
+Requires the EnvFiles feature gate to be enabled.
 
 | `resourceFieldRef`
 | `object`
-| Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+| Selects a resource of the container: only resources limits and requests
+(limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
 
 | `secretKeyRef`
 | `object`
@@ -321,7 +401,11 @@ Required::
 
 | `name`
 | `string`
-| Name of the referent. This field is effectively required, but due to backwards compatibility is allowed to be empty. Instances of this type with an empty value here are almost certainly wrong. TODO: Add other useful fields. apiVersion, kind, uid? More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Drop `kubebuilder:default` when controller-gen doesn't need it https://github.com/kubernetes-sigs/kubebuilder/issues/3896.
+| Name of the referent.
+This field is effectively required, but due to backwards compatibility is
+allowed to be empty. Instances of this type with an empty value here are
+almost certainly wrong.
+More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
 
 | `optional`
 | `boolean`
@@ -332,7 +416,8 @@ Required::
 Description::
 +
 --
-Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`,
+spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
 --
 
 Type::
@@ -356,11 +441,60 @@ Required::
 | Path of the field to select in the specified API version.
 
 |===
+=== .spec.buildDefaults.env[].valueFrom.fileKeyRef
+Description::
++
+--
+FileKeyRef selects a key of the env file.
+Requires the EnvFiles feature gate to be enabled.
+--
+
+Type::
+  `object`
+
+Required::
+  - `key`
+  - `path`
+  - `volumeName`
+
+
+
+[cols="1,1,1",options="header"]
+|===
+| Property | Type | Description
+
+| `key`
+| `string`
+| The key within the env file. An invalid key will prevent the pod from starting.
+The keys defined within a source may consist of any printable ASCII characters except '='.
+During Alpha stage of the EnvFiles feature gate, the key size is limited to 128 characters.
+
+| `optional`
+| `boolean`
+| Specify whether the file or its key must be defined. If the file or key
+does not exist, then the env var is not published.
+If optional is set to true and the specified key does not exist,
+the environment variable will not be set in the Pod's containers.
+
+If optional is set to false and the specified key does not exist,
+an error will be returned during Pod creation.
+
+| `path`
+| `string`
+| The path within the volume from which to select the file.
+Must be relative and may not contain the '..' path or start with '..'.
+
+| `volumeName`
+| `string`
+| The name of the volume mount containing the env file.
+
+|===
 === .spec.buildDefaults.env[].valueFrom.resourceFieldRef
 Description::
 +
 --
-Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+Selects a resource of the container: only resources limits and requests
+(limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
 --
 
 Type::
@@ -413,7 +547,11 @@ Required::
 
 | `name`
 | `string`
-| Name of the referent. This field is effectively required, but due to backwards compatibility is allowed to be empty. Instances of this type with an empty value here are almost certainly wrong. TODO: Add other useful fields. apiVersion, kind, uid? More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Drop `kubebuilder:default` when controller-gen doesn't need it https://github.com/kubernetes-sigs/kubebuilder/issues/3896.
+| Name of the referent.
+This field is effectively required, but due to backwards compatibility is
+allowed to be empty. Instances of this type with an empty value here are
+almost certainly wrong.
+More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
 
 | `optional`
 | `boolean`
@@ -424,8 +562,10 @@ Required::
 Description::
 +
 --
-GitProxy contains the proxy settings for git operations only. If set, this will override any Proxy settings for all git commands, such as git clone. 
- Values that are not set here will be inherited from DefaultProxy.
+gitProxy contains the proxy settings for git operations only. If set, this will override
+any Proxy settings for all git commands, such as git clone.
+
+Values that are not set here will be inherited from DefaultProxy.
 --
 
 Type::
@@ -448,7 +588,8 @@ Type::
 
 | `noProxy`
 | `string`
-| noProxy is a comma-separated list of hostnames and/or CIDRs and/or IPs for which the proxy should not be used. Empty means unset and will not result in an env var.
+| noProxy is a comma-separated list of hostnames and/or CIDRs and/or IPs for which the proxy should not be used.
+Empty means unset and will not result in an env var.
 
 | `readinessEndpoints`
 | `array (string)`
@@ -456,18 +597,58 @@ Type::
 
 | `trustedCA`
 | `object`
-| trustedCA is a reference to a ConfigMap containing a CA certificate bundle. The trustedCA field should only be consumed by a proxy validator. The validator is responsible for reading the certificate bundle from the required key "ca-bundle.crt", merging it with the system default trust bundle, and writing the merged trust bundle to a ConfigMap named "trusted-ca-bundle" in the "openshift-config-managed" namespace. Clients that expect to make proxy connections must use the trusted-ca-bundle for all HTTPS requests to the proxy, and may use the trusted-ca-bundle for non-proxy HTTPS requests as well. 
- The namespace for the ConfigMap referenced by trustedCA is "openshift-config". Here is an example ConfigMap (in yaml): 
- apiVersion: v1 kind: ConfigMap metadata: name: user-ca-bundle namespace: openshift-config data: ca-bundle.crt: \| -----BEGIN CERTIFICATE----- Custom CA certificate bundle. -----END CERTIFICATE-----
+| trustedCA is a reference to a ConfigMap containing a CA certificate bundle.
+The trustedCA field should only be consumed by a proxy validator. The
+validator is responsible for reading the certificate bundle from the required
+key "ca-bundle.crt", merging it with the system default trust bundle,
+and writing the merged trust bundle to a ConfigMap named "trusted-ca-bundle"
+in the "openshift-config-managed" namespace. Clients that expect to make
+proxy connections must use the trusted-ca-bundle for all HTTPS requests to
+the proxy, and may use the trusted-ca-bundle for non-proxy HTTPS requests as
+well.
+
+The namespace for the ConfigMap referenced by trustedCA is
+"openshift-config". Here is an example ConfigMap (in yaml):
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: user-ca-bundle
+ namespace: openshift-config
+ data:
+   ca-bundle.crt: \|
+     -----BEGIN CERTIFICATE-----
+     Custom CA certificate bundle.
+     -----END CERTIFICATE-----
 
 |===
 === .spec.buildDefaults.gitProxy.trustedCA
 Description::
 +
 --
-trustedCA is a reference to a ConfigMap containing a CA certificate bundle. The trustedCA field should only be consumed by a proxy validator. The validator is responsible for reading the certificate bundle from the required key "ca-bundle.crt", merging it with the system default trust bundle, and writing the merged trust bundle to a ConfigMap named "trusted-ca-bundle" in the "openshift-config-managed" namespace. Clients that expect to make proxy connections must use the trusted-ca-bundle for all HTTPS requests to the proxy, and may use the trusted-ca-bundle for non-proxy HTTPS requests as well. 
- The namespace for the ConfigMap referenced by trustedCA is "openshift-config". Here is an example ConfigMap (in yaml): 
- apiVersion: v1 kind: ConfigMap metadata: name: user-ca-bundle namespace: openshift-config data: ca-bundle.crt: \| -----BEGIN CERTIFICATE----- Custom CA certificate bundle. -----END CERTIFICATE-----
+trustedCA is a reference to a ConfigMap containing a CA certificate bundle.
+The trustedCA field should only be consumed by a proxy validator. The
+validator is responsible for reading the certificate bundle from the required
+key "ca-bundle.crt", merging it with the system default trust bundle,
+and writing the merged trust bundle to a ConfigMap named "trusted-ca-bundle"
+in the "openshift-config-managed" namespace. Clients that expect to make
+proxy connections must use the trusted-ca-bundle for all HTTPS requests to
+the proxy, and may use the trusted-ca-bundle for non-proxy HTTPS requests as
+well.
+
+The namespace for the ConfigMap referenced by trustedCA is
+"openshift-config". Here is an example ConfigMap (in yaml):
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: user-ca-bundle
+ namespace: openshift-config
+ data:
+   ca-bundle.crt: \|
+     -----BEGIN CERTIFICATE-----
+     Custom CA certificate bundle.
+     -----END CERTIFICATE-----
 --
 
 Type::
@@ -491,7 +672,9 @@ Required::
 Description::
 +
 --
-ImageLabels is a list of docker labels that are applied to the resulting image. User can override a default label by providing a label with the same name in their Build/BuildConfig.
+imageLabels is a list of docker labels that are applied to the resulting image.
+User can override a default label by providing a label with the same name in their
+Build/BuildConfig.
 --
 
 Type::
@@ -519,18 +702,18 @@ Type::
 
 | `name`
 | `string`
-| Name defines the name of the label. It must have non-zero length.
+| name defines the name of the label. It must have non-zero length.
 
 | `value`
 | `string`
-| Value defines the literal value of the label.
+| value defines the literal value of the label.
 
 |===
 === .spec.buildDefaults.resources
 Description::
 +
 --
-Resources defines resource requirements to execute the build.
+resources defines resource requirements to execute the build.
 --
 
 Type::
@@ -545,9 +728,13 @@ Type::
 
 | `claims`
 | `array`
-| Claims lists the names of resources, defined in spec.resourceClaims, that are used by this container. 
- This is an alpha field and requires enabling the DynamicResourceAllocation feature gate. 
- This field is immutable. It can only be set for containers.
+| Claims lists the names of resources, defined in spec.resourceClaims,
+that are used by this container.
+
+This field depends on the
+DynamicResourceAllocation feature gate.
+
+This field is immutable. It can only be set for containers.
 
 | `claims[]`
 | `object`
@@ -555,20 +742,28 @@ Type::
 
 | `limits`
 | `integer-or-string`
-| Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+| Limits describes the maximum amount of compute resources allowed.
+More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 
 | `requests`
 | `integer-or-string`
-| Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. Requests cannot exceed Limits. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+| Requests describes the minimum amount of compute resources required.
+If Requests is omitted for a container, it defaults to Limits if that is explicitly specified,
+otherwise to an implementation-defined value. Requests cannot exceed Limits.
+More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 
 |===
 === .spec.buildDefaults.resources.claims
 Description::
 +
 --
-Claims lists the names of resources, defined in spec.resourceClaims, that are used by this container. 
- This is an alpha field and requires enabling the DynamicResourceAllocation feature gate. 
- This field is immutable. It can only be set for containers.
+Claims lists the names of resources, defined in spec.resourceClaims,
+that are used by this container.
+
+This field depends on the
+DynamicResourceAllocation feature gate.
+
+This field is immutable. It can only be set for containers.
 --
 
 Type::
@@ -598,14 +793,22 @@ Required::
 
 | `name`
 | `string`
-| Name must match the name of one entry in pod.spec.resourceClaims of the Pod where this field is used. It makes that resource available inside a container.
+| Name must match the name of one entry in pod.spec.resourceClaims of
+the Pod where this field is used. It makes that resource available
+inside a container.
+
+| `request`
+| `string`
+| Request is the name chosen for a request in the referenced claim.
+If empty, everything from the claim is made available, otherwise
+only the result of this request.
 
 |===
 === .spec.buildOverrides
 Description::
 +
 --
-BuildOverrides controls override settings for builds
+buildOverrides controls override settings for builds
 --
 
 Type::
@@ -620,11 +823,16 @@ Type::
 
 | `forcePull`
 | `boolean`
-| ForcePull overrides, if set, the equivalent value in the builds, i.e. false disables force pull for all builds, true enables force pull for all builds, independently of what each build specifies itself
+| forcePull overrides, if set, the equivalent value in the builds,
+i.e. false disables force pull for all builds,
+true enables force pull for all builds,
+independently of what each build specifies itself
 
 | `imageLabels`
 | `array`
-| ImageLabels is a list of docker labels that are applied to the resulting image. If user provided a label in their Build/BuildConfig with the same name as one in this list, the user's label will be overwritten.
+| imageLabels is a list of docker labels that are applied to the resulting image.
+If user provided a label in their Build/BuildConfig with the same name as one in this
+list, the user's label will be overwritten.
 
 | `imageLabels[]`
 | `object`
@@ -632,22 +840,26 @@ Type::
 
 | `nodeSelector`
 | `object (string)`
-| NodeSelector is a selector which must be true for the build pod to fit on a node
+| nodeSelector is a selector which must be true for the build pod to fit on a node
 
 | `tolerations`
 | `array`
-| Tolerations is a list of Tolerations that will override any existing tolerations set on a build pod.
+| tolerations is a list of Tolerations that will override any existing
+tolerations set on a build pod.
 
 | `tolerations[]`
 | `object`
-| The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+| The pod this Toleration is attached to tolerates any taint that matches
+the triple <key,value,effect> using the matching operator <operator>.
 
 |===
 === .spec.buildOverrides.imageLabels
 Description::
 +
 --
-ImageLabels is a list of docker labels that are applied to the resulting image. If user provided a label in their Build/BuildConfig with the same name as one in this list, the user's label will be overwritten.
+imageLabels is a list of docker labels that are applied to the resulting image.
+If user provided a label in their Build/BuildConfig with the same name as one in this
+list, the user's label will be overwritten.
 --
 
 Type::
@@ -675,18 +887,19 @@ Type::
 
 | `name`
 | `string`
-| Name defines the name of the label. It must have non-zero length.
+| name defines the name of the label. It must have non-zero length.
 
 | `value`
 | `string`
-| Value defines the literal value of the label.
+| value defines the literal value of the label.
 
 |===
 === .spec.buildOverrides.tolerations
 Description::
 +
 --
-Tolerations is a list of Tolerations that will override any existing tolerations set on a build pod.
+tolerations is a list of Tolerations that will override any existing
+tolerations set on a build pod.
 --
 
 Type::
@@ -699,7 +912,8 @@ Type::
 Description::
 +
 --
-The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+The pod this Toleration is attached to tolerates any taint that matches
+the triple <key,value,effect> using the matching operator <operator>.
 --
 
 Type::
@@ -714,23 +928,33 @@ Type::
 
 | `effect`
 | `string`
-| Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+| Effect indicates the taint effect to match. Empty means match all taint effects.
+When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
 
 | `key`
 | `string`
-| Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+| Key is the taint key that the toleration applies to. Empty means match all taint keys.
+If the key is empty, operator must be Exists; this combination means to match all values and all keys.
 
 | `operator`
 | `string`
-| Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+| Operator represents a key's relationship to the value.
+Valid operators are Exists, Equal, Lt, and Gt. Defaults to Equal.
+Exists is equivalent to wildcard for value, so that a pod can
+tolerate all taints of a particular category.
+Lt and Gt perform numeric comparisons (requires feature gate TaintTolerationComparisonOperators).
 
 | `tolerationSeconds`
 | `integer`
-| TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+| TolerationSeconds represents the period of time the toleration (which must be
+of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default,
+it is not set, which means tolerate the taint forever (do not evict). Zero and
+negative values will be treated as 0 (evict immediately) by the system.
 
 | `value`
 | `string`
-| Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+| Value is the taint value the toleration matches to.
+If the operator is Exists, the value should be empty, otherwise just a regular string.
 
 |===
 

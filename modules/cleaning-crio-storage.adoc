@@ -7,9 +7,10 @@
 
 = Cleaning CRI-O storage
 
+[role="_abstract"]
 You can manually clear the CRI-O ephemeral storage if you experience the following issues:
 
-* A node cannot run on any pods and this error appears:
+* A node cannot run any pods and this error appears:
 [source,terminal]
 +
 ----
@@ -117,12 +118,11 @@ $ sudo -i
 $ oc get nodes
 ----
 +
-.Example output
 [source,terminal]
 +
 ----
 NAME				    STATUS	                ROLES    AGE    VERSION
-ci-ln-tkbxyft-f76d1-nvwhr-master-1  Ready, SchedulingDisabled   master	 133m   v1.30.3
+ci-ln-tkbxyft-f76d1-nvwhr-master-1  Ready, SchedulingDisabled   master	 133m   v1.35.4
 ----
 +
 . Mark the node schedulable. You will know that the scheduling is enabled when `SchedulingDisabled` is no longer in status:
@@ -132,10 +132,9 @@ ci-ln-tkbxyft-f76d1-nvwhr-master-1  Ready, SchedulingDisabled   master	 133m   v
 $ oc adm uncordon <node_name>
 ----
 +
-.Example output
 [source,terminal]
 +
 ----
 NAME				     STATUS	      ROLES    AGE    VERSION
-ci-ln-tkbxyft-f76d1-nvwhr-master-1   Ready            master   133m   v1.30.3
+ci-ln-tkbxyft-f76d1-nvwhr-master-1   Ready            master   133m   v1.35.4
 ----

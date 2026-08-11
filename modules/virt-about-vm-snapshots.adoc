@@ -6,6 +6,7 @@
 [id="virt-about-vm-snapshots_{context}"]
 = About snapshots
 
+[role="_abstract"]
 A _snapshot_ represents the state and data of a virtual machine (VM) at a specific point in time. You can use a snapshot to restore an existing VM to a previous state (represented by
 the snapshot) for backup and disaster recovery or to rapidly roll back to a previous development version.
 
@@ -18,12 +19,18 @@ The snapshot stores a copy of each Container Storage Interface (CSI) volume atta
 You can perform the following snapshot actions:
 
 * Create a new snapshot
-* Create a copy of a virtual machine from a snapshot
+* Create a clone of a virtual machine from a snapshot
++
+[IMPORTANT]
+====
+Cloning a VM with a vTPM device attached to it or creating a new VM from its snapshot is not supported.
+====
+
 * List all snapshots attached to a specific VM
 * Restore a VM from a snapshot
 * Delete an existing VM snapshot
 
-.VM snapshot controller and custom resources
+== VM snapshot controller and custom resources
 
 The VM snapshot feature introduces three new API objects defined as custom resource definitions (CRDs) for managing snapshots:
 

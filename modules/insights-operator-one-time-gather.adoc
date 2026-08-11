@@ -2,13 +2,12 @@
 //
 // * support/remote_health_monitoring/remote-health-reporting-from-restricted-network.adoc
 
-
-
 :_mod-docs-content-type: PROCEDURE
 [id="insights-operator-one-time-gather_{context}"]
-= Running an Insights Operator gather operation
+= Running an {insights-operator} gather operation
 
-You must run a gather operation to create an Insights Operator archive.
+[role="_abstract"]
+You must run a gather operation to create an {insights-operator} archive.
 
 .Prerequisites
 
@@ -20,8 +19,9 @@ You must run a gather operation to create an Insights Operator archive.
 +
 [source,yaml]
 ----
-include::https://raw.githubusercontent.com/openshift/insights-operator/release-4.17/docs/gather-job.yaml[]
+include::https://raw.githubusercontent.com/openshift/insights-operator/release-4.22/docs/gather-job.yaml[]
 ----
+
 . Copy your `insights-operator` image version:
 +
 [source,terminal]
@@ -30,7 +30,6 @@ $ oc get -n openshift-insights deployment insights-operator -o yaml
 ----
 +
 .Example output
-+
 [source,yaml]
 ----
 apiVersion: apps/v1
@@ -46,10 +45,11 @@ spec:
       containers:
       - args:
 # ...
-        image: registry.ci.openshift.org/ocp/4.15-2023-10-12-212500@sha256:a0aa581400805ad0... <1>
+        image: registry.ci.openshift.org/ocp/4.15-2023-10-12-212500@sha256:a0aa581400805ad0...
 # ...
 ----
-<1> Specifies your `insights-operator` image version.
++
+The `spec.template.spec.containers.image` field specifies your `insights-operator` image version.
 
 . Paste your image version in `gather-job.yaml`:
 +
@@ -66,11 +66,12 @@ spec:
     spec:
     initContainers:
     - name: insights-operator
-      image: image: registry.ci.openshift.org/ocp/4.15-2023-10-12-212500@sha256:a0aa581400805ad0... <1>
+      image: image: registry.ci.openshift.org/ocp/4.15-2023-10-12-212500@sha256:a0aa581400805ad0...
       terminationMessagePolicy: FallbackToLogsOnError
       volumeMounts:
 ----
-<1> Replace any existing value with your `insights-operator` image version.
++
+Replace the value of `spec.template.initContainers.image` with your `insights-operator` image version.
 
 . Create the gather job:
 +
@@ -78,6 +79,7 @@ spec:
 ----
 $ oc apply -n openshift-insights -f gather-job.yaml
 ----
+
 . Find the name of the job pod:
 +
 [source,terminal]
@@ -97,7 +99,7 @@ Events:
   Normal  SuccessfulCreate  7m18s  job-controller  Created pod: insights-operator-job-<your_job>
 ----
 +
-where:: `insights-operator-job-<your_job>` is the name of the pod.
+Replace `insights-operator-job-<your_job>` with the name of the pod.
 
 . Verify that the operation has finished:
 +
@@ -111,12 +113,14 @@ $ oc logs -n openshift-insights insights-operator-job-<your_job> insights-operat
 ----
 I0407 11:55:38.192084       1 diskrecorder.go:34] Wrote 108 records to disk in 33ms
 ----
+
 . Save the created archive:
 +
 [source,terminal,subs="+quotes"]
 ----
 $ oc cp openshift-insights/insights-operator-job-_<your_job>_:/var/lib/insights-operator ./insights-data
 ----
+
 . Clean up the job:
 +
 [source,terminal]

@@ -6,6 +6,7 @@
 [id="installation-vsphere-installer-network-requirements_{context}"]
 = Network connectivity requirements
 
+[role="_abstract"]
 You must configure the network connectivity between machines to allow {product-title} cluster components to communicate.
 
 Review the following details about the required network ports.
@@ -26,7 +27,7 @@ Review the following details about the required network ports.
 |N/A
 |Network reachability tests
 
-.4+|TCP
+.3+|TCP
 |`1936`
 |Metrics
 
@@ -38,8 +39,6 @@ the Cluster Version Operator on port `9099`.
 |The default ports that Kubernetes reserves
 
 .5+|UDP
-|`4789`
-|virtual extensible LAN (VXLAN)
 
 |`6081`
 |Geneve

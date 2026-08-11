@@ -3,29 +3,26 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="nw-aws-load-balancer-operator_{context}"]
-= AWS Load Balancer Operator
+= Deploying the AWS Load Balancer Operator
 
-The AWS Load Balancer Operator can tag the public subnets if the `kubernetes.io/role/elb` tag is missing. Also, the AWS Load Balancer Operator detects the following information from the underlying AWS cloud:
+[role="_abstract"]
+The {aws-short} Load Balancer Operator can tag the public subnets if the `kubernetes.io/role/elb` tag is missing. Also, the {aws-short} Load Balancer Operator detects information from the underlying {aws-short} cloud.
 
-* The ID of the virtual private cloud (VPC) on which the cluster hosting the Operator is deployed in.
+The {aws-short} Load Balancer Operator detects the following information from the underlying {aws-short} cloud:
+
+* The ID of the virtual private cloud (VPC) on which the cluster hosting the Operator is deployed.
 
 * Public and private subnets of the discovered VPC.
 
-The AWS Load Balancer Operator supports the Kubernetes service resource of type `LoadBalancer` by using Network Load Balancer (NLB) with the `instance` target type only.
+The {aws-short} Load Balancer Operator supports the Kubernetes service resource of type `LoadBalancer` by using Network Load Balancer (NLB) with the `instance` target type only.
 
 .Procedure
 
-. You can deploy the AWS Load Balancer Operator on demand from OperatorHub, by creating a `Subscription` object by running the following command:
+. To deploy the {aws-short} Load Balancer Operator on-demand from the software catalog, create a `Subscription` object by running the following command:
 +
 [source,terminal]
 ----
 $ oc -n aws-load-balancer-operator get sub aws-load-balancer-operator --template='{{.status.installplan.name}}{{"\n"}}'
-----
-+
-.Example output
-[source,terminal]
-----
-install-zlfbt
 ----
 
 . Check if the status of an install plan is `Complete` by running the following command:
@@ -33,12 +30,6 @@ install-zlfbt
 [source,terminal]
 ----
 $ oc -n aws-load-balancer-operator get ip <install_plan_name> --template='{{.status.phase}}{{"\n"}}'
-----
-+
-.Example output
-[source,terminal]
-----
-Complete
 ----
 
 . View the status of the `aws-load-balancer-operator-controller-manager` deployment by running the following command:

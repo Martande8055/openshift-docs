@@ -12,7 +12,7 @@ You can configure the node drain grace period for machine pools in your cluster.
 
 .Prerequisites
 
-* You installed and configured the latest {product-title} (ROSA) CLI, `rosa`, on your workstation.
+* You installed and configured the latest {rosa-cli-first} on your workstation.
 * You created a {product-title} cluster.
 * You have an existing machine pool.
 
@@ -29,8 +29,8 @@ $ rosa list machinepools --cluster=<cluster_name>
 [source,terminal]
 ----
 ID           AUTOSCALING  REPLICAS  INSTANCE TYPE  LABELS    TAINTS    AVAILABILITY ZONE  SUBNET                    VERSION  AUTOREPAIR
-db-nodes-mp  No           2/2       m5.xlarge                          us-east-2a         subnet-08d4d81def67847b6  4.14.34  Yes
-workers      No           2/2       m5.xlarge                          us-east-2a         subnet-08d4d81def67847b6  4.14.34  Yes
+db-nodes-mp  No           2/2       m7i.xlarge                          us-east-2a         subnet-08d4d81def67847b6  4.14.34  Yes
+workers      No           2/2       m7i.xlarge                          us-east-2a         subnet-08d4d81def67847b6  4.14.34  Yes
 ----
 
 . Check the node drain grace period for a machine pool by running the following command:
@@ -44,7 +44,7 @@ $ rosa describe machinepool --cluster <cluster_name> --machinepool=<machinepool_
 [source,terminal]
 ----
 ID:                                    workers
-Cluster ID:                            2a90jdl0i4p9r9k9956v5ocv40se1kqs       
+Cluster ID:                            2a90jdl0i4p9r9k9956v5ocv40se1kqs
 ...
 Node drain grace period:               // <1>
 ...
@@ -77,7 +77,7 @@ $ rosa describe machinepool --cluster <cluster_name> <machinepool_name>
 [source,terminal]
 ----
 ID:                                    workers
-Cluster ID:                            2a90jdl0i4p9r9k9956v5ocv40se1kqs       
+Cluster ID:                            2a90jdl0i4p9r9k9956v5ocv40se1kqs
 ...
 Node drain grace period:               30 minutes
 ...

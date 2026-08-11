@@ -1,26 +1,18 @@
 :_mod-docs-content-type: ASSEMBLY
 [id="rosa-mobb-verify-permissions-sts-deployment"]
-= Tutorial: Verifying Permissions for a ROSA STS Deployment
+= Tutorial: Verifying permissions for a {product-title} STS deployment
+
 include::_attributes/attributes-openshift-dedicated.adoc[]
 :context: rosa-mobb-verify-permissions-sts-deployment
 
 toc::[]
 
-// ---
-// date: '2022-10-04'
-// title: "Verify Permissions for ROSA STS Deployment"
-// authors:
-//   - Tyler Stacey
-//   - Kumudu Herath
-// tags: ["AWS", "ROSA", "STS"]
-// ---
+[role="_abstract"]
+To proceed with the deployment of a {product-title} cluster, an account must support the required roles and permissions. AWS Service Control Policies (SCPs) cannot block the API calls made by the installer or Operator roles.
 
-To proceed with the deployment of a ROSA cluster, an account must support the required roles and permissions.
-AWS Service Control Policies (SCPs) cannot block the API calls made by the installer or operator roles.
+Details about the IAM resources required for an STS-enabled installation of {product-title} can be found here: xref:../rosa_architecture/rosa-sts-about-iam-resources.adoc#rosa-sts-about-iam-resources[About IAM resources for {product-title} clusters that use STS].
 
-Details about the IAM resources required for an STS-enabled installation of ROSA can be found here: xref:../rosa_architecture/rosa-sts-about-iam-resources.adoc#rosa-sts-about-iam-resources[About IAM resources for ROSA clusters that use STS]
-
-This guide is validated for ROSA v4.11.X.
+This guide is validated for {product-title} v4.11.X.
 
 == Prerequisites
 
@@ -30,8 +22,8 @@ This guide is validated for ROSA v4.11.X.
 * link:https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_testing-policies.html[AWS role with required permissions]
 
 [id="verify-ROSA-permissions_{context}"]
-== Verifying ROSA permissions
-To verify the permissions required for ROSA, we can run the script included in the following section without ever creating any AWS resources.
+== Verifying {product-title} permissions
+To verify the permissions required for {product-title}, we can run the script included in the following section without ever creating any AWS resources.
 
 The script uses the `rosa`, `aws`, and `jq` CLI commands to create files in the working directory that will be used to verify permissions in the account connected to the current AWS configuration.
 

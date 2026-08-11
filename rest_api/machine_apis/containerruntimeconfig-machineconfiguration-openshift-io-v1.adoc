@@ -11,8 +11,9 @@ toc::[]
 Description::
 +
 --
-ContainerRuntimeConfig describes a customized Container Runtime configuration. 
- Compatibility level 1: Stable within a major release for a minimum of 12 months or 3 minor releases (whichever is longer).
+ContainerRuntimeConfig describes a customized Container Runtime configuration.
+
+Compatibility level 1: Stable within a major release for a minimum of 12 months or 3 minor releases (whichever is longer).
 --
 
 Type::
@@ -42,18 +43,18 @@ Required::
 
 | `spec`
 | `object`
-| ContainerRuntimeConfigSpec defines the desired state of ContainerRuntimeConfig
+| spec contains the desired container runtime configuration.
 
 | `status`
 | `object`
-| ContainerRuntimeConfigStatus defines the observed state of a ContainerRuntimeConfig
+| status contains observed information about the container runtime configuration.
 
 |===
 === .spec
 Description::
 +
 --
-ContainerRuntimeConfigSpec defines the desired state of ContainerRuntimeConfig
+spec contains the desired container runtime configuration.
 --
 
 Type::
@@ -70,18 +71,19 @@ Required::
 
 | `containerRuntimeConfig`
 | `object`
-| ContainerRuntimeConfiguration defines the tuneables of the container runtime
+| containerRuntimeConfig defines the tuneables of the container runtime.
 
 | `machineConfigPoolSelector`
 | `object`
-| MachineConfigPoolSelector selects which pools the ContainerRuntimeConfig shoud apply to. A nil selector will result in no pools being selected.
+| machineConfigPoolSelector selects which pools the ContainerRuntimeConfig shoud apply to.
+A nil selector will result in no pools being selected.
 
 |===
 === .spec.containerRuntimeConfig
 Description::
 +
 --
-ContainerRuntimeConfiguration defines the tuneables of the container runtime
+containerRuntimeConfig defines the tuneables of the container runtime.
 --
 
 Type::
@@ -96,19 +98,28 @@ Type::
 
 | `defaultRuntime`
 | `string`
-| defaultRuntime is the name of the OCI runtime to be used as the default.
+| defaultRuntime is the name of the OCI runtime to be used as the default for containers.
+Allowed values are `runc` and `crun`.
+When set to `runc`, OpenShift will use runc to execute the container
+When set to `crun`, OpenShift will use crun to execute the container
+When omitted, this means no opinion and the platform is left to choose a reasonable default,
+which is subject to change over time. Currently, the default is `crun`.
 
 | `logLevel`
 | `string`
-| logLevel specifies the verbosity of the logs based on the level it is set to. Options are fatal, panic, error, warn, info, and debug.
+| logLevel specifies the verbosity of the logs based on the level it is set to.
+Options are fatal, panic, error, warn, info, and debug.
 
 | `logSizeMax`
 | `integer-or-string`
-| logSizeMax specifies the Maximum size allowed for the container log file. Negative numbers indicate that no size limit is imposed. If it is positive, it must be >= 8192 to match/exceed conmon's read buffer.
+| logSizeMax specifies the Maximum size allowed for the container log file.
+Negative numbers indicate that no size limit is imposed.
+If it is positive, it must be >= 8192 to match/exceed conmon's read buffer.
 
 | `overlaySize`
 | `integer-or-string`
-| overlaySize specifies the maximum size of a container image. This flag can be used to set quota on the size of container images. (default: 10GB)
+| overlaySize specifies the maximum size of a container image.
+This flag can be used to set quota on the size of container images. (default: 10GB)
 
 | `pidsLimit`
 | `integer`
@@ -119,7 +130,8 @@ Type::
 Description::
 +
 --
-MachineConfigPoolSelector selects which pools the ContainerRuntimeConfig shoud apply to. A nil selector will result in no pools being selected.
+machineConfigPoolSelector selects which pools the ContainerRuntimeConfig shoud apply to.
+A nil selector will result in no pools being selected.
 --
 
 Type::
@@ -138,11 +150,14 @@ Type::
 
 | `matchExpressions[]`
 | `object`
-| A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+| A label selector requirement is a selector that contains values, a key, and an operator that
+relates the key and values.
 
 | `matchLabels`
 | `object (string)`
-| matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+| matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
+map is equivalent to an element of matchExpressions, whose key field is "key", the
+operator is "In", and the values array contains only "value". The requirements are ANDed.
 
 |===
 === .spec.machineConfigPoolSelector.matchExpressions
@@ -162,7 +177,8 @@ Type::
 Description::
 +
 --
-A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+A label selector requirement is a selector that contains values, a key, and an operator that
+relates the key and values.
 --
 
 Type::
@@ -184,18 +200,22 @@ Required::
 
 | `operator`
 | `string`
-| operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+| operator represents a key's relationship to a set of values.
+Valid operators are In, NotIn, Exists and DoesNotExist.
 
 | `values`
 | `array (string)`
-| values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+| values is an array of string values. If the operator is In or NotIn,
+the values array must be non-empty. If the operator is Exists or DoesNotExist,
+the values array must be empty. This array is replaced during a strategic
+merge patch.
 
 |===
 === .status
 Description::
 +
 --
-ContainerRuntimeConfigStatus defines the observed state of a ContainerRuntimeConfig
+status contains observed information about the container runtime configuration.
 --
 
 Type::
@@ -257,7 +277,8 @@ Type::
 
 | `message`
 | `string`
-| message provides additional information about the current condition. This is only to be consumed by humans.
+| message provides additional information about the current condition.
+This is only to be consumed by humans.
 
 | `reason`
 | `string`

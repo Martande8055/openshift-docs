@@ -1,10 +1,13 @@
 // Module included in the following assemblies:
 //
-// microshift/understanding-microshift.adoc
+// microshift_welcome/index.adoc
 
 :_mod-docs-content-type: CONCEPT
 [id="con-about-microshift_{context}"]
 = About {product-title}
+
+[role="_abstract"]
+Use {microshift-short} to run single-node Kubernetes workloads directly on resource-constrained edge devices. Integrating {microshift-short} with edge-optimized operating systems overcomes severe networking and physical constraints.
 
 Working with resource-constrained field environments and hardware presents many challenges not experienced with cloud computing. {microshift-short} enables you to solve problems for edge devices by:
 

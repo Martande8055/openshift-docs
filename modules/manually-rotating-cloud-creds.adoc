@@ -4,7 +4,7 @@
 // * authentication/managing_cloud_provider_credentials/cco-mode-mint.adoc
 // * authentication/managing_cloud_provider_credentials/cco-mode-passthrough.adoc
 
-ifeval::["{context}" == "post-install-cluster-tasks"]
+ifeval::["{context}" == "changing-cloud-credentials-configuration"]
 :post-install:
 endif::[]
 ifeval::["{context}" == "cco-mode-mint"]
@@ -16,9 +16,14 @@ endif::[]
 
 :_mod-docs-content-type: PROCEDURE
 [id="manually-rotating-cloud-creds_{context}"]
-ifdef::post-install[= Rotating cloud provider credentials manually]
-ifndef::post-install[= Maintaining cloud provider credentials]
+ifdef::post-install[]
+= Rotating cloud provider credentials manually
+endif::post-install[]
+ifndef::post-install[]
+= Maintaining cloud provider credentials
+endif::post-install[]
 
+[role="_abstract"]
 If your cloud provider credentials are changed for any reason, you must manually update the secret that the Cloud Credential Operator (CCO) uses to manage cloud provider credentials.
 
 The process for rotating cloud credentials depends on the mode that the CCO is configured to use. After you rotate credentials for a cluster that is using mint mode, you must manually remove the component credentials that were created by the removed credential.
@@ -26,7 +31,7 @@ The process for rotating cloud credentials depends on the mode that the CCO is c
 ////
 [NOTE]
 ====
-You can also use the command line interface to complete all parts of this procedure.
+You can also use the command-line interface to complete all parts of this procedure.
 ====
 ////
 
@@ -35,11 +40,11 @@ You can also use the command line interface to complete all parts of this proced
 * Your cluster is installed on a platform that supports rotating cloud credentials manually with the CCO mode that you are using:
 
 ifndef::passthrough[]
-** For mint mode, Amazon Web Services (AWS) and Google Cloud Platform (GCP) are supported.
+** For mint mode, Amazon Web Services (AWS) and {gcp-first} are supported.
 endif::passthrough[]
 
 ifndef::mint[]
-** For passthrough mode, Amazon Web Services (AWS), Microsoft Azure, Google Cloud Platform (GCP), {rh-openstack-first}, and VMware vSphere are supported.
+** For passthrough mode, Amazon Web Services (AWS), Microsoft Azure, {gcp-first}, {rh-openstack-first}, and VMware vSphere are supported.
 endif::mint[]
 
 * You have changed the credentials that are used to interface with your cloud provider.
@@ -65,7 +70,7 @@ ifndef::mint[]
 |`azure-credentials`
 endif::mint[]
 
-|GCP
+|{gcp-short}
 |`gcp-credentials`
 
 ifndef::mint[]
@@ -78,7 +83,7 @@ endif::mint[]
 
 |===
 
-. Click the *Options* menu {kebab} in the same row as the secret and select *Edit Secret*.
+. Click the Options menu {kebab} in the same row as the secret and select *Edit Secret*.
 
 . Record the contents of the *Value* field or fields. You can use this information to verify that the value is different after updating the credentials.
 
@@ -131,10 +136,10 @@ where `<provider_spec>` is the corresponding value for your cloud provider:
 +
 --
 * AWS: `AWSProviderSpec`
-* GCP: `GCPProviderSpec`
+* {gcp-short}: `GCPProviderSpec`
 --
 +
-.Partial example output for AWS
+The following example is partial output for the command on an {aws-short} cluster:
 +
 [source,json]
 ----
@@ -156,10 +161,14 @@ $ oc delete secret <secret_name> \//<1>
   -n <secret_namespace> <2>
 ----
 +
-<1> Specify the name of a secret.
-<2> Specify the namespace that contains the secret.
+where:
 +
-.Example deletion of an AWS secret
+--
+`<secret_name>`:: Specifies the name of a secret.
+`<secret_namespace>`:: Specifies the namespace that contains the secret.
+--
++
+The following example is a command to delete an AWS secret:
 +
 [source,terminal]
 ----
@@ -170,8 +179,6 @@ You do not need to manually delete the credentials from your provider console. D
 endif::passthrough[]
 
 .Verification
-
-To verify that the credentials have changed:
 
 . In the *Administrator* perspective of the web console, navigate to *Workloads* -> *Secrets*.
 
@@ -188,7 +195,7 @@ To verify that the credentials have changed:
 $ oc -n openshift-cloud-credential-operator get CredentialsRequest -o json | jq -r '.items[] | select (.spec[].kind=="<provider_spec>") | .metadata.name'
 ----
 +
-Where `<provider_spec>` is the corresponding value for your cloud provider: `AWSProviderSpec` for AWS, `AzureProviderSpec` for Azure, or `GCPProviderSpec` for GCP.
+Where `<provider_spec>` is the corresponding value for your cloud provider: `AWSProviderSpec` for AWS, `AzureProviderSpec` for Azure, or `GCPProviderSpec` for {gcp-short}.
 +
 .Example output for AWS
 +
@@ -227,7 +234,7 @@ Where `<example-iam-username>` is the name of an IAM user on the cloud provider.
 .. For each IAM username, view the details for the user on the cloud provider. The credentials should show that they were created after being rotated on the cluster.
 ////
 
-ifeval::["{context}" == "post-install-cluster-tasks"]
+ifeval::["{context}" == "changing-cloud-credentials-configuration"]
 :!post-install:
 endif::[]
 ifeval::["{context}" == "cco-mode-mint"]

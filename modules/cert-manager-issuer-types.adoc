@@ -4,13 +4,20 @@
 
 :_mod-docs-content-type: CONCEPT
 [id="cert-manager-issuer-types_{context}"]
-= Supported issuer types
+= {cert-manager-operator} issuer providers
 
-The {cert-manager-operator} supports the following issuer types:
+[role="_abstract"]
+To configure certificate authorities for your cluster, review the issuer providers offered with the {cert-manager-operator}. You can use the following issuer types to automate certificate validation and issuance:
 
 * Automated Certificate Management Environment (ACME)
-* Certificate authority (CA)
+* Certificate Authority (CA)
 * Self-signed
-* link:https://cert-manager.io/docs/configuration/vault/[Vault]
-* link:https://cert-manager.io/docs/configuration/venafi/[Venafi]
-* link:https://www.nokia.com/networks/security-portfolio/netguard/certificate-manager/[Nokia NetGuard Certificate Manager] (NCM)
+* Vault
+* Venafi
+* Nokia NetGuard Certificate Manager (NCM)
+* Google Cloud Certificate Authority Service (Google CAS)
+
+[NOTE]
+====
+{product-title} does not test all factors associated with third-party {cert-manager-operator} provider functionality. For more information about third-party support, see "{product-title} third-party support policy" in Additional resources.
+====

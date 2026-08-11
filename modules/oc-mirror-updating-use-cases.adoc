@@ -6,6 +6,9 @@
 [id="oc-mirror-image-set-examples-add-images_{context}"]
 = Mirror registry update examples
 
+[role="_abstract"]
+You can update mirror registry content by modifying the `ImageSetConfiguration` file to mirror a specific version, update Operators, or prune existing images.
+
 This section covers the use cases for updating the mirror registry from disk to mirror.
 
 .Example `ImageSetConfiguration` file that was previously used for mirroring
@@ -20,7 +23,7 @@ storageConfig:
 mirror:
   platform:
     channels:
-      - name: stable-4.12 
+      - name: stable-4.12
         minVersion: 4.12.1
         maxVersion: 4.12.1
   operators:
@@ -31,7 +34,7 @@ mirror:
           - name: stable
 ----
 
-[discrete]
+
 == Mirroring a specific {product-title} version by pruning the existing images
 
 .Updated `ImageSetConfiguration` file
@@ -46,7 +49,7 @@ storageConfig:
 mirror:
   platform:
     channels:
-      - name: stable-4.13 #<1>
+      - name: stable-4.13
   operators:
     - catalog: registry.redhat.io/redhat/redhat-operator-index:v4.14
       packages:
@@ -54,9 +57,10 @@ mirror:
           channels:
           - name: stable
 ----
-<1> Replacing by `stable-4.13` prunes all the images of `stable-4.12`.
 
-[discrete]
+Specifying `mirror.platform.channels.name` as `stable-4.13` prunes all the images of `stable-4.12`.
+
+
 == Updating to the latest version of an Operator by pruning the existing images
 
 .Updated `ImageSetConfiguration` file
@@ -71,7 +75,7 @@ storageConfig:
 mirror:
   platform:
     channels:
-      - name: stable-4.12 
+      - name: stable-4.12
         minVersion: 4.12.1
         maxVersion: 4.12.1
   operators:
@@ -79,12 +83,13 @@ mirror:
       packages:
         - name: rhacs-operator
           channels:
-          - name: stable #<1>
+          - name: stable
 ----
-<1> Using the same channel without specifying a version prunes the existing images and updates with the latest version of images.
+
+Using the same channel for `operators.packages.channels.name` without specifying a version prunes the existing images and updates with the latest version of images.
 
 
-[discrete]
+
 [id="oc-mirror-image-set-examples-operator-pruning-versions_{context}"]
 == Mirroring a new Operator by pruning the existing Operator
 
@@ -106,13 +111,14 @@ mirror:
   operators:
     - catalog: registry.redhat.io/redhat/redhat-operator-index:v4.14
       packages:
-        - name: <new_operator_name> #<1>
+        - name: <new_operator_name>
           channels:
           - name: stable
 ----
-<1> Replacing `rhacs-operator` with `new_operator_name` prunes the Red Hat Advanced Cluster Security for Kubernetes Operator.
 
-[discrete]
+Replacing `rhacs-operator` with `new_operator_name` prunes the Red Hat Advanced Cluster Security for Kubernetes Operator.
+
+
 == Pruning all the {product-title} images
 
 .Updated `ImageSetConfiguration` file

@@ -2,10 +2,11 @@
 //
 // * scalability_and_performance/ztp_far_edge/ztp-vdu-validating-cluster-tuning.adoc
 
-:_module-type: REFERENCE
+:_mod-docs-content-type: REFERENCE
 [id="ztp-recommended-cluster-kernel-config_{context}"]
 = Recommended cluster kernel configuration
 
+[role="_abstract"]
 Always use the latest supported real-time kernel version in your cluster. Ensure that you apply the following configurations in the cluster:
 
 . Ensure that the following `additionalKernelArgs` are set in the cluster performance profile:
@@ -21,8 +22,8 @@ spec:
   - "efi=runtime"
   - "vfio_pci.enable_sriov=1"
   - "vfio_pci.disable_idle_d3=1"
-  - "module_blacklist=irdma"  
-  
+  - "module_blacklist=irdma"
+
   # ...
 ----
 
@@ -31,7 +32,7 @@ spec:
 You can use hardware tuning to tune CPU frequencies for reserved and isolated core CPUs.
 For FlexRAN like applications, hardware vendors recommend that you run CPU frequencies below the default provided frequencies.
 It is highly recommended that, before setting any frequencies, you refer to the hardware vendor’s guidelines for maximum frequency settings for your processor generation.
-This example shows the frequencies for reserved and isolated CPUs for Sapphire Rapid hardware:
+This example sets the frequencies for reserved and isolated CPUs to 2500 MHz:
 +
 [source,yaml]
 ----
@@ -52,7 +53,7 @@ spec:
           enabled: true
       hardwareTuning:
           isolatedCpuFreq: 2500000
-          reservedCpuFreq: 2800000
+          reservedCpuFreq: 2500000
 ----
 
 . Ensure that the `performance-patch` profile in the `Tuned` CR configures the correct CPU isolation set that matches the `isolated` CPU set in the related `PerformanceProfile` CR, for example:

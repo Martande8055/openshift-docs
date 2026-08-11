@@ -1,17 +1,13 @@
 // Module included in the following assemblies:
 //
-// * updates/updating_a_cluster/updating-hosted-control-planes.adoc
 // * hosted_control_planes/hcp-machine-config.adoc
 
 :_mod-docs-content-type: PROCEDURE
 [id="configuring-node-pools-for-hcp_{context}"]
 = Configuring node pools for {hcp}
 
-On {hcp}, you can configure node pools by creating a `MachineConfig` object inside of a config map in the management cluster.
-
-//.Prerequisites
-
-//Are any prerequisites needed for this procedure? i.e., does the customer need to perform an update first?
+[role="_abstract"]
+In {hcp}, you can configure node pools by creating a `MachineConfig` object inside of a config map in the management cluster.
 
 .Procedure
 
@@ -22,7 +18,7 @@ On {hcp}, you can configure node pools by creating a `MachineConfig` object insi
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: <configmap-name>
+  name: <configmap_name>
   namespace: clusters
 data:
   config: |
@@ -31,7 +27,7 @@ data:
     metadata:
       labels:
         machineconfiguration.openshift.io/role: worker
-      name: <machineconfig-name>
+      name: <machineconfig_name>
     spec:
       config:
         ignition:
@@ -42,9 +38,10 @@ data:
               source: data:...
             mode: 420
             overwrite: true
-            path: ${PATH} <1>
+            path: ${PATH}
 ----
-<1> Sets the path on the node where the `MachineConfig` object is stored.
++
+The `path` field specifies the path on the node where the `MachineConfig` object is stored.
 
 . After you add the object to the config map, you can apply the config map to the node pool as follows:
 +
@@ -53,6 +50,7 @@ data:
 $ oc edit nodepool <nodepool_name> --namespace <hosted_cluster_namespace>
 ----
 
+. Edit the `NodePool` resource to include the config map:
 +
 [source,yaml]
 ----
@@ -65,9 +63,11 @@ metadata:
 # ...
 spec:
   config:
-  - name: ${configmap-name}
+  - name: <configmap_name>
 # ...
 ----
++
+Replace `<configmap_name>` with the name of your config map.
 
 //.Verification
 

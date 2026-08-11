@@ -6,31 +6,27 @@ ifdef::openshift-origin[]
 :registry-image: quay.io/operator-framework/opm:latest
 endif::[]
 ifndef::openshift-origin[]
-:registry-image: registry.redhat.io/openshift4/ose-operator-registry:v{product-version}
+:registry-image: registry.redhat.io/openshift4/ose-operator-registry-rhel9:v{product-version}
 endif::[]
 
 :_mod-docs-content-type: PROCEDURE
 [id="olm-filtering-fbc_{context}"]
 = Updating or filtering a file-based catalog image
 
-You can use the `opm` CLI to update or filter a catalog image that uses the file-based catalog format. By extracting the contents of an existing catalog image, you can modify the catalog as needed, for example:
+[role="_abstract"]
+To keep your catalog accurate and ensure users can safely upgrade installed Operators, you can use the `opm` CLI to  extract, edit, and rebuild a file-based catalog image. You can also specify deprecation messages for packages, channels, and bundles.
 
-* Adding packages
-* Removing packages
-* Updating existing package entries
-* Detailing deprecation messages per package, channel, and bundle
-
-You can then rebuild the image as an updated version of the catalog.
+After you complete the changes, you can rebuild the image as an updated version of the catalog.
 
 // This note points to a topic that's excluded from OSD and ROSA.
-ifndef::openshift-dedicated,openshift-rosa[]
+ifndef::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
 [NOTE]
 ====
 Alternatively, if you already have a catalog image on a mirror registry, you can use the oc-mirror CLI plugin to automatically prune any removed images from an updated source version of that catalog image while mirroring it to the target registry.
 
 For more information about the oc-mirror plugin and this use case, see the "Keeping your mirror registry content updated" section, and specifically the "Pruning images" subsection, of "Mirroring images for a disconnected installation using the oc-mirror plugin".
 ====
-endif::openshift-dedicated,openshift-rosa[]
+endif::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
 
 .Prerequisites
 * You have the following on your workstation:
@@ -168,4 +164,4 @@ $ podman push <registry>/<namespace>/<catalog_image_name>:<tag>
 +
 For more information, see "Adding a catalog source to a cluster" in the "Additional resources" of this section.
 
-. After the catalog source is in a *READY* state, navigate to the *Operators* -> *OperatorHub* page and check that the changes you made are reflected in the list of Operators.
+. After the catalog source is in a *READY* state, navigate to the *Ecosystem* -> *Software Catalog* page. Select *Operators* under the *Type* heading and check that the changes you made are reflected in the list of Operators.

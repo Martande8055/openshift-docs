@@ -1,34 +1,16 @@
 // Module included in the following assemblies:
 //
 // * rosa_planning/rosa-sts-aws-prereqs.adoc
-// * rosa_planning/rosa-hcp-prereqs.adoc
-
-ifeval::["{context}" == "rosa-sts-aws-prereqs"]
-:rosa-classic-sts:
-endif::[]
-ifeval::["{context}" == "rosa-hcp-aws-prereqs"]
-:hcp:
-endif::[]
-
+// * rosa_planning/rosa-hcp-prereqs.adoc <-- this is a symlink
+:_mod-docs-content-type: REFERENCE
 [id="rosa-hcp-firewall-prerequisites_{context}"]
-// Conditionals are to change the title when displayed on the rosa-sts-aws-prereqs page
-ifdef::rosa-classic-sts[]
-= {hcp-title}
-endif::rosa-classic-sts[]
-ifndef::rosa-classic-sts[]
-= AWS firewall prerequisites
+= Firewall prerequisites for {product-title}
 
-If you are using a firewall to control egress traffic from {product-title}, you must configure your firewall to grant access to the certain domain and port combinations below. {product-title} requires this access to provide a fully managed OpenShift service.
-endif::rosa-classic-sts[]
+[role="_abstract"]
+If you are using a firewall to control egress traffic from {product-title}, your Virtual Private Cloud (VPC) must be able to complete requests from the cluster to the Amazon S3 service, for example, via an Amazon S3 gateway. You must also configure your firewall to grant access to the following domain and port combinations.
+//TODO OSDOCS-11789: From your deploy machine? From your cluster?
 
-.Prerequisites
-
-* You have configured an Amazon S3 gateway endpoint in your AWS Virtual Private Cloud (VPC). This endpoint is required to complete requests from the cluster to the Amazon S3 service. 
-
-.Procedure
-
-. Allowlist the following URLs that are used to download and install packages and tools:
-+
+== Domains for installation packages and tools
 [cols="6,1,6",options="header"]
 |===
 |Domain | Port | Function
@@ -48,6 +30,18 @@ endif::rosa-classic-sts[]
 |443
 |Provides core container images.
 
+|`cdn04.quay.io`
+|443
+|Provides core container images.
+
+|`cdn05.quay.io`
+|443
+|Provides core container images.
+
+|`cdn06.quay.io`
+|443
+|Provides core container images.
+
 |`quayio-production-s3.s3.amazonaws.com`
 |443
 |Provides core container images.
@@ -62,7 +56,7 @@ endif::rosa-classic-sts[]
 
 |`access.redhat.com`
 |443
-|Required. Hosts a signature store that a container client requires for verifying images when pulling them from `registry.access.redhat.com`. 
+|Required. Hosts a signature store that a container client requires for verifying images when pulling them from `registry.access.redhat.com`.
 
 |`api.openshift.com`
 |443
@@ -71,10 +65,14 @@ endif::rosa-classic-sts[]
 |`mirror.openshift.com`
 |443
 |Required. Used to access mirrored installation content and images. This site is also a source of release image signatures, although the Cluster Version Operator (CVO) needs only a single functioning source.
+
+|`api.openshiftusgov.com`
+|443
+|This is for GovCloud only.
 |===
-+
-. Allowlist the following telemetry URLs:
-+
+
+
+== Domains for telemetry
 [cols="6,1,6",options="header"]
 |===
 |Domain | Port | Function
@@ -89,35 +87,45 @@ endif::rosa-classic-sts[]
 |`sso.redhat.com`
 |443
 |Required. The `https://console.redhat.com/openshift` site uses authentication from `sso.redhat.com` to download the pull secret and use Red{nbsp}Hat SaaS solutions to facilitate monitoring of your subscriptions, cluster inventory, chargeback reporting, etc.
+
+|`console.openshiftusgov.com`
+|443
+|This is for GovCloud only.
+
+|`time-a-g.nist.gov`
+|443
+|This is for GovCloud only.
+
+|`time-a-wwv.nist.gov`
+|443
+|This is for GovCloud only.
+
+|`time-a-b.nist.gov`
+|443
+|This is for GovCloud only.
 |===
-+
+
 Managed clusters require enabling telemetry to allow Red{nbsp}Hat to react more quickly to problems, better support the customers, and better understand how product upgrades impact clusters.
 For more information about how remote health monitoring data is used by Red{nbsp}Hat, see _About remote health monitoring_ in the _Additional resources_ section.
 
-. Allowlist the following Amazon Web Services (AWS) API URls:
-+
+== Domains for Amazon Web Services (AWS) APIs
 [cols="6,1,6",options="header"]
 |===
 |Domain | Port | Function
 
-|`sts.<aws_region>.amazonaws.com` ^[1]^
+|`sts.<aws_region>.amazonaws.com`
 |443
-|Required. Used to access the AWS Secure Token Service (STS) regional endpoint. Ensure that you replace `<aws-region>` with the region that your cluster is deployed in.
-
-|`sts.amazonaws.com` ^[2]^
-|443
-|See footnote. Used to access the AWS Secure Token Service (STS) global endpoint.
+|Required. Used to access the AWS Secure Token Service (STS) regional endpoint. Ensure that you replace `<aws-region>` with the region that your cluster is deployed in. This can also be accomplished by configuring a private interface endpoint in your AWS Virtual Private Cloud (VPC) to the regional AWS STS endpoint.
 |===
-+
-[.small]
---
-1. This can also be accomplished by configuring a private interface endpoint in your AWS Virtual Private Cloud (VPC) to the regional AWS STS endpoint.
-2. The AWS STS global endpoint is only required to be allowed if you are running a version of OpenShift before 4.14.18 or 4.15.4. ROSA HCP version 4.14.18+, 4.15.4+, and 4.16.0+ use the AWS STS regional endpoint.
---
-+
 
-. Allowlist the following URLs for optional third-party content:
-+
+== Domains for your workload
+
+Your workload may require access to other sites that provide resources for programming languages or frameworks.
+
+* Allow access to sites that provide resources required by your builds.
+* Allow access to outbound URLs required for your workload, for example, link:https://access.redhat.com/solutions/2998411[OpenShift Outbound URLs to Allow].
+
+== Optional domains to enable third-party content
 [cols="6,1,6",options="header"]
 |===
 |Domain | Port | Function
@@ -134,12 +142,63 @@ For more information about how remote health monitoring data is used by Red{nbsp
 | Optional. Required for Sonatype Nexus, F5 Big IP operators.
 |===
 
-. Allowlist any site that provides resources for a language or framework that your builds require.
-. Allowlist any outbound URLs that depend on the languages and frameworks used in OpenShift. See link:https://access.redhat.com/solutions/2998411[OpenShift Outbound URLs to Allow] for a list of recommended URLs to be allowed on the firewall or proxy.
+[id="firewall-cli-bastion_{context}"]
+== Outbound firewall rules for the {rosa-cli} for clusters with egress zero
 
-ifeval::["{context}" == "rosa-sts-aws-prereqs"]
-:!rosa-classic-sts:
-endif::[]
-ifeval::["{context}" == "rosa-hcp-aws-prereqs"]
-:!hcp:
-endif::[]
+If you use a bastion host to connect to a private cluster with egress zero, you must add the following rules to your firewall so that it can connect and authenticate to the cluster.
+
+[cols="6,1,6,6",options="header"]
+|===
+|Domain | Port | From/To | Function
+|`sso.redhat.com`
+|443
+|ROSA CLI running on bastion host
+|The link:https://console.redhat.com/openshift[OpenShift console] uses authentication from `sso.redhat.com` to download the pull secret and use Red Hat SaaS solutions to facilitate monitoring of your subscriptions, cluster inventory, chargeback reporting, etc.
+
+|`api.openshift.com`
+|443
+|ROSA CLI running on bastion host
+|Required for registering a {product-title} cluster into {hybrid-console}.
+
+|`iam.amazonaws.com`
+|443
+|ROSA CLI running on bastion host
+|Used for creating IAM roles and attaching permissions.
+
+|`servicequotas.<your region>.amazonaws.com`
+|443
+|ROSA CLI running on bastion host
+|Checks AWS quotas to ensure they satisfy ROSA installation requirements. Alternatively, you can create a VPC endpoint for servicequota service to avoid whitelisting this URL from your firewall.
+
+|`sts.<your region>.amazonaws.com`
+|443
+|ROSA CLI running on bastion host
+|Used to get short-lived token to access AWS service. Alternatively, you can create a VPC endpoint for STS service to avoid whitelisting this url from your firewall.
+
+|`ec2.<your region>.amazonaws.com`
+|443
+|ROSA CLI running on bastion host
+|Used to retrieve EC2 instance related information such as subnets. Alternatively, you can create a VPC endpoint for EC2 service to avoid whitelisting this URL from your firewall.
+|===
+
+[id="firewall-hcm-bastion_{context}"]
+== Outbound firewall rules from {hybrid-console} for clusters with egress zero
+[cols="6,1,6,6",options="header"]
+|===
+|Domain | Port | From/To | Function
+
+|`sts.<your region>.amazonaws.com`
+|443
+|{product-title} cluster
+|Used to access the AWS Secure Token Service (STS) regional endpoint to retrieve a short-lived token to access AWS services. Alternatively, you can create a VPC endpoint for STS service to avoid whitelisting this URL from your firewall.
+
+|`console.redhat.com`
+|443
+|Any browser to access {hybrid-console}
+|To manage a {product-title} cluster from {hybrid-console-second}.
+
+|`sso.redhat.com`
+|443
+|Any browser to access {hybrid-console}
+|The link:https://console.redhat.com/openshift[{hybrid-console}] site uses authentication from `sso.redhat.com` to download the pull secret and use Red Hat SaaS solutions to facilitate monitoring of your subscriptions, cluster inventory, chargeback reporting, etc.
+|===

@@ -33,27 +33,27 @@ Type::
 
 | `clientName`
 | `string`
-| ClientName references the client that created this authorization
+| clientName references the client that created this authorization
 
 | `kind`
 | `string`
 | Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 
 | `metadata`
-| xref:../objects/index.adoc#io-k8s-apimachinery-pkg-apis-meta-v1-ObjectMeta_v2[`ObjectMeta_v2`]
+| xref:../objects/index.adoc#io-k8s-apimachinery-pkg-apis-meta-v1-ObjectMeta[`ObjectMeta`]
 | metadata is the standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 
 | `scopes`
 | `array (string)`
-| Scopes is an array of the granted scopes.
+| scopes is an array of the granted scopes.
 
 | `userName`
 | `string`
-| UserName is the user name that authorized this client
+| userName is the user name that authorized this client
 
 | `userUID`
 | `string`
-| UserUID is the unique UID associated with this authorization. UserUID and UserName must both match for this authorization to be valid.
+| userUID is the unique UID associated with this authorization. UserUID and UserName must both match for this authorization to be valid.
 
 |===
 
@@ -102,7 +102,7 @@ Description::
 |===
 | HTTP code | Reponse body
 | 200 - OK
-| xref:../objects/index.adoc#io-k8s-apimachinery-pkg-apis-meta-v1-Status_v6[`Status_v6`] schema
+| xref:../objects/index.adoc#io-k8s-apimachinery-pkg-apis-meta-v1-Status_v2[`Status_v2`] schema
 | 401 - Unauthorized
 | Empty
 |===
@@ -225,9 +225,9 @@ Description::
 |===
 | HTTP code | Reponse body
 | 200 - OK
-| xref:../objects/index.adoc#io-k8s-apimachinery-pkg-apis-meta-v1-Status_v6[`Status_v6`] schema
+| xref:../objects/index.adoc#io-k8s-apimachinery-pkg-apis-meta-v1-Status_v2[`Status_v2`] schema
 | 202 - Accepted
-| xref:../objects/index.adoc#io-k8s-apimachinery-pkg-apis-meta-v1-Status_v6[`Status_v6`] schema
+| xref:../objects/index.adoc#io-k8s-apimachinery-pkg-apis-meta-v1-Status_v2[`Status_v2`] schema
 | 401 - Unauthorized
 | Empty
 |===

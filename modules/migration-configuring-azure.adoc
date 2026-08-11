@@ -1,31 +1,17 @@
 // Module included in the following assemblies:
 //
-// * migrating_from_ocp_3_to_4/installing-3-4.adoc
-// * migration_toolkit_for_containers/installing-mtc.adoc
 // * backup_and_restore/application_backup_and_restore/installing/installing-oadp-azure.adoc
 
 :_mod-docs-content-type: PROCEDURE
 [id="migration-configuring-azure_{context}"]
 = Configuring {azure-full}
 
-ifdef::installing-3-4,installing-mtc[]
-You configure a {azure-full} Blob storage container as a replication repository for the {mtc-first}.
-endif::[]
-ifdef::installing-oadp-azure[]
-You configure {azure-full} for {oadp-first}.
-endif::[]
+[role="_abstract"]
+Configure Microsoft Azure storage and service principal credentials for backup storage with {oadp-short}. This provides the necessary authentication and storage infrastructure for data protection operations.
 
 .Prerequisites
 
 * You must have the link:https://docs.microsoft.com/en-us/cli/azure/install-azure-cli[{azure-short} CLI] installed.
-ifdef::installing-3-4,installing-mtc[]
-* The Azure Blob storage container must be accessible to the source and target clusters.
-* If you are using the snapshot copy method:
-** The source and target clusters must be in the same region.
-** The source and target clusters must have the same storage class.
-** The storage class must be compatible with snapshots.
-endif::[]
-ifdef::installing-oadp-azure[]
 
 Tools that use {azure-short} services should always have restricted permissions to make sure that {azure-short} resources are safe. Therefore, instead of having applications sign in as a fully privileged user, {azure-short} offers service principals. An {azure-short} service principal is a name that can be used with applications, hosted services, or automated tools.
 
@@ -39,8 +25,7 @@ This identity is used for access to resources.
 * Reset service principal credentials
 
 For more details, see link:https://learn.microsoft.com/en-us/cli/azure/azure-cli-sp-tutorial-1?tabs=bash[Create an {azure-short} service principal with Azure CLI].
-endif::[]
-ifndef::installing-oadp-azure[]
+
 .Procedure
 
 . Log in to {azure-short}:
@@ -61,9 +46,12 @@ $ AZURE_RESOURCE_GROUP=Velero_Backups
 +
 [source,terminal]
 ----
-$ az group create -n $AZURE_RESOURCE_GROUP --location CentralUS <1>
+$ az group create -n $AZURE_RESOURCE_GROUP --location CentralUS
 ----
-<1> Specify your location.
++
+where:
++
+`CentralUS`:: Specifies your location.
 
 . Set the `AZURE_STORAGE_ACCOUNT_ID` variable:
 +
@@ -134,8 +122,7 @@ $ AZURE_CLIENT_ID=`az ad app credential list --id <your_app_id>`
 ====
 For this to be successful, you must know your {azure-short} application ID.
 ====
-endif::[]
-ifndef::installing-oadp-azure[]
+
 . Save the service principal credentials in the `credentials-velero` file:
 +
 [source,terminal]
@@ -151,57 +138,4 @@ EOF
 ----
 +
 You use the `credentials-velero` file to add {azure-short} as a replication repository.
-endif::[]
-////
-ifdef::installing-oadp-azure[]
-. Obtain the storage account access key:
-+
-[source,terminal]
-----
-$ AZURE_STORAGE_ACCOUNT_ACCESS_KEY=`az storage account keys list \
-  --account-name $AZURE_STORAGE_ACCOUNT_ID \
-  --query "[?keyName == 'key1'].value" -o tsv`
-----
 
-. Create a custom role that has the minimum required permissions:
-+
-[source,terminal,subs="attributes+"]
-----
-AZURE_ROLE=Velero
-az role definition create --role-definition '{
-   "Name": "'$AZURE_ROLE'",
-   "Description": "Velero related permissions to perform backups, restores and deletions",
-   "Actions": [
-       "Microsoft.Compute/disks/read",
-       "Microsoft.Compute/disks/write",
-       "Microsoft.Compute/disks/endGetAccess/action",
-       "Microsoft.Compute/disks/beginGetAccess/action",
-       "Microsoft.Compute/snapshots/read",
-       "Microsoft.Compute/snapshots/write",
-       "Microsoft.Compute/snapshots/delete",
-       "Microsoft.Storage/storageAccounts/listkeys/action",
-       "Microsoft.Storage/storageAccounts/regeneratekey/action"
-   ],
-   "AssignableScopes": ["/subscriptions/'$AZURE_SUBSCRIPTION_ID'"]
-   }'
-----
-
-. Create a `credentials-velero` file:
-+
-[source,terminal,subs="attributes+"]
-----
-$ cat << EOF > ./credentials-velero
-AZURE_SUBSCRIPTION_ID=${AZURE_SUBSCRIPTION_ID}
-AZURE_TENANT_ID=${AZURE_TENANT_ID}
-AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
-AZURE_CLIENT_SECRET=${AZURE_CLIENT_SECRET}
-AZURE_RESOURCE_GROUP=${AZURE_RESOURCE_GROUP}
-AZURE_STORAGE_ACCOUNT_ACCESS_KEY=${AZURE_STORAGE_ACCOUNT_ACCESS_KEY} <1>
-AZURE_CLOUD_NAME=AzurePublicCloud
-EOF
-----
-<1> Mandatory. You cannot back up internal images if the `credentials-velero` file contains only the service principal credentials.
-+
-You use the `credentials-velero` file to create a `Secret` object for {azure-short} before you install the Data Protection Application.
-endif::[]
-////

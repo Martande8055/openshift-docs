@@ -7,6 +7,9 @@
 [id="oc-mirror-command-reference_{context}"]
 = Command reference for oc-mirror
 
+[role="_abstract"]
+You can use the `oc mirror` subcommands and flags to generate image sets, manage registries, and control your mirroring workflow.
+
 The following tables describe the `oc mirror` subcommands and flags:
 
 .oc mirror subcommands
@@ -36,10 +39,16 @@ The following tables describe the `oc mirror` subcommands and flags:
 |===
 
 .oc mirror flags
-[cols="1,2",options="header"]
+[cols="1,2a",options="header"]
 |===
 |Flag
 |Description
+
+|`--v1`
+|Uses the oc-mirror v1 plugin implementation.
+
+|`--v2`
+|Uses the oc-mirror v2 plugin implementation.
 
 |`-c`, `--config` `<string>`
 |Specify the path to an image set configuration file.
@@ -87,7 +96,11 @@ The following tables describe the `oc mirror` subcommands and flags:
 |Do not replace image tags with digest pins in Operator catalogs.
 
 |`--skip-metadata-check`
-|Skip metadata when publishing an image set. This is only recommended when the image set was created with `--ignore-history`.
+|Skip metadata when publishing an image set.
+[NOTE]
+====
+This is recommended only when the image set was created with the `--ignore-history` flag.
+====
 
 |`--skip-missing`
 |If an image is not found, skip it instead of reporting an error and aborting execution. Does not apply to custom images explicitly specified in the image set configuration.

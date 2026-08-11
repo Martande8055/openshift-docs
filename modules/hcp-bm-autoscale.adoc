@@ -2,11 +2,13 @@
 //
 // * hosted_control_planes/hcp-manage/hcp-manage-bm.adoc
 // * hosted_control_planes/hcp-manage/hcp-manage-non-bm.adoc
+// * hosted_control_planes/hcp-manage/hcp-manage-virt.adoc
 
 :_mod-docs-content-type: PROCEDURE
 [id="hcp-bm-autoscale_{context}"]
 = Enabling node auto-scaling for the hosted cluster
 
+[role="_abstract"]
 When you need more capacity in your hosted cluster and spare agents are available, you can enable auto-scaling to install new worker nodes.
 
 .Procedure
@@ -15,7 +17,9 @@ When you need more capacity in your hosted cluster and spare agents are availabl
 +
 [source,terminal]
 ----
-$ oc -n <hosted_cluster_namespace> patch nodepool <hosted_cluster_name> --type=json -p '[{"op": "remove", "path": "/spec/replicas"},{"op":"add", "path": "/spec/autoScaling", "value": { "max": 5, "min": 2 }}]'
+$ oc -n <hosted_cluster_namespace> patch nodepool <hosted_cluster_name> \
+  --type=json \
+  -p '[{"op": "remove", "path": "/spec/replicas"},{"op":"add", "path": "/spec/autoScaling", "value": { "max": 5, "min": 2 }}]'
 ----
 +
 [NOTE]
@@ -25,7 +29,7 @@ In the example, the minimum number of nodes is 2, and the maximum is 5. The maxi
 
 . Create a workload that requires a new node.
 
-.. Create a YAML file that contains the workload configuration, by using the following example:
+.. Create a YAML file that has the workload configuration, by using the following example:
 +
 [source,yaml]
 ----
@@ -48,13 +52,13 @@ spec:
       creationTimestamp: null
       labels:
         app: reversewords
-  spec:
-    containers:
-    - image: quay.io/mavazque/reversewords:latest
-      name: reversewords
-      resources:
-        requests:
-          memory: 2Gi
+    spec:
+      containers:
+      - image: quay.io/mavazque/reversewords:latest
+        name: reversewords
+        resources:
+          requests:
+            memory: 2Gi
 status: {}
 ----
 
@@ -71,7 +75,9 @@ $ oc apply -f workload-config.yaml
 +
 [source,terminal]
 ----
-$ oc extract -n <hosted_cluster_namespace> secret/<hosted_cluster_name>-admin-kubeconfig --to=./hostedcluster-secrets --confirm
+$ oc extract -n <hosted_cluster_namespace> \
+  secret/<hosted_cluster_name>-admin-kubeconfig \
+  --to=./hostedcluster-secrets --confirm
 ----
 +
 .Example output
@@ -90,7 +96,8 @@ $ oc --kubeconfig ./hostedcluster-secrets get nodes
 +
 [source,terminal]
 ----
-$ oc --kubeconfig ./hostedcluster-secrets -n <namespace> delete deployment <deployment_name>
+$ oc --kubeconfig ./hostedcluster-secrets -n <namespace> \
+  delete deployment <deployment_name>
 ----
 
 . Wait for several minutes to pass without requiring the additional capacity. On the Agent platform, the agent is decommissioned and can be reused. You can confirm that the node was removed by entering the following command:
@@ -99,10 +106,8 @@ $ oc --kubeconfig ./hostedcluster-secrets -n <namespace> delete deployment <depl
 ----
 $ oc --kubeconfig ./hostedcluster-secrets get nodes
 ----
-
++
 [NOTE]
 ====
-For {ibm-z-title} agents, compute nodes are detached from the cluster only for {ibm-z-title} with KVM agents. For z/VM and LPAR, you must delete the compute nodes manually.
-
-Agents can be reused only for {ibm-z-title} with KVM. For z/VM and LPAR, re-create the agents to use them as compute nodes.
+For {ibm-z-name} agents, if you are using an OSA network device in Processor Resource/Systems Manager (PR/SM) mode, auto scaling is not supported. You must delete the old agent manually and scale up the node pool because the new agent joins during the scale down process.
 ====

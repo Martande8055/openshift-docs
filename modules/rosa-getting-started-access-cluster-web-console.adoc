@@ -5,7 +5,7 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="rosa-getting-started-access-cluster-web-console_{context}"]
-= Accessing a cluster through the web console
+= Access a cluster through the web console
 
 ifeval::["{context}" == "rosa-getting-started"]
 :getting-started:
@@ -14,15 +14,16 @@ ifeval::["{context}" == "rosa-quickstart"]
 :quickstart:
 endif::[]
 
-After you have created a cluster administrator user or added a user to your configured identity provider, you can log into your {product-title} (ROSA) cluster through the web console.
+[role="_abstract"]
+After creating a cluster administrator or adding a user to your identity provider, you can log in to your {product-title} cluster through the web console.
 
 ifdef::getting-started[]
 .Prerequisites
 
 * You have an AWS account.
-* You installed and configured the latest {product-title} (ROSA) CLI, `rosa`, on your workstation.
-* You logged in to your Red{nbsp}Hat account using the ROSA CLI (`rosa`).
-* You created a ROSA cluster.
+* You installed and configured the latest {rosa-cli}, `rosa`, on your workstation.
+* You logged in to your Red{nbsp}Hat account using the {rosa-cli}.
+* You created a {product-title} cluster.
 * You have created a cluster administrator user or added your user account to the configured identity provider.
 endif::[]
 
@@ -32,9 +33,8 @@ endif::[]
 +
 [source,terminal]
 ----
-$ rosa describe cluster -c <cluster_name> | grep Console <1>
+$ rosa describe cluster -c <cluster_name> | grep Console
 ----
-<1> Replace `<cluster_name>` with the name of your cluster.
 +
 .Example output
 [source,terminal]
@@ -45,7 +45,17 @@ Console URL:                https://console-openshift-console.apps.example-clust
 . Go to the console URL in the output of the preceding step and log in.
 +
 * If you created a `cluster-admin` user, log in by using the provided credentials.
-* If you configured an identity provider for your cluster, select the identity provider name in the *Log in with...* dialog and complete any authorization requests that are presented by your provider.
+* If you configured an identity provider for your cluster, select the identity provider name in the *Log in with...* dialog and complete any authorization requests from your provider.
+
+.Verification
+
+* Verify that you can access the {product-title} web console and view cluster resources.
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://docs.openshift.com/container-platform/latest/web_console/web-console.html[Accessing the web console]
+* link:https://docs.openshift.com/container-platform/latest/authentication/understanding-identity-provider.html[Understanding identity provider configuration]
 
 ifeval::["{context}" == "rosa-getting-started"]
 :getting-started:

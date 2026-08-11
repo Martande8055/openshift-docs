@@ -2,11 +2,14 @@
 //
 // * operators/understanding/olm/olm-understanding-operatorgroups.adoc
 
+:_mod-docs-content-type: CONCEPT
 [id="olm-operatorgroups-target-namespace_{context}"]
 = Target namespace selection
 
-You can explicitly name the target namespace for an Operator group using the `spec.targetNamespaces` parameter:
+[role="_abstract"]
+You can explicitly name the target namespace for an Operator group using the `spec.targetNamespaces` parameter.
 
+.Example Operator group
 [source,yaml]
 ----
 apiVersion: operators.coreos.com/v1

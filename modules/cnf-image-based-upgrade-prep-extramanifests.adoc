@@ -6,7 +6,13 @@
 [id="cnf-image-based-upgrade-prep-extramanifests_{context}"]
 = Creating ConfigMap objects of extra manifests for the image-based upgrade with {lcao}
 
+[role="_abstract"]
 Create additional manifests that you want to apply to the target cluster.
+
+[NOTE]
+====
+If you add more than one extra manifest, and the manifests must be applied in a specific order, you must prefix the filenames of the manifests with numbers that represent the required order. For example, `00-namespace.yaml`, `01-sriov-extra-manifest.yaml`, and so on.
+====
 
 .Procedure
 

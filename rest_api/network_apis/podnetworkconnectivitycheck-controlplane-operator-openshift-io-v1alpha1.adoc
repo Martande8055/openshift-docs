@@ -11,8 +11,9 @@ toc::[]
 Description::
 +
 --
-PodNetworkConnectivityCheck 
- Compatibility level 4: No compatibility is provided, the API can change at any point for any reason. These capabilities should not be used by applications needing long term support.
+PodNetworkConnectivityCheck
+
+Compatibility level 4: No compatibility is provided, the API can change at any point for any reason. These capabilities should not be used by applications needing long term support.
 --
 
 Type::
@@ -42,18 +43,18 @@ Required::
 
 | `spec`
 | `object`
-| Spec defines the source and target of the connectivity check
+| spec defines the source and target of the connectivity check
 
 | `status`
 | `object`
-| Status contains the observed status of the connectivity check
+| status contains the observed status of the connectivity check
 
 |===
 === .spec
 Description::
 +
 --
-Spec defines the source and target of the connectivity check
+spec defines the source and target of the connectivity check
 --
 
 Type::
@@ -71,22 +72,32 @@ Required::
 
 | `sourcePod`
 | `string`
-| SourcePod names the pod from which the condition will be checked
+| sourcePod names the pod from which the condition will be checked
 
 | `targetEndpoint`
 | `string`
-| EndpointAddress to check. A TCP address of the form host:port. Note that if host is a DNS name, then the check would fail if the DNS name cannot be resolved. Specify an IP address for host to bypass DNS name lookup.
+| EndpointAddress to check. A TCP address of the form host:port. Note that
+if host is a DNS name, then the check would fail if the DNS name cannot
+be resolved. Specify an IP address for host to bypass DNS name lookup.
 
 | `tlsClientCert`
 | `object`
-| TLSClientCert, if specified, references a kubernetes.io/tls type secret with 'tls.crt' and 'tls.key' entries containing an optional TLS client certificate and key to be used when checking endpoints that require a client certificate in order to gracefully preform the scan without causing excessive logging in the endpoint process. The secret must exist in the same namespace as this resource.
+| TLSClientCert, if specified, references a kubernetes.io/tls type secret with 'tls.crt' and
+'tls.key' entries containing an optional TLS client certificate and key to be used when
+checking endpoints that require a client certificate in order to gracefully preform the
+scan without causing excessive logging in the endpoint process. The secret must exist in
+the same namespace as this resource.
 
 |===
 === .spec.tlsClientCert
 Description::
 +
 --
-TLSClientCert, if specified, references a kubernetes.io/tls type secret with 'tls.crt' and 'tls.key' entries containing an optional TLS client certificate and key to be used when checking endpoints that require a client certificate in order to gracefully preform the scan without causing excessive logging in the endpoint process. The secret must exist in the same namespace as this resource.
+TLSClientCert, if specified, references a kubernetes.io/tls type secret with 'tls.crt' and
+'tls.key' entries containing an optional TLS client certificate and key to be used when
+checking endpoints that require a client certificate in order to gracefully preform the
+scan without causing excessive logging in the endpoint process. The secret must exist in
+the same namespace as this resource.
 --
 
 Type::
@@ -110,7 +121,7 @@ Required::
 Description::
 +
 --
-Status contains the observed status of the connectivity check
+status contains the observed status of the connectivity check
 --
 
 Type::
@@ -125,7 +136,7 @@ Type::
 
 | `conditions`
 | `array`
-| Conditions summarize the status of the check
+| conditions summarize the status of the check
 
 | `conditions[]`
 | `object`
@@ -133,7 +144,7 @@ Type::
 
 | `failures`
 | `array`
-| Failures contains logs of unsuccessful check actions
+| failures contains logs of unsuccessful check actions
 
 | `failures[]`
 | `object`
@@ -141,7 +152,7 @@ Type::
 
 | `outages`
 | `array`
-| Outages contains logs of time periods of outages
+| outages contains logs of time periods of outages
 
 | `outages[]`
 | `object`
@@ -149,7 +160,7 @@ Type::
 
 | `successes`
 | `array`
-| Successes contains logs successful check actions
+| successes contains logs successful check actions
 
 | `successes[]`
 | `object`
@@ -160,7 +171,7 @@ Type::
 Description::
 +
 --
-Conditions summarize the status of the check
+conditions summarize the status of the check
 --
 
 Type::
@@ -195,26 +206,26 @@ Required::
 
 | `message`
 | `string`
-| Message indicating details about last transition in a human readable format.
+| message indicating details about last transition in a human readable format.
 
 | `reason`
 | `string`
-| Reason for the condition's last status transition in a machine readable format.
+| reason for the condition's last status transition in a machine readable format.
 
 | `status`
 | `string`
-| Status of the condition
+| status of the condition
 
 | `type`
 | `string`
-| Type of the condition
+| type of the condition
 
 |===
 === .status.failures
 Description::
 +
 --
-Failures contains logs of unsuccessful check actions
+failures contains logs of unsuccessful check actions
 --
 
 Type::
@@ -244,19 +255,19 @@ Required::
 
 | `latency`
 | ``
-| Latency records how long the action mentioned in the entry took.
+| latency records how long the action mentioned in the entry took.
 
 | `message`
 | `string`
-| Message explaining status in a human readable format.
+| message explaining status in a human readable format.
 
 | `reason`
 | `string`
-| Reason for status in a machine readable format.
+| reason for status in a machine readable format.
 
 | `success`
 | `boolean`
-| Success indicates if the log entry indicates a success or failure.
+| success indicates if the log entry indicates a success or failure.
 
 | `time`
 | ``
@@ -267,7 +278,7 @@ Required::
 Description::
 +
 --
-Outages contains logs of time periods of outages
+outages contains logs of time periods of outages
 --
 
 Type::
@@ -295,11 +306,12 @@ Type::
 
 | `end`
 | ``
-| End of outage detected
+| end of outage detected
 
 | `endLogs`
 | `array`
-| EndLogs contains log entries related to the end of this outage. Should contain the success entry that resolved the outage and possibly a few of the failure log entries that preceded it.
+| endLogs contains log entries related to the end of this outage. Should contain the success
+entry that resolved the outage and possibly a few of the failure log entries that preceded it.
 
 | `endLogs[]`
 | `object`
@@ -307,15 +319,16 @@ Type::
 
 | `message`
 | `string`
-| Message summarizes outage details in a human readable format.
+| message summarizes outage details in a human readable format.
 
 | `start`
 | ``
-| Start of outage detected
+| start of outage detected
 
 | `startLogs`
 | `array`
-| StartLogs contains log entries related to the start of this outage. Should contain the original failure, any entries where the failure mode changed.
+| startLogs contains log entries related to the start of this outage. Should contain
+the original failure, any entries where the failure mode changed.
 
 | `startLogs[]`
 | `object`
@@ -326,7 +339,8 @@ Type::
 Description::
 +
 --
-EndLogs contains log entries related to the end of this outage. Should contain the success entry that resolved the outage and possibly a few of the failure log entries that preceded it.
+endLogs contains log entries related to the end of this outage. Should contain the success
+entry that resolved the outage and possibly a few of the failure log entries that preceded it.
 --
 
 Type::
@@ -356,19 +370,19 @@ Required::
 
 | `latency`
 | ``
-| Latency records how long the action mentioned in the entry took.
+| latency records how long the action mentioned in the entry took.
 
 | `message`
 | `string`
-| Message explaining status in a human readable format.
+| message explaining status in a human readable format.
 
 | `reason`
 | `string`
-| Reason for status in a machine readable format.
+| reason for status in a machine readable format.
 
 | `success`
 | `boolean`
-| Success indicates if the log entry indicates a success or failure.
+| success indicates if the log entry indicates a success or failure.
 
 | `time`
 | ``
@@ -379,7 +393,8 @@ Required::
 Description::
 +
 --
-StartLogs contains log entries related to the start of this outage. Should contain the original failure, any entries where the failure mode changed.
+startLogs contains log entries related to the start of this outage. Should contain
+the original failure, any entries where the failure mode changed.
 --
 
 Type::
@@ -409,19 +424,19 @@ Required::
 
 | `latency`
 | ``
-| Latency records how long the action mentioned in the entry took.
+| latency records how long the action mentioned in the entry took.
 
 | `message`
 | `string`
-| Message explaining status in a human readable format.
+| message explaining status in a human readable format.
 
 | `reason`
 | `string`
-| Reason for status in a machine readable format.
+| reason for status in a machine readable format.
 
 | `success`
 | `boolean`
-| Success indicates if the log entry indicates a success or failure.
+| success indicates if the log entry indicates a success or failure.
 
 | `time`
 | ``
@@ -432,7 +447,7 @@ Required::
 Description::
 +
 --
-Successes contains logs successful check actions
+successes contains logs successful check actions
 --
 
 Type::
@@ -462,19 +477,19 @@ Required::
 
 | `latency`
 | ``
-| Latency records how long the action mentioned in the entry took.
+| latency records how long the action mentioned in the entry took.
 
 | `message`
 | `string`
-| Message explaining status in a human readable format.
+| message explaining status in a human readable format.
 
 | `reason`
 | `string`
-| Reason for status in a machine readable format.
+| reason for status in a machine readable format.
 
 | `success`
 | `boolean`
-| Success indicates if the log entry indicates a success or failure.
+| success indicates if the log entry indicates a success or failure.
 
 | `time`
 | ``

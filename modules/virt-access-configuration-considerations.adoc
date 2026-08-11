@@ -6,9 +6,13 @@
 [id="virt-access-configuration-considerations_{context}"]
 = Access configuration considerations
 
+[role="_abstract"]
 Each method for configuring access to a virtual machine (VM) has advantages and limitations, depending on the traffic load and client requirements.
 
+[NOTE]
+====
 Services provide excellent performance and are recommended for applications that are accessed from outside the cluster.
+====
 
 If the internal cluster network cannot handle the traffic load, you can configure a secondary network.
 
@@ -38,4 +42,3 @@ Secondary network::
 * Excellent performance because traffic does not go through the internal cluster network.
 * Allows a flexible approach to network topology.
 * Guest operating system must be configured with appropriate security because the VM is exposed directly to the secondary network. If a VM is compromised, an intruder could gain access to the secondary network.
-

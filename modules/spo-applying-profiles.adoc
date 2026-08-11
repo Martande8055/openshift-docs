@@ -16,14 +16,15 @@ endif::[]
 
 :_mod-docs-content-type: PROCEDURE
 [id="spo-applying-profiles_{context}"]
-= Applying {type} profiles to a pod
+= Apply {type} profiles to a pod
 
-Create a pod to apply one of the created profiles.
+[role="_abstract"]
+To enforce a recorded or custom {type} profile on a workload, create a pod that references the profile in its security context.
 
 ifdef::selinux[]
-For {type} profiles, the namespace must be labelled to allow link:https://kubernetes.io/docs/concepts/security/pod-security-standards/[privileged] workloads.
-
+For {type} profiles, the namespace must be labeled to allow link:https://kubernetes.io/docs/concepts/security/pod-security-standards/[privileged] workloads.
 endif::[]
+
 .Procedure
 
 ifdef::seccomp[]
@@ -40,7 +41,7 @@ spec:
     runAsNonRoot: true
     seccompProfile:
       type: Localhost
-      localhostProfile: operator/my-namespace/profile1.json
+      localhostProfile: operator/profile1.json
   containers:
     - name: test-container
       image: quay.io/security-profiles-operator/test-nginx-unprivileged:1.21
@@ -54,14 +55,14 @@ spec:
 +
 [source,terminal]
 ----
-$ oc -n my-namespace get seccompprofile profile1 --output wide
+$ oc get seccompprofile profile1 --output wide
 ----
 +
 .Example output
 [source,terminal]
 ----
 NAME       STATUS     AGE   SECCOMPPROFILE.LOCALHOSTPROFILE
-profile1   Installed  14s   operator/my-namespace/profile1.json
+profile1   Installed  14s   operator/profile1.json
 ----
 
 . View the path to the localhost profile by running the following command:
@@ -74,7 +75,7 @@ $ oc get sp profile1 --output=jsonpath='{.status.localhostProfile}'
 .Example output
 [source,terminal]
 ----
-operator/my-namespace/profile1.json
+operator/profile1.json
 ----
 
 . Apply the `localhostProfile` output to the patch file:
@@ -87,7 +88,7 @@ spec:
       securityContext:
         seccompProfile:
           type: Localhost
-          localhostProfile: operator/my-namespace/profile1.json
+          localhostProfile: operator/profile1.json
 ----
 
 . Apply the profile to any other workload, such as a `Deployment` object, by running the following command:
@@ -117,7 +118,7 @@ $ oc -n my-namespace get deployment myapp --output=jsonpath='{.spec.template.spe
 ----
 {
   "seccompProfile": {
-    "localhostProfile": "operator/my-namespace/profile1.json",
+    "localhostProfile": "operator/profile1.json",
     "type": "localhost"
   }
 }
@@ -143,13 +144,13 @@ $ oc label ns nginx-deploy --overwrite=true pod-security.kubernetes.io/enforce=p
 +
 [source,terminal]
 ----
-$ oc get selinuxprofile.security-profiles-operator.x-k8s.io/nginx-secure -n nginx-deploy -ojsonpath='{.status.usage}'
+$ oc get selinuxprofile.security-profiles-operator.x-k8s.io/nginx-secure -ojsonpath='{.status.usage}'
 ----
 +
 .Example output
 [source,terminal]
 ----
-nginx-secure_nginx-deploy.process
+nginx-secure.process
 ----
 
 . Apply the output string in the workload manifest in the `.spec.containers[].securityContext.seLinuxOptions` attribute:
@@ -175,7 +176,7 @@ spec:
           drop: [ALL]
         seLinuxOptions:
           # NOTE: This uses an appropriate SELinux type
-          type: nginx-secure_nginx-deploy.process
+          type: nginx-secure.process
 ----
 +
 [IMPORTANT]

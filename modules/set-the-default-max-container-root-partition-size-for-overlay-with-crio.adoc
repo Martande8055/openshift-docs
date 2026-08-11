@@ -6,7 +6,10 @@
 [id="set-the-default-max-container-root-partition-size-for-overlay-with-crio_{context}"]
 = Setting the default maximum container root partition size for Overlay with CRI-O
 
-The root partition of each container shows all of the available disk space of the underlying host. Follow this guidance to set a maximum partition size for the root disk of all containers.
+[role="_abstract"]
+You can use a `ContainerRuntimeConfig` custom resource (CR) to set a maximum partition size for the root disk of all containers.
+
+The root partition of each container shows all of the available disk space of the underlying host.
 
 To configure the maximum Overlay size, as well as other CRI-O options like the log level, you can create the following `ContainerRuntimeConfig` custom resource definition (CRD):
 
@@ -67,8 +70,8 @@ New `99-worker-generated-containerruntime` and `rendered-worker-xyz` objects are
 .Example output
 [source,terminal]
 ----
-99-worker-generated-containerruntime  4173030d89fbf4a7a0976d1665491a4d9a6e54f1   3.2.0             7m42s
-rendered-worker-xyz                   4173030d89fbf4a7a0976d1665491a4d9a6e54f1   3.2.0             7m36s
+99-worker-generated-containerruntime  4173030d89fbf4a7a0976d1665491a4d9a6e54f1   3.5.0             7m42s
+rendered-worker-xyz                   4173030d89fbf4a7a0976d1665491a4d9a6e54f1   3.5.0             7m36s
 ----
 
 . After those objects are created, monitor the machine config pool for the changes to be applied:

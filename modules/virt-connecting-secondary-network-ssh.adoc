@@ -1,17 +1,19 @@
 // Module included in the following assemblies:
 //
-// * virt/virtual_machines/virt-accessing-vm-ssh.adoc
+// * virt/managing_vms/ssh/virt-using-secondary-networks-ssh.adoc
 
 :_mod-docs-content-type: PROCEDURE
 [id="virt-connecting-secondary-network-ssh_{context}"]
 = Connecting to a VM attached to a secondary network by using SSH
 
+[role="_abstract"]
 You can connect to a virtual machine (VM) attached to a secondary network by using SSH.
 
 .Prerequisites
 
 * You attached a VM to a secondary network with a DHCP server.
 * You have an SSH client installed.
+* You have installed the {oc-first}.
 
 .Procedure
 
@@ -22,7 +24,9 @@ You can connect to a virtual machine (VM) attached to a secondary network by usi
 $ oc describe vm <vm_name> -n <namespace>
 ----
 +
-.Example output
+Example output:
++
+[source,terminal]
 ----
 # ...
 Interfaces:
@@ -43,7 +47,8 @@ Interfaces:
 $ ssh <user_name>@<ip_address> -i <ssh_key>
 ----
 +
-.Example
+Example command:
++
 [source,terminal]
 ----
 $ ssh cloud-user@10.244.0.37 -i ~/.ssh/id_rsa_cloud-user

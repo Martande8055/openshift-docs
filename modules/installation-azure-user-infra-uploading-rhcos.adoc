@@ -25,9 +25,17 @@ endif::[]
 [id="installation-azure-user-infra-uploading-rhcos_{context}"]
 ifndef::ash-ipi[]
 = Uploading the {op-system} cluster image and bootstrap Ignition config file
+
+[role="_abstract"]
+To make the {op-system} cluster image and bootstrap Ignition config accessible during deployment, you can upload them to an Azure storage container.
+
 endif::ash-ipi[]
 ifdef::ash-ipi[]
 = Uploading the {op-system} cluster image
+
+[role="_abstract"]
+To make the {op-system} cluster image accessible during deployment, you can download and upload the image to your Azure Stack Hub environment.
+
 endif::ash-ipi[]
 
 ifndef::ash-ipi[]
@@ -38,6 +46,10 @@ endif::ash-ipi[]
 ifdef::ash-ipi[]
 You must download the {op-system} virtual hard disk (VHD) cluster image and upload it to your Azure Stack Hub environment so that it is accessible during deployment.
 endif::ash-ipi[]
+
+.Prerequisites
+
+* Generate the Ignition config files for your cluster.
 
 .Procedure
 

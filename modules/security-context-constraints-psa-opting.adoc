@@ -6,14 +6,15 @@
 [id="security-context-constraints-psa-opting_{context}"]
 = Controlling pod security admission synchronization
 
-You can enable or disable automatic pod security admission synchronization for most namespaces.
+[role="_abstract"]
+To customize which namespaces have their pod security admission labels automatically updated, you can enable or disable synchronization for most namespaces.
 
 [IMPORTANT]
 ====
 You cannot enable pod security admission synchronization on
-ifndef::openshift-dedicated,openshift-rosa[]
+ifndef::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
 some
-endif::openshift-dedicated,openshift-rosa[]
+endif::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
 system-created namespaces. For more information, see _Pod security admission synchronization namespace exclusions_.
 ====
 

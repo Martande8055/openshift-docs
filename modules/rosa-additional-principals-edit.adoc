@@ -5,9 +5,10 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="rosa-additional-principals-edit_{context}"]
-= Adding additional principals to your existing {hcp-title} cluster
+= Adding additional principals to your existing {product-title} cluster
 
-You can add additional principals to your cluster by using the command line interface (CLI).
+[role="_abstract"]
+If you did not specify additional allowed principals when you created your cluster, or if your access requirements have changed, you can add additional principals to an existing cluster by using the {rosa-cli-first}.
 
 .Procedure
 
@@ -19,3 +20,7 @@ $ rosa edit cluster -c <cluster_name> --additional-allowed-principals <arn_strin
 ----
 +
 You can use `arn:aws:iam::account_id:role/role_name` to approve a specific role.
+
+.Next steps
+
+* Configure an identity provider.

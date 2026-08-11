@@ -7,13 +7,12 @@
 
 = Security context constraint synchronization with pod security standards
 
-{microshift-short} includes link:https://kubernetes.io/docs/concepts/security/pod-security-admission[Kubernetes pod security admission].
-
-In addition to the global pod security admission control configuration, a controller exists that applies pod security admission control `warn` and `audit` labels to namespaces according to the security context constraint (SCC) permissions of the service accounts that are in a given namespace.
+[role="_abstract"]
+{microshift-short} includes Kubernetes pod security admission (PSA) and a controller that applies PSA labels to namespaces based on the security context constraint (SCC) permissions of service accounts in that namespace.
 
 [IMPORTANT]
 ====
-Namespaces that are defined as part of the cluster payload have pod security admission synchronization disabled permanently. You can enable pod security admission synchronization on other namespaces as necessary. If an Operator is installed in a user-created `openshift-*` namespace, synchronization is turned on by default after a cluster service version (CSV) is created in the namespace.
+Namespaces that are defined as part of the node payload have pod security admission synchronization disabled permanently. You can enable pod security admission synchronization on other namespaces as necessary. If an Operator is installed in a user-created `openshift-*` namespace, synchronization is turned on by default after a cluster service version (CSV) is created in the namespace.
 ====
 
 The controller examines `ServiceAccount` object permissions to use security context constraints in each namespace. Security context constraints (SCCs) are mapped to pod security profiles based on their field values; the controller uses these translated profiles. Pod security admission `warn` and `audit` labels are set to the most privileged pod security profile found in the namespace to prevent warnings and audit logging as pods are created.

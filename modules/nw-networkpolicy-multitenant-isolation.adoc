@@ -6,8 +6,8 @@
 [id="nw-networkpolicy-multitenant-isolation_{context}"]
 = Configuring multitenant isolation by using network policy
 
-You can configure your project to isolate it from pods and services in other
-project namespaces.
+[role="_abstract"]
+You can configure network policies to isolate workloads in a project from pods and services in other namespaces. This isolation helps control network traffic between projects and improves multitenant security in your cluster.
 
 .Prerequisites
 
@@ -126,7 +126,7 @@ Spec:
   Allowing ingress traffic:
     To Port: <any> (traffic allowed to all ports)
     From:
-      NamespaceSelector: network.openshift.io/policy-group: ingress
+      NamespaceSelector: policy-group.network.openshift.io/ingress:
   Not affecting egress traffic
   Policy Types: Ingress
 

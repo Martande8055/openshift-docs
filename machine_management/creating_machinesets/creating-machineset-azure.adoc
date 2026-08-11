@@ -1,23 +1,36 @@
 :_mod-docs-content-type: ASSEMBLY
 [id="creating-machineset-azure"]
-= Creating a compute machine set on Azure
+= Creating a compute machine set on {azure-short}
 include::_attributes/common-attributes.adoc[]
 :context: creating-machineset-azure
 
 toc::[]
 
-You can create a different compute machine set to serve a specific purpose in your {product-title} cluster on Microsoft Azure. For example, you might create infrastructure machine sets and related machines so that you can move supporting workloads to the new machines.
+[role="_abstract"]
+You can create a different compute machine set to serve a specific purpose in your {product-title} cluster on {azure-first}. For example, you might create infrastructure machine sets and related machines so that you can move supporting workloads to the new machines.
 
 //[IMPORTANT] admonition for UPI
-include::modules/machine-user-provisioned-limitations.adoc[leveloffset=+1]
+include::snippets/machine-user-provisioned-limitations.adoc[leveloffset=+1]
 
 //Sample YAML for a compute machine set custom resource on Azure
 include::modules/machineset-yaml-azure.adoc[leveloffset=+1]
 
+[role="_additional-resources"]
+.Additional resources
+
+* xref:../../machine_configuration/mco-update-boot-images-manual.adoc#mco-update-boot-images-manual[Manually updating the boot image]
+
 //Creating a compute machine set
 include::modules/machineset-creating.adoc[leveloffset=+1]
 
-//Selecting an Azure Marketplace image
+//Labeling GPU machine sets for the cluster autoscaler
+include::modules/machineset-label-gpu-autoscaler.adoc[leveloffset=+1]
+
+[role="_additional-resources"]
+.Additional resources
+* xref:../../machine_management/applying-autoscaling.adoc#cluster-autoscaler-cr_applying-autoscaling[Cluster autoscaler resource definition]
+
+//Using the Azure Marketplace offering
 include::modules/installation-azure-marketplace-subscribe.adoc[leveloffset=+1]
 
 //Enabling Azure boot diagnostics
@@ -40,7 +53,7 @@ include::modules/machineset-azure-ultra-disk.adoc[leveloffset=+1]
 
 [role="_additional-resources"]
 .Additional resources
-* link:https://docs.microsoft.com/en-us/azure/virtual-machines/disks-types#ultra-disks[Microsoft Azure ultra disks documentation]
+* link:https://docs.microsoft.com/en-us/azure/virtual-machines/disks-types#ultra-disks[Ultra disks ({azure-short} documentation)]
 * xref:../../storage/container_storage_interface/persistent-storage-csi-azure.adoc#machineset-azure-ultra-disk_persistent-storage-csi-azure[Machine sets that deploy machines on ultra disks using CSI PVCs]
 * xref:../../storage/persistent_storage/persistent-storage-azure.adoc#machineset-azure-ultra-disk_persistent-storage-azure[Machine sets that deploy machines on ultra disks using in-tree PVCs]
 
@@ -63,7 +76,7 @@ include::modules/machineset-azure-confidential-vms.adoc[leveloffset=+1]
 include::modules/machineset-azure-accelerated-networking.adoc[leveloffset=+1]
 
 //Configuring Capacity Reservation by using machine sets
-include::modules/machineset-azure-capacity-reservation.adoc[leveloffset=+1]
+include::modules/machineset-capacity-reservation.adoc[leveloffset=+1,tag=!controlplane]
 
 //Adding a GPU node to a machine set (stesmith)
 include::modules/nvidia-gpu-azure-adding-a-gpu-node.adoc[leveloffset=+1]

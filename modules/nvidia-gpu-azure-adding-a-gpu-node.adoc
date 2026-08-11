@@ -6,7 +6,8 @@
 [id="nvidia-gpu-aws-adding-a-gpu-node_{context}"]
 = Adding a GPU node to an existing {product-title} cluster
 
-You can copy and modify a default compute machine set configuration to create a GPU-enabled machine set and machines for the Azure cloud provider.
+[role="_abstract"]
+To provide specialized hardware for compute-intensive workloads that require NVIDIA GPU acceleration, you can copy and modify a default compute machine set configuration to create a GPU-enabled machine set and machines for the {azure-first} cloud provider.
 
 The following table lists the validated instance types:
 
@@ -32,21 +33,17 @@ The following table lists the validated instance types:
 
 [NOTE]
 ====
-By default, Azure subscriptions do not have a quota for the Azure instance types with GPU. Customers have to request a quota increase for the Azure instance families listed above.
+By default, {azure-full} subscriptions do not have a quota for the {azure-full} instance types with GPU. Customers have to request a quota increase for the {azure-full} instance families in the preceding list.
 ====
 
 .Procedure
 
-. View the machines and machine sets that exist in the `openshift-machine-api` namespace
-by running the following command. Each compute machine set is associated with a different availability zone within the Azure region.
-The installer automatically load balances compute machines across availability zones.
+. View the machines and machine sets that exist in the `openshift-machine-api` namespace by running the following command. Each compute machine set is associated with a different availability zone within the {azure-full} region. The installation program automatically load balances compute machines across availability zones.
 +
 [source,terminal]
 ----
 $ oc get machineset -n openshift-machine-api
 ----
-+
-.Example output
 +
 [source,terminal]
 ----
@@ -64,14 +61,12 @@ This will be the basis for the GPU-enabled compute machine set definition.
 $ oc get machineset -n openshift-machine-api myclustername-worker-centralus1 -o yaml > machineset-azure.yaml
 ----
 
-. View the content of the machineset:
+. View the content of the compute machine set:
 +
 [source,terminal]
 ----
 $ cat machineset-azure.yaml
 ----
-+
-.Example `machineset-azure.yaml` file
 +
 [source,yaml]
 ----
@@ -169,8 +164,6 @@ $ cp machineset-azure.yaml machineset-azure-gpu.yaml
 
 * Change `.spec.template.spec.providerSpec.value.vmSize` to `Standard_NC4as_T4_v3`.
 +
-.Example `machineset-azure-gpu.yaml` file
-+
 [source,yaml]
 ----
 apiVersion: machine.openshift.io/v1beta1
@@ -257,7 +250,6 @@ status:
 $ diff machineset-azure.yaml machineset-azure-gpu.yaml
 ----
 +
-.Example output
 [source,terminal]
 ----
 14c14
@@ -285,24 +277,17 @@ $ diff machineset-azure.yaml machineset-azure-gpu.yaml
 $ oc create -f machineset-azure-gpu.yaml
 ----
 +
-.Example output
-+
 [source,terminal]
 ----
 machineset.machine.openshift.io/myclustername-nc4ast4-gpu-worker-centralus1 created
 ----
 
-. View the machines and machine sets that exist in the `openshift-machine-api` namespace
-by running the following command. Each compute machine set is associated with a
-different availability zone within the Azure region.
-The installer automatically load balances compute machines across availability zones.
+. View the machines and machine sets that exist in the `openshift-machine-api` namespace by running the following command. Each compute machine set is associated with a different availability zone within the {azure-full} region. The installation program automatically load balances compute machines across availability zones.
 +
 [source,terminal]
 ----
 $ oc get machineset -n openshift-machine-api
 ----
-+
-.Example output
 +
 [source,terminal]
 ----
@@ -319,8 +304,6 @@ clustername-n6n4r-worker-centralus3                1         1         1       1
 ----
 $ oc get machines -n openshift-machine-api
 ----
-+
-.Example output
 +
 [source,terminal]
 ----
@@ -341,18 +324,16 @@ myclustername-worker-centralus3-p9b8c               Running   Standard_D4s_v3   
 $ oc get nodes
 ----
 +
-.Example output
-+
 [source,terminal]
 ----
 NAME                                                STATUS   ROLES                  AGE     VERSION
-myclustername-master-0                              Ready    control-plane,master   6h39m   v1.30.3
-myclustername-master-1                              Ready    control-plane,master   6h41m   v1.30.3
-myclustername-master-2                              Ready    control-plane,master   6h39m   v1.30.3
-myclustername-nc4ast4-gpu-worker-centralus1-w9bqn   Ready    worker                 14m     v1.30.3
-myclustername-worker-centralus1-rbh6b               Ready    worker                 6h29m   v1.30.3
-myclustername-worker-centralus2-dbz7w               Ready    worker                 6h29m   v1.30.3
-myclustername-worker-centralus3-p9b8c               Ready    worker                 6h31m   v1.30.3
+myclustername-master-0                              Ready    control-plane,master   6h39m   v1.35.4
+myclustername-master-1                              Ready    control-plane,master   6h41m   v1.35.4
+myclustername-master-2                              Ready    control-plane,master   6h39m   v1.35.4
+myclustername-nc4ast4-gpu-worker-centralus1-w9bqn   Ready    worker                 14m     v1.35.4
+myclustername-worker-centralus1-rbh6b               Ready    worker                 6h29m   v1.35.4
+myclustername-worker-centralus2-dbz7w               Ready    worker                 6h29m   v1.35.4
+myclustername-worker-centralus3-p9b8c               Ready    worker                 6h31m   v1.35.4
 ----
 
 . View the list of compute machine sets:
@@ -361,8 +342,6 @@ myclustername-worker-centralus3-p9b8c               Ready    worker             
 ----
 $ oc get machineset -n openshift-machine-api
 ----
-+
-.Example output
 +
 [source,terminal]
 ----
@@ -386,8 +365,6 @@ $ oc create -f machineset-azure-gpu.yaml
 oc get machineset -n openshift-machine-api
 ----
 +
-.Example output
-+
 [source,terminal]
 ----
 NAME                                          DESIRED   CURRENT   READY   AVAILABLE   AGE
@@ -408,8 +385,6 @@ $ oc get machineset -n openshift-machine-api | grep gpu
 +
 The MachineSet replica count is set to `1` so a new `Machine` object is created automatically.
 +
-.Example output
-+
 [source,terminal]
 ----
 myclustername-nc4ast4-gpu-worker-centralus1   1         1         1       1           121m
@@ -421,8 +396,6 @@ myclustername-nc4ast4-gpu-worker-centralus1   1         1         1       1     
 ----
 $ oc -n openshift-machine-api get machines | grep gpu
 ----
-+
-.Example output
 +
 [source,terminal]
 ----

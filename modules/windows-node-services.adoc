@@ -2,10 +2,12 @@
 //
 // * windows_containers/understanding-windows-container-workloads.adoc
 
+:_mod-docs-content-type: REFERENCE
 [id="windows-node-services_{context}"]
 = Windows node services
 
-The following Windows-specific services are installed on each Windows node:
+[role="_abstract"]
+By default, the installation process installs several Windows-specific services on each Windows node.
 
 [cols="1,2",options="header"]
 |===

@@ -6,6 +6,9 @@
 [id="openshift-cli-admin_{context}"]
 = OpenShift CLI (oc) administrator commands
 
+[role="_abstract"]
+Review the commands that cluster administrators can use to configure, maintain, and troubleshoot OpenShift Container Platform clusters.
+
 
 
 == oc adm build-chain
@@ -355,6 +358,9 @@ Create an ISO image for booting the nodes to be added to the target cluster
   # Specify a custom image name
   oc adm node-image create -o=my-node.iso
   
+  # In place of an ISO, creates files that can be used for PXE boot
+  oc adm node-image create --pxe
+  
   # Create an ISO to add a single node without using the configuration file
   oc adm node-image create --mac-address=00:d8:e7:c7:4b:bb
   
@@ -375,7 +381,7 @@ Monitor new nodes being added to an OpenShift cluster
   oc adm node-image monitor --ip-addresses 192.168.111.83
   
   # Monitor multiple nodes being added to a cluster by separating each
-  IP address with a comma
+  # IP address with a comma
   oc adm node-image monitor --ip-addresses 192.168.111.83,192.168.111.84
 ----
 
@@ -476,51 +482,6 @@ Update user-data secrets in an OpenShift cluster to use updated MCO certfs
   
   # Update the user-data secrets to use new MCS certs
   oc adm ocp-certificates update-ignition-ca-bundle-for-machine-config-server
-----
-
-
-
-== oc adm pod-network isolate-projects
-Isolate project network
-
-.Example usage
-[source,bash,options="nowrap"]
-----
-  # Provide isolation for project p1
-  oc adm pod-network isolate-projects <p1>
-  
-  # Allow all projects with label name=top-secret to have their own isolated project network
-  oc adm pod-network isolate-projects --selector='name=top-secret'
-----
-
-
-
-== oc adm pod-network join-projects
-Join project network
-
-.Example usage
-[source,bash,options="nowrap"]
-----
-  # Allow project p2 to use project p1 network
-  oc adm pod-network join-projects --to=<p1> <p2>
-  
-  # Allow all projects with label name=top-secret to use project p1 network
-  oc adm pod-network join-projects --to=<p1> --selector='name=top-secret'
-----
-
-
-
-== oc adm pod-network make-projects-global
-Make project network global
-
-.Example usage
-[source,bash,options="nowrap"]
-----
-  # Allow project p1 to access all pods in the cluster and vice versa
-  oc adm pod-network make-projects-global <p1>
-  
-  # Allow all projects with label name=share to access all pods in the cluster and vice versa
-  oc adm pod-network make-projects-global --selector='name=share'
 ----
 
 
@@ -837,34 +798,6 @@ Display information about a release
 
 
 
-== oc adm release mirror
-Mirror a release to a different image registry location
-
-.Example usage
-[source,bash,options="nowrap"]
-----
-  # Perform a dry run showing what would be mirrored, including the mirror objects
-  oc adm release mirror 4.11.0 --to myregistry.local/openshift/release \
-  --release-image-signature-to-dir /tmp/releases --dry-run
-  
-  # Mirror a release into the current directory
-  oc adm release mirror 4.11.0 --to file://openshift/release \
-  --release-image-signature-to-dir /tmp/releases
-  
-  # Mirror a release to another directory in the default location
-  oc adm release mirror 4.11.0 --to-dir /tmp/releases
-  
-  # Upload a release from the current directory to another server
-  oc adm release mirror --from file://openshift/release --to myregistry.com/openshift/release \
-  --release-image-signature-to-dir /tmp/releases
-  
-  # Mirror the 4.11.0 release to repository registry.example.com and apply signatures to connected cluster
-  oc adm release mirror --from=quay.io/openshift-release-dev/ocp-release:4.11.0-x86_64 \
-  --to=registry.example.com/your/repository --apply-release-image-signature
-----
-
-
-
 == oc adm release new
 Create a new OpenShift release
 
@@ -969,6 +902,24 @@ Display resource (CPU/memory) usage of nodes
   
   # Show metrics for a given node
   oc adm top node NODE_NAME
+----
+
+
+
+== oc adm top persistentvolumeclaims
+Experimental: Show usage statistics for bound persistentvolumeclaims
+
+.Example usage
+[source,bash,options="nowrap"]
+----
+  # Show usage statistics for all the bound persistentvolumeclaims across the cluster
+  oc adm top persistentvolumeclaims -A
+  
+  # Show usage statistics for all the bound persistentvolumeclaims in a specific namespace
+  oc adm top persistentvolumeclaims -n default
+  
+  # Show usage statistics for specific bound persistentvolumeclaims
+  oc adm top persistentvolumeclaims database-pvc app-pvc -n default
 ----
 
 

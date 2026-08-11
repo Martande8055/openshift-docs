@@ -2,8 +2,12 @@
 //
 // * scalability_and_performance/using-node-tuning-operator.adoc
 
+:_mod-docs-content-type: CONCEPT
 [id="custom-tuning-example_{context}"]
 = Custom tuning examples
+
+[role="_abstract"]
+The following examples demonstrate custom tuning configurations for {product-title} nodes using the Node Tuning Operator.
 
 *Using TuneD profiles from the default CR*
 

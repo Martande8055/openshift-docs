@@ -5,7 +5,8 @@
 [id="cloud-providers_{context}"]
 = Cloud providers
 
+[role="_abstract"]
 {product-title} offers OpenShift Container Platform clusters as a managed service on the following cloud providers:
 
 * Amazon Web Services (AWS)
-* Google Cloud Platform (GCP)
+* {gcp-first}

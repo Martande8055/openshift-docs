@@ -6,9 +6,9 @@
 [id="kmm-observing-events_{context}"]
 = Observing events
 
-Use the following methods to view KMM events.
+[role="_abstract"]
+You can observe Kernel Module Management (KMM) events on {product-title} to monitor kmod image builds, signing, and module load or unload operations. Events attach to `Module` and `Node` objects and appear in `oc describe` output.
 
-[discrete]
 [id="kmm-observing-events-build-and-sign_{context}"]
 == Build & sign
 
@@ -27,7 +27,6 @@ Events:
   Normal  SignSucceeded   57s                kmm   Sign job succeeded for kernel 6.6.2-201.fc39.x86_64
 ----
 
-[discrete]
 [id="kmm-observing-events-module-load-unload_{context}"]
 == Module load or unload
 

@@ -3,10 +3,12 @@
 // * rosa_architecture/rosa-sts-about-iam-resources.adoc
 // * rosa_install_access_delete_clusters/rosa_getting_started_iam/rosa-aws-prereqs.adoc
 
+:_mod-docs-content-type: REFERENCE
 [id="rosa-minimum-scp_{context}"]
 = Minimum set of effective permissions for service control policies (SCP)
 
-Service control policies (SCP) are a type of organization policy that manages permissions within your organization. SCPs ensure that accounts within your organization stay within your defined access control guidelines. These polices are maintained in AWS Organizations and control the services that are available within the attached AWS accounts. SCP management is the responsibility of the customer.
+[role="_abstract"]
+Service control policies (SCP) are a type of organization policy that manages permissions within your organization. SCPs ensure that accounts within your organization stay within your defined access control guidelines. These policies are maintained in AWS organizations and control the services that are available within the attached AWS accounts. SCP management is the responsibility of the customer.
 
 ifeval::["{context}" == "rosa-sts-about-iam-resources"]
 :aws-sts:

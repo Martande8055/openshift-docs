@@ -3,6 +3,7 @@
 // * observability/monitoring/managing-alerts.adoc
 
 :_mod-docs-content-type: PROCEDURE
+
 [id="getting-information-about-alerts-silences-and-alerting-rules_{context}"]
 = Getting information about alerts, silences, and alerting rules
 
@@ -10,13 +11,13 @@ The Alerting UI provides detailed information about alerts and their governing a
 
 .Prerequisites
 
-* You have access to the cluster as a developer or as a user with view permissions for the project that you are viewing alerts for.
+* You have access to the cluster as a user with view permissions for the project that you are viewing alerts for.
 
 .Procedure
 
-*To obtain information about alerts in the Administrator perspective*:
+To obtain information about alerts:
 
-. Open the {product-title} web console and go to the *Observe* -> *Alerting* -> *Alerts* page.
+. In the {product-title} web console, go to the *Observe* -> *Alerting* -> *Alerts* page.
 
 . Optional: Search for alerts by name by using the *Name* field in the search list.
 
@@ -28,13 +29,14 @@ The Alerting UI provides detailed information about alerts and their governing a
 
 * A description of the alert
 * Messages associated with the alert
+* A link to the runbook page on GitHub for the alert, if the page exists
 * Labels attached to the alert
 * A link to its governing alerting rule
 * Silences for the alert, if any exist
 
-*To obtain information about silences in the Administrator perspective*:
+To obtain information about silences:
 
-. Go to the *Observe* -> *Alerting* -> *Silences* page.
+. In the {product-title} web console, go to the *Observe* -> *Alerting* -> *Silences* page.
 
 . Optional: Filter the silences by name using the *Search by name* field.
 
@@ -50,9 +52,9 @@ The Alerting UI provides detailed information about alerts and their governing a
 * Silence state
 * Number and list of firing alerts
 
-*To obtain information about alerting rules in the Administrator perspective*:
+To obtain information about alerting rules:
 
-. Go to the *Observe* -> *Alerting* -> *Alerting rules* page.
+. In the {product-title} web console, go to the *Observe* -> *Alerting* -> *Alerting rules* page.
 
 . Optional: Filter alerting rules by state, severity, and source by selecting filters in the *Filter* list.
 
@@ -65,26 +67,3 @@ The Alerting UI provides detailed information about alerts and their governing a
 * The time for which the condition should be true for an alert to fire.
 * A graph for each alert governed by the alerting rule, showing the value with which the alert is firing.
 * A table of all alerts governed by the alerting rule.
-
-*To obtain information about alerts, silences, and alerting rules in the Developer perspective*:
-
-. Go to the *Observe* -> *<project_name>* -> *Alerts* page.
-
-. View details for an alert, silence, or an alerting rule:
-
-* *Alert details* can be viewed by clicking a greater than symbol (*>*) next to an alert name and then selecting the alert from the list.
-
-* *Silence details* can be viewed by clicking a silence in the *Silenced by* section of the *Alert details* page. The *Silence details* page includes the following information:
-
-** Alert specification
-** Start time
-** End time
-** Silence state
-** Number and list of firing alerts
-
-* *Alerting rule details* can be viewed by clicking the {kebab} menu next to an alert in the *Alerts* page and then clicking *View Alerting Rule*.
-
-[NOTE]
-====
-Only alerts, silences, and alerting rules relating to the selected project are displayed in the *Developer* perspective.
-====

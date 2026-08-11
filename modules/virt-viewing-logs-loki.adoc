@@ -4,13 +4,14 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="virt-viewing-logs-loki_{context}"]
-= Viewing aggregated {VirtProductName} logs with the LokiStack
+= Viewing aggregated {VirtProductName} logs with Loki
 
-You can view aggregated logs for {VirtProductName} pods and containers by using the LokiStack in the web console.
+[role="_abstract"]
+You can use the Loki logging component to view aggregated logs for {VirtProductName} pods and containers in the web console. This is useful for troubleshooting issues and monitoring your {VirtProductName} environment.
 
 .Prerequisites
 
-* You deployed the LokiStack.
+* You have installed the {loki-op} and deployed the `LokiStack` custom resource (CR).
 
 .Procedure
 

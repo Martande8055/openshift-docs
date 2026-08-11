@@ -6,7 +6,8 @@ include::_attributes/common-attributes.adoc[]
 
 toc::[]
 
-After you install an {product-title} version {product-version} cluster, you can set some of its core components to be private.
+[role="_abstract"]
+After installing {product-title}, you can restrict access to cluster DNS, ingress, API server, and Azure registry storage endpoints to make core cluster services private.
 
 include::modules/private-clusters-about.adoc[leveloffset=+1]
 
@@ -14,11 +15,17 @@ include::modules/private-clusters-setting-dns-private.adoc[leveloffset=+1]
 
 include::modules/private-clusters-setting-ingress-private.adoc[leveloffset=+1]
 
-include::modules/private-clusters-setting-api-private.adoc[leveloffset=+1]
+include::modules/private-clusters-setting-api-private-aws.adoc[leveloffset=+1]
 
 [role="_additional-resources"]
 .Additional resources
-* xref:../networking/configuring_ingress_cluster_traffic/nw-configuring-ingress-controller-endpoint-publishing-strategy.adoc#nw-ingresscontroller-change-internal_nw-configuring-ingress-controller-endpoint-publishing-strategy[Configuring the Ingress Controller endpoint publishing scope to Internal]
+* xref:../machine_management/control_plane_machine_management/cpmso-managing-machines.adoc#cpmso-feat-config-update_cpmso-managing-machines[Updating the control plane configuration]
+
+include::modules/private-clusters-setting-api-private-azure.adoc[leveloffset=+1]
+
+[role="_additional-resources"]
+.Additional resources
+* xref:../networking/ingress_load_balancing/configuring_ingress_cluster_traffic/nw-configuring-ingress-controller-endpoint-publishing-strategy.adoc#nw-ingresscontroller-change-internal_nw-configuring-ingress-controller-endpoint-publishing-strategy[Configuring the Ingress Controller endpoint publishing scope to Internal]
 
 include::modules/registry-configuring-private-storage-endpoint-azure.adoc[leveloffset=+1]
 

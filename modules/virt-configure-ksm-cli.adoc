@@ -7,7 +7,12 @@
 [id="virt-configure-ksm-cli_{context}"]
 = Configuring KSM activation by using the CLI
 
+[role="_abstract"]
 You can enable or disable {VirtProductName}'s kernel samepage merging (KSM) activation feature by editing the `HyperConverged` custom resource (CR). Use this method if you want {VirtProductName} to activate KSM on only a subset of nodes.
+
+.Prerequisites
+
+* You have installed the {oc-first}.
 
 .Procedure
 
@@ -15,7 +20,7 @@ You can enable or disable {VirtProductName}'s kernel samepage merging (KSM) acti
 +
 [source,terminal,subs="attributes+"]
 ----
-$ oc edit hyperconverged kubevirt-hyperconverged -n {CNVNamespace}
+$ oc edit {HCOCliKind} kubevirt-hyperconverged -n {CNVNamespace}
 ----
 
 . Edit the `ksmConfiguration` stanza:
@@ -23,13 +28,13 @@ $ oc edit hyperconverged kubevirt-hyperconverged -n {CNVNamespace}
 +
 [source,yaml,subs="attributes+"]
 ----
-apiVersion: hco.kubevirt.io/v1beta1
+apiVersion: hco.kubevirt.io/v1
 kind: HyperConverged
 metadata:
   name: kubevirt-hyperconverged
   namespace: {CNVNamespace}
 spec:
-  configuration:
+  virtualization:
     ksmConfiguration:
       nodeLabelSelector: {}
 # ...
@@ -39,13 +44,13 @@ spec:
 +
 [source,yaml,subs="attributes+"]
 ----
-apiVersion: hco.kubevirt.io/v1beta1
+apiVersion: hco.kubevirt.io/v1
 kind: HyperConverged
 metadata:
   name: kubevirt-hyperconverged
   namespace: {CNVNamespace}
 spec:
-  configuration:
+  virtualization:
     ksmConfiguration:
       nodeLabelSelector:
         matchLabels:
@@ -58,13 +63,13 @@ spec:
 +
 [source,yaml,subs="attributes+"]
 ----
-apiVersion: hco.kubevirt.io/v1beta1
+apiVersion: hco.kubevirt.io/v1
 kind: HyperConverged
 metadata:
   name: kubevirt-hyperconverged
   namespace: {CNVNamespace}
 spec:
-  configuration:
+  virtualization: {}
 # ...
 ----
 

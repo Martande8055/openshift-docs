@@ -4,9 +4,17 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="cleanup-a-backup-oadp-rosa-sts_{context}"]
+ifndef::openshift-rosa,openshift-rosa-hcp[]
 = Cleaning up a cluster after a backup with OADP and ROSA STS
 
-If you need to uninstall the {oadp-first} Operator together with the backups and the S3 bucket from this example, follow these instructions.
+endif::openshift-rosa,openshift-rosa-hcp[]
+ifdef::openshift-rosa,openshift-rosa-hcp[]
+= Cleaning up a cluster after a backup with OADP
+
+endif::openshift-rosa,openshift-rosa-hcp[]
+
+[role="_abstract"]
+Uninstall the {oadp-first} Operator together with the backups and the S3 bucket from the hello-world example.
 
 .Procedure
 
@@ -60,7 +68,7 @@ $ oc delete ns openshift-adp
 +
 [source,terminal]
 ----
-$ oc delete backup hello-world
+$ oc delete backups.velero.io hello-world
 ----
 
 . To delete backup, restore and remote objects in {aws-short} S3 run the following command:

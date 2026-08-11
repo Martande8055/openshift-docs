@@ -1,16 +1,17 @@
 // Module included in the following assemblies:
 //
-// * virt/virtual_machines/virt-accessing-vm-ssh.adoc
+// * virt/managing_vms/ssh/virt-using-services.adoc
 
 :_mod-docs-content-type: PROCEDURE
 [id="virt-creating-service-virtctl_{context}"]
-= Creating a service by using virtctl
+= Create a service with virtctl
 
-You can create a service for a virtual machine (VM) by using the `virtctl` command line tool.
+[role="_abstract"]
+You can create a service for a virtual machine (VM) by using the `virtctl` command-line tool.
 
 .Prerequisites
 
-* You installed the `virtctl` command line tool.
+* You installed the `virtctl` command-line tool.
 * You configured the cluster network to support the service.
 * The environment where you installed `virtctl` has the cluster permissions required to access the VM. For example, you ran `oc login` or you set the `KUBECONFIG` environment variable.
 
@@ -20,11 +21,17 @@ You can create a service for a virtual machine (VM) by using the `virtctl` comma
 +
 [source,terminal]
 ----
-$ virtctl expose vm <vm_name> --name <service_name> --type <service_type> --port <port> <1>
+$ virtctl expose vm <vm_name> --name <service_name> --type <service_type> --port <port>
 ----
-<1> Specify the `ClusterIP`, `NodePort`, or `LoadBalancer` service type.
 +
-.Example
+where:
++
+`<vm_name>`:: Specifies the name of the VM you are exposing.
+`<service_name>`:: Specifies a user-defined name for the service you are creating.
+`<service_type>`:: Specifies one of `ClusterIP`, `NodePort`, or `LoadBalancer`.
+`<port>`:: Specifies the network port on the VM that the service will expose.
++
+Example:
 +
 [source,terminal]
 ----

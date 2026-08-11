@@ -6,7 +6,12 @@
 [id="virt-set-guest-log-single-vm-cli_{context}"]
 = Setting guest system log access for a single VM with the CLI
 
-You can configure access to VM guest system logs for a single VM by editing the `VirtualMachine` CR. This setting takes precedence over the cluster-wide default configuration.
+[role="_abstract"]
+To troubleshoot a specific virtual machine (VM) without changing global settings, you can configure the guest system log access by editing the `VirtualMachine` CR. 
+
+.Prerequisites
+
+* You have installed the {oc-first}.
 
 .Procedure
 
@@ -30,10 +35,11 @@ spec:
     spec:
       domain:
         devices:
-          logSerialConsole: true <1>
+          logSerialConsole: true
 #...
 ----
-<1> To enable access to the guest's serial console log, set the `logSerialConsole` value to `true`.
++
+To enable access to the guest serial console log, set the `logSerialConsole` value to `true`.
 
 . Apply the new configuration to the VM by running the following command:
 +

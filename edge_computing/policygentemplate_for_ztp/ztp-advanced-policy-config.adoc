@@ -7,10 +7,17 @@ include::_attributes/common-attributes.adoc[]
 :policy-prefix:
 :rangen-yaml-path: spec.sourceFiles
 :argocd-folder: out/argocd/example/policygentemplates/
+:path-prefix: policygentemplates
 
 toc::[]
 
 You can use `{policy-gen-cr}` CRs to deploy custom functionality in your managed clusters.
+[IMPORTANT]
+====
+Using {rh-rhacm} and `{policy-gen-cr}` CRs is the recommended approach for managing policies and deploying them to managed clusters.
+This replaces the use of `PolicyGenTemplate` CRs for this purpose.
+For more information about `{policy-gen-cr}` resources, see the {rh-rhacm} link:https://docs.redhat.com/en/documentation/red_hat_advanced_cluster_management_for_kubernetes/{rh-rhacm-version}/html/governance/policy-deployment#integrate-policy-generator[Policy Generator] documentation.
+====
 
 include::snippets/pgt-deprecation-notice.adoc[]
 
@@ -41,7 +48,7 @@ include::modules/ztp-using-pgt-to-configure-power-states.adoc[leveloffset=+1]
 [role="_additional-resources"]
 .Additional resources
 
-* xref:../../scalability_and_performance/low_latency_tuning/cnf-tuning-low-latency-nodes-with-perf-profile.adoc#configuring-workload-hints_cnf-low-latency-perf-profile[Configuring node power consumption and realtime processing with workload hints]
+* xref:../../scalability_and_performance/cnf-tuning-low-latency-nodes-with-perf-profile.adoc#configuring-workload-hints_cnf-tuning-low-latency-nodes-with-perf-profile[Configuring node power consumption and realtime processing with workload hints]
 
 include::modules/ztp-using-pgt-to-configure-performance-mode.adoc[leveloffset=+2]
 
@@ -54,7 +61,7 @@ include::modules/ztp-using-pgt-to-configure-power-saving-mode.adoc[leveloffset=+
 [role="_additional-resources"]
 .Additional resources
 
-* xref:../../scalability_and_performance/low_latency_tuning/cnf-tuning-low-latency-nodes-with-perf-profile.adoc#cnf-configuring-power-saving-for-nodes_cnf-low-latency-perf-profile[Configuring power saving for nodes that run colocated high and low priority workloads]
+* xref:../../scalability_and_performance/cnf-tuning-low-latency-nodes-with-perf-profile.adoc#cnf-configuring-power-saving-for-nodes_cnf-tuning-low-latency-nodes-with-perf-profile[Configuring power saving for nodes that run colocated high and low priority workloads]
 
 * xref:../../edge_computing/ztp-reference-cluster-configuration-for-vdu.adoc#ztp-du-configuring-host-firmware-requirements_sno-configure-for-vdu[Configuring host firmware for low latency and high performance]
 
@@ -101,3 +108,4 @@ include::modules/ztp-configuring-pgt-image-registry.adoc[leveloffset=+2]
 :!policy-prefix:
 :!rangen-yaml-path:
 :!argocd-folder:
+:!path-prefix:

@@ -6,6 +6,11 @@ include::_attributes/common-attributes.adoc[]
 
 toc::[]
 
+:operator-name: vSphere Problem Detector Operator
+
+[role="_abstract"]
+You can use the {operator-name} to check a cluster that you deployed on {vmw-full} for common installation and configuration issues that relate to storage.
+
 // About the operator
 include::modules/vsphere-problem-detector-about.adoc[leveloffset=+1]
 
@@ -30,4 +35,7 @@ include::modules/vsphere-problem-detector-metrics.adoc[leveloffset=+1]
 [role="_additional-resources"]
 == Additional resources
 
-* xref:../../observability/monitoring/monitoring-overview.adoc#monitoring-overview[Monitoring overview]
+* link:https://docs.redhat.com/en/documentation/monitoring_stack_for_red_hat_openshift/latest/html/about_monitoring/about-ocp-monitoring[About {product-title} monitoring]
+
+// Clear temporary attributes
+:!operator-name:

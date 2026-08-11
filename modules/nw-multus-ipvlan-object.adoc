@@ -1,29 +1,28 @@
 // Module included in the following assemblies:
 //
-// * networking/multiple_networks/configuring-additional-network.adoc
 // * microshift_networking/microshift_multiple_networks/microshift_cni_multus.adoc
+// * networking/multiple_networks/secondary_networks/creating-secondary-nwt-other-cni.adoc
 
 //37.1. IPVLAN overview
 // https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/getting-started-with-ipvlan_configuring-and-managing-networking#ipvlan-overview_getting-started-with-ipvlan
 :_mod-docs-content-type: REFERENCE
 
 [id="nw-multus-ipvlan-object_{context}"]
-= Configuration for an ipvlan additional network
+= Configuration for an IPVLAN secondary network
 
-The following object describes the configuration parameters for the IPVLAN CNI plugin:
+[role="_abstract"]
+The IPVLAN CNI plugin JSON configuration object describes the configuration parameters for the IPVLAN, `ipvlan`, CNI plugin. The following table details these parameters:
 
-.IPVLAN CNI plugin JSON configuration object
 [cols=".^2,.^2,.^6",options="header"]
 |====
 |Field|Type|Description
 
 |`cniVersion`
 |`string`
-|The CNI specification version. The `0.3.1` value is required.
-
+|The CNI specification version. A minimum version of `0.3.1` is required.
 |`name`
 |`string`
-|The value for the `name` parameter you provided previously for the CNO configuration.
+|The mandatory, unique identifier assigned to this CNI network attachment definition. It is used by the container runtime to select the correct network configuration and serves as the key for persistent resource state management, such as IP address allocations.
 
 |`type`
 |`string`
@@ -47,7 +46,7 @@ The following object describes the configuration parameters for the IPVLAN CNI p
 
 |`linkInContainer`
 |`boolean`
-|Optional: Specifies whether the master interface is in the container network namespace or the main network namespace. Set the value to `true` to request the use of a container namespace master interface.
+|Optional: Specifies whether the `master` interface is in the container network namespace or the main network namespace. Set the value to `true` to request the use of a container namespace `master` interface.
 
 |====
 
@@ -61,7 +60,7 @@ The following object describes the configuration parameters for the IPVLAN CNI p
 [id="nw-multus-ipvlan-config-example_{context}"]
 == IPVLAN CNI plugin configuration example
 
-The following example configures an additional network named `ipvlan-net`:
+The following example configures a secondary network named `ipvlan-net`:
 
 [source,json]
 ----

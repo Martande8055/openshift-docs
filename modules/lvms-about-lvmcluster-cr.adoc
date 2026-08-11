@@ -6,6 +6,9 @@
 [id="about-lvmcluster_{context}"]
 = About the LVMCluster custom resource
 
+[role="_abstract"]
+The `LVMCluster` custom resource (CR) is the primary configuration for {lvms} deployment, defining how storage is provisioned across your cluster by specifying volume groups, devices, node selection, and thin pool settings to meet your workload requirements.
+
 You can configure the `LVMCluster` CR to perform the following actions:
 
 * Create LVM volume groups that you can use to provision persistent volume claims (PVCs).
@@ -17,7 +20,7 @@ After you have installed {lvms}, you must create an `LVMCluster` custom resource
 
 include::snippets/lvms-creating-lvmcluster.adoc[]
 
-[discrete]
+[id="about-lvmcluster-explain-fields_{context}"]
 == Explanation of fields in the LVMCluster CR
 
 The `LVMCluster` CR fields are described in the following table:
@@ -98,6 +101,7 @@ Wiping the device can lead to inconsistencies in data integrity if any of the fo
 * The device is mounted.
 
 If any of these conditions are true, do not force wipe the disk. Instead, you must manually wipe the disk.
+| deviceClasses.storageClassOptions | object | Optional. Allows customization of the StorageClass created for this device class, including reclaim policy, volume binding mode, additional parameters, and labels. For more information, see "StorageClass customization for LVMS device classes". 
 
 |`deviceClasses.thinPoolConfig`
 |`object`
@@ -127,7 +131,20 @@ By default, this field is set to 90. The minimum value that you can set is 10, a
 |Specify a factor by which you can provision additional storage based on the available storage in the thin pool.
 
 For example, if this field is set to 10, you can provision up to 10 times the amount of available storage in the thin pool.
+You can modify this field after the LVM cluster has been created.
 
+To update the parameter, do any of the following tasks:
+
+* To edit the LVM Cluster, run the following command:
+[source,terminal]
+----
+$ oc edit lvmcluster <lvmcluster_name>
+----
+* To apply a patch, run the following command:
+[source,terminal]
+----
+$ oc patch lvmcluster <lvmcluster_name> -p <patch_file.yaml>
+----
 To disable over-provisioning, set this field to 1.
 
 |`thinPoolConfig.chunkSize`
@@ -140,7 +157,7 @@ For more information, see "Overview of chunk size".
 
 |`thinPoolConfig.chunkSizeCalculationPolicy`
 |`string`
-|Specifies the policy to calculate the chunk size for the underlying volume group. You can set this field to either `Static` or `Host`. By default, this field is set to `Static`. 
+|Specifies the policy to calculate the chunk size for the underlying volume group. You can set this field to either `Static` or `Host`. By default, this field is set to `Static`.
 
 If this field is set to `Static`, the chunk size is set to the value of the `chunkSize` field. If the `chunkSize` field is not configured, chunk size is set to 128 KiB.
 
@@ -148,8 +165,19 @@ If this field is set to `Host`, the chunk size is calculated based on the config
 
 For more information, see "Limitations to configure the size of the devices used in LVM Storage".
 
+|`thinPoolConfig.metadataSize`
+|`integer`
+|Specifies the metadata size for the thin pool. You can configure this field only when the `MetadataSizeCalculationPolicy` field is set to `Static`. 
+
+If this field is not configured, and the `MetadataSizeCalculationPolicy` field is set to `Static`, the default metadata size is set to 1 GiB. 
+
+The value for this field must be configured in the range of 2 MiB to 16 GiB due to the underlying limitations of `lvm2`. You can only increase the value of this field during updates.
+
+|`thinPoolConfig.metadataSizeCalculationPolicy`
+|`string`
+|Specifies the policy to calculate the metadata size for the underlying volume group. You can set this field to either `Static` or `Host`. By default, this field is set to `Host`.
+
+If this field is set to `Static`, the metadata size is calculated based on the value of the `thinPoolConfig.metadataSize` field. 
+
+If this field is set to `Host`, the metadata size is calculated based on the `lvm2` settings. 
 |====
-
-
-
-

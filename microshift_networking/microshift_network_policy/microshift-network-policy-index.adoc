@@ -3,9 +3,11 @@
 = About network policies
 include::_attributes/attributes-microshift.adoc[]
 :context: microshift-network-policies
+
 toc::[]
 
-Learn how network policies work for {microshift-short} to restrict or allow network traffic to pods in your cluster.
+[role="_abstract"]
+Learn how network policies work for {microshift-short} to restrict or allow network traffic to pods in your node.
 
 include::modules/microshift-nw-network-policy-intro.adoc[leveloffset=+1]
 

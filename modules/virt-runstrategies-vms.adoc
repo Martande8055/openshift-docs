@@ -1,24 +1,31 @@
 // Module included in the following assemblies:
 //
-// * virt/nodes/virt-node-maintenance.adoc
+// * virt/nodes/virt-eviction-strategies.adoc
 
 :_mod-docs-content-type: REFERENCE
 [id="virt-runstrategies-vms_{context}"]
 = Run strategies
 
-The `spec.runStrategy` key has four possible values:
+[role="_abstract"]
+The `spec.runStrategy` key determines how a VM behaves under certain conditions.
+This key has four possible values: `Always`, `RerunOnFailure`, `Manual`, and `Halted`.
 
 `Always`::
-The virtual machine instance (VMI) is always present when a virtual machine (VM) is created on another node. A new VMI is created if the original stops for any reason. This is the same behavior as `running: true`.
+The virtual machine instance (VMI) is always present when a virtual machine (VM) is created on another node. A new VMI is created if the original stops for any reason.
 
 `RerunOnFailure`::
 The VMI is re-created on another node if the previous instance fails. The instance is not re-created if the VM stops successfully, such as when it is shut down.
++
+[IMPORTANT]
+====
+Setting `spec.runStrategy: RerunOnFailure` is an explicit command to start the VM. If the VM is intentionally stopped and you do not want it to start, do not change the run strategy value to `RerunOnFailure`.
+====
 
 `Manual`::
 You control the VMI state manually with the `start`, `stop`, and `restart` virtctl client commands. The VM is not automatically restarted.
 
 `Halted`::
-No VMI is present when a VM is created. This is the same behavior as `running: false`.
+No VMI is present when a VM is created.
 
 Different combinations of the `virtctl start`, `stop` and `restart` commands affect the run strategy.
 
@@ -35,8 +42,8 @@ The following table describes a VM's transition between states. The first column
 |Always
 
 |RerunOnFailure
-|-
-|Halted
+|RerunOnFailure
+|RerunOnFailure
 |RerunOnFailure
 
 |Manual
@@ -54,4 +61,3 @@ The following table describes a VM's transition between states. The first column
 ====
 If a node in a cluster installed by using installer-provisioned infrastructure fails the machine health check and is unavailable, VMs with `runStrategy: Always` or `runStrategy: RerunOnFailure` are rescheduled on a new node.
 ====
-

@@ -14,7 +14,6 @@
 // * installing/installaing_aws/installing-aws-wavelength-zone.adoc
 // * installing/installing_azure/installing-azure-customizations.adoc
 // * installing/installing_azure/installing-azure-government-region.adoc
-// * installing/installing_azure/installing-azure-network-customizations.adoc
 // * installing/installing_azure/installing-azure-private.adoc
 // * installing/installing_azure/installing-azure-vnet.adoc
 // * installing/installing_azure/installing-azure-user-infra.adoc
@@ -35,19 +34,15 @@
 // * installing/installing_ibm_powervs/installing-ibm-power-vs-private-cluster.adoc
 // * installing/installing_ibm_powervs/installing-restricted-networks-ibm-power-vs.adoc
 // * installing/installing_ibm_powervs/installing-ibm-powervs-vpc.adoc
-// * installing/installing_ibm_z/installing-ibm-z.adoc
-// * installing/installing_ibm_z/installing-restricted-networks-ibm-z.adoc
-// * installing/installing_ibm_z/installing-ibm-z-lpar.adoc
-// * installing/installing_ibm_z/installing-restricted-networks-ibm-z-lpar.adoc
-// * installing/installing_ibm_cloud/installing-ibm-cloud-customizations.adoc
-// * installing/installing_ibm_cloud/installing-ibm-cloud-network-customizations.adoc
-// * installing/installing_ibm_cloud/installing-ibm-cloud-private.adoc
-// * installing/installing_ibm_cloud/installing-ibm-cloud-vpc.adoc
-// * installing/installing_ibm_cloud/installing-ibm-cloud-restricted.adoc
+// * installing/installing_ibm_cloud_public/installing-ibm-cloud-customizations.adoc
+// * installing/installing_ibm_cloud_public/installing-ibm-cloud-private.adoc
+// * installing/installing_ibm_cloud_public/installing-ibm-cloud-vpc.adoc
+// * installing/installing_ibm_cloud_public/installing-ibm-cloud-restricted.adoc
 // * installing/installing-restricted-networks-azure-installer-provisioned.adoc
 // * installing/installing_azure/installing-restricted-networks-azure-user-provisioned.adoc
 // * installing/installing_vsphere/upi/upi-vsphere-installation-reqs.adoc
-// * installing/installing_bare_metal/ipi/ipi-install-prerequisites.adoc
+// * installing/installing_bare_metal_ipi/ipi-install-prerequisites.adoc
+// * installing/installing_ibm_z/installing-ibm-z-reqs.adoc
 
 ifeval::["{context}" == "installing-azure-customizations"]
 :azure:
@@ -97,22 +92,10 @@ endif::[]
 ifeval::["{context}" == "installing-restricted-networks-ibm-power-vs"]
 :ibm-power:
 endif::[]
-ifeval::["{context}" == "installing-ibm-z"]
-:ibm-z:
-endif::[]
-ifeval::["{context}" == "installing-restricted-networks-ibm-z"]
-:ibm-z:
-endif::[]
-ifeval::["{context}" == "installing-ibm-z-lpar"]
-:ibm-z:
-endif::[]
-ifeval::["{context}" == "installing-restricted-networks-ibm-z-lpar"]
+ifeval::["{context}" == "installing-ibm-z-reqs"]
 :ibm-z:
 endif::[]
 ifeval::["{context}" == "installing-ibm-cloud-customizations"]
-:ibm-cloud-vpc:
-endif::[]
-ifeval::["{context}" == "installing-ibm-cloud-network-customizations"]
 :ibm-cloud-vpc:
 endif::[]
 ifeval::["{context}" == "installing-ibm-cloud-vpc"]
@@ -132,7 +115,8 @@ endif::[]
 [id="installation-minimum-resource-requirements_{context}"]
 = Minimum resource requirements for cluster installation
 
-Each cluster machine must meet the following minimum requirements:
+[role="_abstract"]
+Each created cluster must meet minimum requirements so that the cluster runs as expected.
 
 .Minimum resource requirements
 [cols="2,2,2,2,2,2",options="header"]
@@ -195,8 +179,8 @@ endif::ibm-z[]
 ifndef::openshift-origin[]
 |Compute
 ifdef::ibm-z,ibm-power,ibm-cloud-vpc,ipi-bare-metal[|{op-system}]
-ifndef::ibm-z,ibm-power,ibm-cloud-vpc,vsphere,ipi-bare-metal[|{op-system}, {op-system-base} 8.6 and later ^[3]^]
-ifdef::vsphere[|{op-system}, {op-system-base} 8.6 and later ^[2]^]
+ifndef::ibm-z,ibm-power,ibm-cloud-vpc,vsphere,ipi-bare-metal[|{op-system}]
+ifdef::vsphere[|{op-system}]
 |2
 |8 GB
 |100 GB
@@ -247,14 +231,14 @@ endif::vsphere[]
 --
 [NOTE]
 ====
-As of {product-title} version 4.13, RHCOS is based on RHEL version 9.2, which updates the micro-architecture requirements. The following list contains the minimum instruction set architectures (ISA) that each architecture requires:
+For {product-title} version 4.22, {op-system} is based on {op-system-base} version 9.8, which has the micro-architecture requirements. The following list contains the minimum instruction set architectures (ISA) that each architecture requires:
 
 * x86-64 architecture requires x86-64-v2 ISA
 * ARM64 architecture requires ARMv8.0-A ISA
 * IBM Power architecture requires Power 9 ISA
 * s390x architecture requires z14 ISA
 
-For more information, see link:https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/9.0_release_notes/index#architectures[RHEL Architectures].
+For more information, see "Architectures" in the {op-system-base} documentation.
 ====
 
 ifdef::azure[]
@@ -277,8 +261,17 @@ Do not use memory ballooning in {product-title} clusters. Memory ballooning can 
 
 These minimum CPU and memory requirements do not account for resources required by user workloads.
 
-For more information, see the Red Hat Knowledgebase article link:https://access.redhat.com/articles/7074533[Memory Ballooning and OpenShift].
+For more information, see "Memory Ballooning and OpenShift".
 ====
+endif::vsphere[]
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/9.2_release_notes/index#architectures[Architectures ({op-system-base} documentation)]
+
+ifdef::vsphere[]
+* link:https://access.redhat.com/articles/7074533[Memory Ballooning and OpenShift (Red{nbsp}Hat Knowledgebase article)]
 endif::vsphere[]
 
 ifeval::["{context}" == "installing-azure-customizations"]
@@ -329,22 +322,10 @@ endif::[]
 ifeval::["{context}" == "installing-restricted-networks-ibm-power-vs"]
 :!ibm-power:
 endif::[]
-ifeval::["{context}" == "installing-ibm-z"]
-:!ibm-z:
-endif::[]
-ifeval::["{context}" == "installing-restricted-networks-ibm-z"]
-:!ibm-z:
-endif::[]
-ifeval::["{context}" == "installing-ibm-z-lpar"]
-:!ibm-z:
-endif::[]
-ifeval::["{context}" == "installing-restricted-networks-ibm-z-lpar"]
+ifeval::["{context}" == "installing-ibm-z-reqs"]
 :!ibm-z:
 endif::[]
 ifeval::["{context}" == "installing-ibm-cloud-customizations"]
-:!ibm-cloud-vpc:
-endif::[]
-ifeval::["{context}" == "installing-ibm-cloud-network-customizations"]
 :!ibm-cloud-vpc:
 endif::[]
 ifeval::["{context}" == "installing-ibm-cloud-vpc"]

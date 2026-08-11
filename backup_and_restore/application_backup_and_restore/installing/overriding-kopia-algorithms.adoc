@@ -7,7 +7,8 @@ include::_attributes/common-attributes.adoc[]
 
 toc::[]
 
-You can override the default values of Kopia hashing, encryption, and splitter algorithms by using specific environment variables in the Data Protection Application (DPA).
+[role="_abstract"]
+Override the default values of Kopia hashing, encryption, and splitter algorithms by using specific environment variables in the Data Protection Application (DPA).
 
 // configuring the DPA with Kopia environment variables
 include::modules/oadp-kopia-configuring-algorithms.adoc[leveloffset=+1]

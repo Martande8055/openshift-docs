@@ -9,21 +9,22 @@
 [id="olm-deleting-operators-from-a-cluster-using-web-console_{context}"]
 = Deleting Operators from a cluster using the web console
 
+[role="_abstract"]
 Cluster administrators can delete installed Operators from a selected namespace by using the web console.
 
 .Prerequisites
 
-- You have access to an {product-title} cluster web console using an account with
+- You have access to the {product-title} cluster web console using an account with
 ifdef::openshift-enterprise,openshift-webscale,openshift-origin[]
 `cluster-admin` permissions.
 endif::[]
-ifdef::openshift-dedicated,openshift-rosa[]
+ifdef::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
 `dedicated-admin` permissions.
-endif::openshift-dedicated,openshift-rosa[]
+endif::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
 
 .Procedure
 
-. Navigate to the *Operators* → *Installed Operators* page.
+. Navigate to the *Ecosystem* -> *Installed Operators* page.
 
 . Scroll or enter a keyword into the *Filter by name* field to find the Operator that you want to remove. Then, click on it.
 

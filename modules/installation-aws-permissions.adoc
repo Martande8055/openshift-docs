@@ -4,16 +4,19 @@
 // * installing/installing_aws/installing-aws-account.adoc
 // * installing/installing_aws/installing-restricted-networks-aws.adoc
 
+:_mod-docs-content-type: REFERENCE
 [id="installation-aws-permissions_{context}"]
-= Required AWS permissions for the IAM user
+= Required {aws-short} permissions for the IAM user
+
+[role="_abstract"]
+To deploy all components of an {product-title} cluster, you must grant the all the required permissions to the IAM user that you create in {aws-first}.
 
 [NOTE]
 ====
-Your IAM user must have the permission `tag:GetResources` in the region `us-east-1` to delete the base cluster resources. As part of the AWS API requirement, the {product-title} installation program performs various actions in this region.
+Your IAM user must have the permission `tag:GetResources` in the region `us-east-1` to delete the base cluster resources. As part of the {aws-short} API requirement, the {product-title} installation program performs various actions in this region.
 ====
 
-When you attach the `AdministratorAccess` policy to the IAM user that you create in Amazon Web Services (AWS),
-you grant that user all of the required permissions. To deploy all components of an {product-title}
+When you attach the `AdministratorAccess` policy to the IAM user that you create in {aws-first}, you grant that user all of the required permissions. To deploy all components of an {product-title}
 cluster, the IAM user requires the following permissions:
 
 .Required EC2 permissions for installation
@@ -40,6 +43,7 @@ cluster, the IAM user requires the following permissions:
 * `ec2:DescribeInstanceCreditSpecifications`
 * `ec2:DescribeInstances`
 * `ec2:DescribeInstanceTypes`
+* `ec2:DescribeInstanceTypeOfferings`
 * `ec2:DescribeInternetGateways`
 * `ec2:DescribeKeyPairs`
 * `ec2:DescribeNatGateways`
@@ -156,7 +160,7 @@ If you use an existing Virtual Private Cloud (VPC), your account does not requir
 =====
 * If you specify an existing IAM role in the `install-config.yaml` file, the following IAM permissions are not required: `iam:CreateRole`,`iam:DeleteRole`, `iam:DeleteRolePolicy`, and `iam:PutRolePolicy`.
 
-* If you have not created a load balancer in your AWS account, the IAM user also requires the `iam:CreateServiceLinkedRole` permission.
+* If you have not created a load balancer in your {aws-short} account, the IAM user also requires the `iam:CreateServiceLinkedRole` permission.
 =====
 ====
 
@@ -269,12 +273,23 @@ If you use an existing VPC, your account does not require these permissions to d
 * `kms:GenerateDataKeyWithoutPlainText`
 * `kms:ListGrants`
 * `kms:RevokeGrant`
+
+[NOTE]
+=====
+If you provide an Amazon Machine Image (AMI) that is encrypted with a customer-managed key, you must provide the `kms:ReEncrypt*` permissions in addition to these permissions.
+=====
 ====
 
 .Required permissions to delete a cluster with shared instance roles
 [%collapsible]
 ====
 * `iam:UntagRole`
+====
+
+.Required permissions to delete a cluster with shared instance profiles
+[%collapsible]
+====
+* `tag:UntagResources`
 ====
 
 .Additional IAM and S3 permissions that are required to create manifests
@@ -300,7 +315,6 @@ If you are managing your cloud provider credentials with mint mode, the IAM user
 .Optional permissions for instance and quota checks for installation
 [%collapsible]
 ====
-* `ec2:DescribeInstanceTypeOfferings`
 * `servicequotas:ListAWSDefaultServiceQuotas`
 ====
 
@@ -315,4 +329,17 @@ If you are managing your cloud provider credentials with mint mode, the IAM user
 ====
 * `ec2:DescribePublicIpv4Pools`
 * `ec2:DisassociateAddress`
+====
+
+.Required permissions to install a cluster with dual-stack networking
+[%collapsible]
+====
+* `ec2:DescribeEgressOnlyInternetGateways`
+* `ec2:CreateEgressOnlyInternetGateway`
+====
+
+.Required permissions to delete a cluster with dual-stack networking
+[%collapsible]
+====
+* `ec2:DeleteEgressOnlyInternetGateway`
 ====

@@ -6,6 +6,7 @@
 [id="virt-adding-vm-to-service-mesh_{context}"]
 = Adding a virtual machine to a service mesh
 
+[role="_abstract"]
 To add a virtual machine (VM) workload to a service mesh, enable automatic sidecar injection in the VM configuration file by setting the `sidecar.istio.io/inject` annotation to `true`. Then expose your VM as a service to view your application in the mesh.
 
 [IMPORTANT]
@@ -15,15 +16,15 @@ To avoid port conflicts, do not use ports used by the Istio sidecar proxy. These
 
 .Prerequisites
 
-* You installed the Service Mesh Operators.
-* You created the Service Mesh control plane.
-* You added the VM project to the Service Mesh member roll.
+* You have installed the {oc-first}.
+* You have installed the {SMProductShortName} Operator.
 
 .Procedure
 
-. Edit the VM configuration file to add the `sidecar.istio.io/inject: "true"` annotation:
+. Edit the VM configuration file to add the `sidecar.istio.io/inject: "true"` annotation.
 +
-.Example configuration file
+Example configuration file:
++
 [source,yaml]
 ----
 apiVersion: kubevirt.io/v1
@@ -38,15 +39,15 @@ spec:
     metadata:
       labels:
         kubevirt.io/vm: vm-istio
-        app: vm-istio <1>
+        app: vm-istio
       annotations:
-        sidecar.istio.io/inject: "true" <2>
+        sidecar.istio.io/inject: "true"
     spec:
       domain:
         devices:
           interfaces:
           - name: default
-            masquerade: {} <3>
+            masquerade: {}
           disks:
           - disk:
               bus: virtio
@@ -66,20 +67,23 @@ spec:
           image: registry:5000/kubevirt/fedora-cloud-container-disk-demo:devel
         name: containerdisk
 ----
-<1> The key/value pair (label) that must be matched to the service selector attribute.
-<2> The annotation to enable automatic sidecar injection.
-<3> The binding method (masquerade mode) for use with the default pod network.
+** `spec.template.metadata.labels.app` specifies the key/value pair (label) that must be matched to the service selector attribute.
+** `spec.template.metadata.annotations.sidecar.istio.io/inject` is the annotation to enable automatic sidecar injection.
+** `spec.template.spec.domain.devices.interfaces.masquerade` is the binding method (masquerade mode) for use with the default pod network.
 
-. Apply the VM configuration:
+. Run the following command to apply the VM configuration:
 +
 [source,terminal]
 ----
-$ oc apply -f <vm_name>.yaml <1>
+$ oc apply -f <vm_name>.yaml
 ----
-<1> The name of the virtual machine YAML file.
++
+where:
++
+`<vm_name>`:: Specifies the name of the virtual machine YAML file.
 
 
-. Create a `Service` object to expose your VM to the service mesh.
+. Create a `Service` object to expose your VM to the service mesh:
 +
 [source,yaml]
 ----
@@ -89,18 +93,21 @@ metadata:
   name: vm-istio
 spec:
   selector:
-    app: vm-istio <1>
+    app: vm-istio
   ports:
     - port: 8080
       name: http
       protocol: TCP
 ----
-<1> The service selector that determines the set of pods targeted by a service. This attribute corresponds to the `spec.metadata.labels` field in the VM configuration file. In the above example, the `Service` object named `vm-istio` targets TCP port 8080 on any pod with the label `app=vm-istio`.
+** `spec.selector.app` specifies the service selector that determines the set of pods targeted by a service. This attribute corresponds to the `spec.metadata.labels` field in the VM configuration file. In the above example, the `Service` object named `vm-istio` targets TCP port 8080 on any pod with the label `app=vm-istio`.
 
-. Create the service:
+. Run the following command to create the service:
 +
 [source,terminal]
 ----
-$ oc create -f <service_name>.yaml <1>
+$ oc create -f <service_name>.yaml
 ----
-<1> The name of the service YAML file.
++
+where:
++
+`<service_name>`:: Specifies the name of the service YAML file.

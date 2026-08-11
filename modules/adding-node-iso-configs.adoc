@@ -6,14 +6,12 @@
 [id="adding-node-iso-configs_{context}"]
 = Cluster configuration reference
 
-When creating the ISO image, configurations are retrieved from the target cluster and are applied to the new nodes.
-Any configurations for your cluster are applied to the nodes unless you override the configurations in either the `nodes-config.yaml` file or any flags you add to the `oc adm node-image create` command.
+[role="_abstract"]
+When creating the ISO image, configurations are retrieved from the target cluster and are applied to the new nodes. You can override these configurations by specifying new values in either the `nodes-config.yaml` file or any flags you add to the `oc adm node-image create` command before you create the ISO image.
 
-[id="adding-node-iso-yaml-config_{context}"]
-== YAML file parameters
-
+YAML file parameters::
 Configuration parameters that can be specified in the `nodes-config.yaml` file are described in the following table:
-
++
 .`nodes-config.yaml` parameters
 [cols=".^4l,.^3,.^2",options="header"]
 |====
@@ -68,27 +66,30 @@ For more information, see "Root device hints" in the "Setting up the environment
 The configuration must match the Host Network Management API defined in the link:https://nmstate.io/[nmstate documentation].
 |A dictionary of host network configuration objects.
 
-|cpuArchitecture
+|cpuArchitecture:
 |Optional.
 Specifies the architecture of the nodes you are adding.
 This parameter allows you to override the default value from the cluster when required.
 |String.
 
-|sshKey
+|sshKey:
 |Optional.
 The file containing the SSH key to authenticate access to your cluster machines.
 |String.
 
+|bootArtifactsBaseURL:
+|Optional.
+Specifies the URL of the server to upload Preboot Execution Environment (PXE) assets to when you are generating an iPXE script.
+You must also set the `--pxe` flag to generate PXE assets instead of an ISO image.
+|String.
+
 |====
 
-
-[id="adding-node-iso-flags-config_{context}"]
-== Command flag options
-
+Command flag options::
 You can use command flags with the `oc adm node-image create` command to configure the nodes you are creating.
-
++
 The following table describes command flags that are not limited to the single-node use case:
-
++
 .General command flags
 [cols=".^4,.^3,.^2",options="header"]
 |====
@@ -112,12 +113,23 @@ This path is also used to store the generated artifacts.
 |The name of the generated output image.
 |String
 
+|`p`, `--pxe`
+|Generates Preboot Execution Environment (PXE) assets instead of a bootable ISO file.
+
+When this flag is set, you can also use the `bootArtifactsBaseURL` parameter in the `nodes-config.yaml` file to specify URL of the server you will upload PXE assets to.
+|Boolean
+
 |`-a`, `--registry-config`
 |The path to your registry credentials.
 Alternatively, you can specify the `REGISTRY_AUTH_FILE` environment variable.
 The default paths are `${XDG_RUNTIME_DIR}/containers/auth.json`, `/run/containers/${UID}/auth.json`, `${XDG_CONFIG_HOME}/containers/auth.json`, `${DOCKER_CONFIG}`, `~/.docker/config.json`, `~/.dockercfg.`
 The order can be changed through the deprecated `REGISTRY_AUTH_PREFERENCE` environment variable to a "docker" value, in order to prioritize Docker credentials over Podman.
 |String
+
+|`-r`, `--report`
+|Generates a report of the node creation process regardless of whether the process is successful or not.
+If you do not specify this flag, reports are generated only in cases of failure.
+|Boolean
 
 |`--skip-verification`
 |An option to skip verifying the integrity of the retrieved content.
@@ -126,9 +138,9 @@ Bypass verification only if the registry is known to be trustworthy.
 |Boolean
 
 |====
-
++
 The following table describes command flags that can be used only when creating a single node:
-
++
 .Single-node only command flags
 [cols=".^4,.^3,.^2",options="header"]
 |====

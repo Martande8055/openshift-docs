@@ -62,9 +62,13 @@ Filters:: Transform or drop log messages in the pipeline. Users can define filte
 
 Inputs are configured in an array under `spec.inputs`. There are three built-in input types:
 
-application:: Selects logs from all application containers, excluding those in infrastructure namespaces such as `default`, `openshift`, or any namespace with the `kube-` or `openshift-` prefix.
+application:: Selects logs from all application containers, excluding those in infrastructure namespaces.
 
-infrastructure:: Selects logs from infrastructure components running in `default` and `openshift` namespaces and node logs.
+infrastructure:: Selects logs from nodes and from infrastructure components running in the following namespaces:
+** `default`
+** `kube`
+** `openshift`
+** Containing the `kube-` or `openshift-` prefix
 
 audit:: Selects logs from the OpenShift API server audit logs, Kubernetes API server audit logs, ovn audit logs, and node audit logs from auditd.
 
@@ -76,8 +80,8 @@ Outputs are configured in an array under `spec.outputs`. Each output must have a
 
 azureMonitor:: Forwards logs to Azure Monitor.
 cloudwatch:: Forwards logs to AWS CloudWatch.
-elasticsearch:: Forwards logs to an external Elasticsearch instance.
-googleCloudLogging:: Forwards logs to Google Cloud Logging.
+//elasticsearch:: Forwards logs to an external Elasticsearch instance.
+googleCloudLogging:: Forwards logs to {gcp-full} Logging.
 http:: Forwards logs to a generic HTTP endpoint.
 kafka:: Forwards logs to a Kafka broker.
 loki:: Forwards logs to a Loki logging backend.

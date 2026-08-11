@@ -17,14 +17,37 @@ fi
 
 FILES=$(git diff --name-only HEAD~1 HEAD --diff-filter=d "*.adoc" ':(exclude)_unused_topics/*' ':(exclude)rest_api/*' ':(exclude)microshift_rest_api/*' ':(exclude)modules/virt-runbook-*' ':(exclude)modules/oc-by-example-content.adoc' ':(exclude)modules/oc-adm-by-example-content.adoc' ':(exclude)monitoring/config-map-reference-for-the-cluster-monitoring-operator.adoc' ':(exclude)modules/microshift-oc-adm-by-example-content.adoc' ':(exclude)modules/microshift-oc-by-example-content.adoc')
 
-function post_review_comment {
 
+function post_review_comment {
     LINE_NUMBER=$3
     BODY=$1
     FILENAME=$2
+    SUBJECT_TYPE=${4:-"line"}  # Default to "line", but will use "file" for file-level comments
+    # Use jq to excruciatingly craft JSON payload
+    # jq -n because we're constructing from scratch per https://jqlang.org/manual/
+    # --arg for string, --argjson for integer
+    # body constructed from https://docs.github.com/en/rest/pulls/comments?apiVersion=2022-11-28#create-a-review-comment-for-a-pull-request
+    
     echo "Sending review comment curl request..."
-    curl -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_AUTH_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/openshift/openshift-docs/pulls/$PULL_NUMBER/comments -d '{"body":"'"$BODY"'","commit_id":"'"$COMMIT_ID"'","path":"'"$FILENAME"'","line":'"$LINE_NUMBER"',"side":"RIGHT"}'
-
+    if [[ "$SUBJECT_TYPE" == "file" ]]; then
+        # File-level comment - no diff to apply to 
+        payload=$(jq -n \
+            --arg body "$BODY" \
+            --arg commit_id "$COMMIT_ID" \
+            --arg path "$FILENAME" \
+            '{body: $body, commit_id: $commit_id, path: $path, subject_type: "file"}')
+    else
+        # Line-level comment
+        payload=$(jq -n \
+            --arg body "$BODY" \
+            --arg commit_id "$COMMIT_ID" \
+            --arg path "$FILENAME" \
+            --argjson line "$LINE_NUMBER" \
+            '{body: $body, commit_id: $commit_id, path: $path, line: $line, side: "RIGHT"}')
+    fi
+    
+    echo "DEBUG payload:" "$payload"
+    curl -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_AUTH_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/openshift/openshift-docs/pulls/$PULL_NUMBER/comments -d "$payload"
 }
 
 function get_vale_errors {
@@ -32,11 +55,24 @@ function get_vale_errors {
     local vale_json="$1"
     local pull_comments_json="$2"
 
+    # Create temp files to avoid shell argument size limits
+    # Hopefully fixes arg size error...
+    local vale_file=$(mktemp)
+    local comments_file=$(mktemp)
+    echo "$vale_json" > "$vale_file"
+    echo "$pull_comments_json" > "$comments_file"
+    
     # jq map and filter to retain only Vale alerts that don't already have a corresponding review comment on the PR
-    updated_vale_json=$(jq -n --argjson vale "$vale_json" --argjson comments "$pull_comments_json" '$vale | map(select(. as $v | $comments | any(.path == $v.path and .line == $v.line and .body == $v.body) | not))' | jq)
-
+    # read json from temp files
+    updated_vale_json=$(jq -n \
+        --slurpfile vale "$vale_file" \
+        --slurpfile comments "$comments_file" \
+        '$vale[0] | map(select(. as $v | $comments[0] | any(.path == $v.path and .line == $v.line and .body == $v.body) | not))')
+    
+    # clean up
+    rm -f "$vale_file" "$comments_file"
+    
     export updated_vale_json
-
 }
 
 # Run vale with the custom template on updated files and determine if a review comment should be posted
@@ -50,7 +86,11 @@ do
     fi
 
     # Update conditional markup in place
-    sed -i 's/ifdef::.*/ifdef::temp-ifdef[]/; s/ifeval::.*/ifeval::["{temp-ifeval}" == "temp"]/; s/ifndef::.*/ifndef::temp-ifndef[]/; s/endif::.*/endif::[]/;' "$FILE"
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        sed -i '' 's/ifdef::.*/ifdef::temp-ifdef[]/; s/ifeval::.*/ifeval::["{temp-ifeval}" == "temp"]/; s/ifndef::.*/ifndef::temp-ifndef[]/; s/endif::.*/endif::[]/;' "$FILE"
+    else
+        sed -i 's/ifdef::.*/ifdef::temp-ifdef[]/; s/ifeval::.*/ifeval::["{temp-ifeval}" == "temp"]/; s/ifndef::.*/ifndef::temp-ifndef[]/; s/endif::.*/endif::[]/;' "$FILE"
+    fi
 
     # Parse for vale errors
     vale_json=$(vale --minAlertLevel=error --output=.vale/templates/bot-comment-output.tmpl --config="$INI" "$FILE" | jq)
@@ -60,7 +100,7 @@ do
         echo "Vale errors found in the file..."
 
         #Check if Vale review comments already exist in the PR
-        pull_comments_json=$(curl -L -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_AUTH_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/openshift/openshift-docs/pulls/$PULL_NUMBER/comments | jq)
+        pull_comments_json=$(curl -L -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_AUTH_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/repos/openshift/openshift-docs/pulls/$PULL_NUMBER/comments?per_page=100" | jq)
 
         # If there are existing comments in the response, compare with Vale errors, otherwise proceed with existing Vale errors
         if [[ "$pull_comments_json" != "[]" ]]; then
@@ -89,6 +129,13 @@ do
         FILENAME=$(echo "$object" | jq -r '.path')
         LINE_NUMBER=$(echo "$object" | jq -r '.line')
         
+        # Line 1 errors from Vale likely to be file-level issues - post as file-level comment
+        if [[ "$LINE_NUMBER" -eq 1 ]]; then
+            post_review_comment "$BODY" "$FILENAME" "" "file"
+            sleep 1
+            continue
+        fi
+        
         # Check the unified file diff for the alert and file
         file_diff=$(git diff --unified=0 --stat --diff-filter=AM HEAD~1 HEAD "${FILENAME}" ':(exclude)_unused_topics/*')
         
@@ -103,13 +150,21 @@ do
 
                 # Check if there is a comma in the number pairing before @@
                 if [[ $line =~ \+.*\,.*\ @@ ]]; then
-                    # There are comma separated numbers before closing @@. Grab the number before the comma as the diff_start_line, after the comma is the added_lines. 
-                    added_lines=$(echo "$line" | grep -oP '\d+\s+@@' | grep -oP '\d+')
+                    # There are comma separated numbers before closing @@. Grab the number before the comma as the diff_start_line, after the comma is the added_lines.
+                    if [[ "$OSTYPE" == "darwin"* ]]; then
+                        added_lines=$(echo "$line" | grep -oE '[0-9]+[[:space:]]+@@' | grep -oE '[0-9]+')
+                    else
+                        added_lines=$(echo "$line" | grep -oP '\d+\s+@@' | grep -oP '\d+')
+                    fi
                     diff_start_line=$(echo "$line" | awk -F'+' '{print $2}' | awk -F',' '{print $1}')
                 else
                     # There are no comma seperated numbers. Consider the number after the plus as diff_start_line with no added lines - this means there's a modification on a single line
                     added_lines=0
-                    diff_start_line=$(echo "$line" | grep -oP '\+\d+\s+@@' | grep -oP '\d+')
+                    if [[ "$OSTYPE" == "darwin"* ]]; then
+                        diff_start_line=$(echo "$line" | grep -oE '\+[0-9]+[[:space:]]+@@' | grep -oE '[0-9]+')
+                    else
+                        diff_start_line=$(echo "$line" | grep -oP '\+\d+\s+@@' | grep -oP '\d+')
+                    fi
                 fi
 
                 # If the last_number is 0, disregard the hunk and move to the next hunk as zero lines were modified (deletions only)
@@ -121,6 +176,7 @@ do
                 if (( LINE_NUMBER >= diff_start_line && LINE_NUMBER <= diff_start_line + added_lines )); then
 
                     post_review_comment "$BODY" "$FILENAME" "$LINE_NUMBER"
+                    sleep 1  # Pause between POST requests to avoid limiting
                     
                     break  # Exit the loop since the alert is within the diff, move on to the next JSON object
                 else

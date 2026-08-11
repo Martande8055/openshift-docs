@@ -1,4 +1,4 @@
-:_mod-docs-content-type: ASSEMBLY
+:_mod-docs-content-type: REFERENCE
 [id="virt-runbooks"]
 = {VirtProductName} runbooks
 include::_attributes/common-attributes.adoc[]
@@ -7,300 +7,283 @@ include::_attributes/common-attributes.adoc[]
 toc::[]
 
 :!virt-runbooks:
-To diagnose and resolve issues that trigger {VirtProductName} xref:../../observability/monitoring/managing-alerts.adoc#managing-alerts[alerts], follow the procedures in the runbooks for the {VirtProductName} Operator. Triggered {VirtProductName} alerts can be viewed in the main *Observe* -> *Alerts* tab in the web console, and also in the *Virtualization* -> *Overview* tab.
+[role="_abstract"]
+To diagnose and resolve {VirtProductName} alerts, you can use the {VirtProductName} Operator runbooks. These guides help ensure you can effectively troubleshoot cluster issues and restore system health.
 
+[NOTE]
+====
 Runbooks for the {VirtProductName} Operator are maintained in the link:https://github.com/openshift/runbooks/tree/master/alerts/openshift-virtualization-operator[openshift/runbooks] Git repository, and you can view them on GitHub. 
+====
 
-// IMPORTANT: these IDs are meant to exactly mirror the original module IDs //
-// changing them will break links in the actual alerts //
+[id="virt-runbooks-supported-table"]
+[cols="1m,1"]
+.Runbooks for {VirtProductName} alerts
+|===
+| Alert | GitHub link
 
-[id="virt-runbook-cdidataimportcronoutdated_{context}"]
-== CDIDataImportCronOutdated
+| CDIDataImportCronOutdated
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CDIDataImportCronOutdated.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CDIDataImportCronOutdated.md[View the runbook] for the `CDIDataImportCronOutdated` alert.
+| CDIDataVolumeUnusualRestartCount
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CDIDataVolumeUnusualRestartCount.md[Runbook]
 
-[id="virt-runbook-cdidatavolumeunusualrestartcount_{context}"]
-== CDIDataVolumeUnusualRestartCount
+| CDIDefaultStorageClassDegraded
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CDIDefaultStorageClassDegraded.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CDIDataVolumeUnusualRestartCount.md[View the runbook] for the `CDIDataVolumeUnusualRestartCount` alert.
+| CDIMultipleDefaultVirtStorageClasses
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CDIMultipleDefaultVirtStorageClasses.md[Runbook]
 
-[id="virt-runbook-cdidefaultstorageclassdegraded_{context}"]
-== CDIDefaultStorageClassDegraded
+| CDINoDefaultStorageClass
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CDINoDefaultStorageClass.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CDIDefaultStorageClassDegraded.md[View the runbook] for the `CDIDefaultStorageClassDegraded` alert.
+| CDINotReady
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CDINotReady.md[Runbook]
 
-[id="virt-runbook-cdimultipledefaultvirtstorageclasses_{context}"]
-== CDIMultipleDefaultVirtStorageClasses
+| CDIOperatorDown
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CDIOperatorDown.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CDIMultipleDefaultVirtStorageClasses.md[View the runbook] for the `CDIMultipleDefaultVirtStorageClasses` alert.
+| CDIStorageProfilesIncomplete
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CDIStorageProfilesIncomplete.md[Runbook]
 
-[id="virt-runbook-cdinodefaultstorageclass_{context}"]
-== CDINoDefaultStorageClass
+| CnaoDown
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CnaoDown.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CDINoDefaultStorageClass.md[View the runbook] for the `CDINoDefaultStorageClass` alert.
+| CnaoNMstateMigration
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CnaoNmstateMigration.md[Runbook]
 
-[id="virt-runbook-cdinotready_{context}"]
-== CDINotReady
+| DeprecatedMachineType
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/DeprecatedMachineType.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CDINotReady.md[View the runbook] for the `CDINotReady` alert.
+| GuestFilesystemAlmostOutOfSpace
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/GuestFilesystemAlmostOutOfSpace.md[Runbook]
 
-[id="virt-runbook-cdioperatordown_{context}"]
-== CDIOperatorDown
+| GuestVCPUQueueHighCritical
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/GuestVCPUQueueHighCritical.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CDIOperatorDown.md[View the runbook] for the `CDIOperatorDown` alert.
+| GuestVCPUQueueHighWarning
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/GuestVCPUQueueHighWarning.md[Runbook]
 
-[id="virt-runbook-cdistorageprofilesincomplete_{context}"]
-== CDIStorageProfilesIncomplete
+| HAControlPlaneDown
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/HAControlPlaneDown.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CDIStorageProfilesIncomplete.md[View the runbook] for the `CDIStorageProfilesIncomplete` alert.
+| HCOGoldenImageWithNoArchitectureAnnotation
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/HCOGoldenImageWithNoArchitectureAnnotation.md[Runbook]
 
-[id="virt-runbook-cnaodown_{context}"]
-== CnaoDown
+| HCOGoldenImageWithNoSupportedArchitecture
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/HCOGoldenImageWithNoSupportedArchitecture.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CnaoDown.md[View the runbook] for the `CnaoDown` alert.
+| HCOInstallationIncomplete
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/HCOInstallationIncomplete.md[Runbook]
 
-[id="virt-runbook-cnaonmstatemigration_{context}"]
-== CnaoNMstateMigration
+| HCOMisconfiguredDescheduler
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/HCOMisconfiguredDescheduler.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/CnaoNmstateMigration.md[View the runbook] for the `CnaoNMstateMigration` alert.
+| HCOMultiArchGoldenImagesDisabled
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/HCOMultiArchGoldenImagesDisabled.md[Runbook]
 
-[id="virt-runbook-hcoinstallationincomplete_{context}"]
-== HCOInstallationIncomplete
+| HCOOperatorConditionsUnhealthy
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/HCOOperatorConditionsUnhealthy.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/HCOInstallationIncomplete.md[View the runbook] for the `HCOInstallationIncomplete` alert.
+| HighNodeCPUFrequency
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/HighNodeCPUFrequency.md[Runbook]
 
-[id="virt-runbook-hppnotready_{context}"]
-== HPPNotReady
+| HPPNotReady
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/HPPNotReady.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/HPPNotReady.md[View the runbook] for the `HPPNotReady` alert.
+| HPPOperatorDown
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/HPPOperatorDown.md[Runbook]
 
-[id="virt-runbook-hppoperatordown_{context}"]
-== HPPOperatorDown
+| HPPSharingPoolPathWithOS
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/HPPSharingPoolPathWithOS.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/HPPOperatorDown.md[View the runbook] for the `HPPOperatorDown` alert.
+| HighCPUWorkload
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/HighCPUWorkload.md[Runbook]
 
-[id="virt-runbook-hppsharingpoolpathwithos_{context}"]
-== HPPSharingPoolPathWithOS
+| KubemacpoolDown
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/KubemacpoolDown.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/HPPSharingPoolPathWithOS.md[View the runbook] for the `HPPSharingPoolPathWithOS` alert.
+| KubeVirtCRModified
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/KubeVirtCRModified.md[Runbook]
 
-[id="virt-runbook-kubemacpooldown_{context}"]
-== KubemacpoolDown
+| KubeVirtDeprecatedAPIRequested
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/KubeVirtDeprecatedAPIRequested.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/KubemacpoolDown.md[View the runbook] for the `KubemacpoolDown` alert.
+| KubeVirtVMGuestMemoryAvailableLow
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/KubeVirtVMGuestMemoryAvailableLow.md[Runbook]
 
-[id="virt-runbook-KubeMacPoolDuplicateMacsfound_{context}"]
-== KubeMacPoolDuplicateMacsFound
+| KubeVirtVMGuestMemoryPressure
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/KubeVirtVMGuestMemoryPressure.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/KubeMacPoolDuplicateMacsFound.md[View the runbook] for the `KubeMacPoolDuplicateMacsFound` alert.
+| KubeVirtNoAvailableNodesToRunVMs
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/KubeVirtNoAvailableNodesToRunVMs.md[Runbook]
 
-[id="virt-runbook-kubevirtcomponentexceedsrequestedcpu_{context}"]
-== KubeVirtComponentExceedsRequestedCPU
+| KubeVirtVMIExcessiveMigrations
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/KubeVirtVMIExcessiveMigrations.md[Runbook]
 
-* The `KubeVirtComponentExceedsRequestedCPU` alert is link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/deprecated/KubeVirtComponentExceedsRequestedCPU.md[deprecated].
+| LowKVMNodesCount
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/LowKVMNodesCount.md[Runbook]
 
-[id="virt-runbook-kubevirtcomponentexceedsrequestedmemory_{context}"]
-== KubeVirtComponentExceedsRequestedMemory
+| LowReadyVirtControllersCount
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/LowReadyVirtControllersCount.md[Runbook]
 
-* The `KubeVirtComponentExceedsRequestedMemory` alert is link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/deprecated/KubeVirtComponentExceedsRequestedMemory.md[deprecated].
+| LowReadyVirtOperatorsCount
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/LowReadyVirtOperatorsCount.md[Runbook]
 
-[id="virt-runbook-kubevirtcrmodified_{context}"]
-== KubeVirtCRModified
+| LowVirtAPICount
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/LowVirtAPICount.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/KubeVirtCRModified.md[View the runbook] for the `KubeVirtCRModified` alert.
+| LowVirtControllersCount
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/LowVirtControllersCount.md[Runbook]
 
-[id="virt-runbook-kubevirtdeprecatedapirequested_{context}"]
-== KubeVirtDeprecatedAPIRequested
+| LowVirtOperatorCount
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/LowVirtOperatorCount.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/KubeVirtDeprecatedAPIRequested.md[View the runbook] for the `KubeVirtDeprecatedAPIRequested` alert.
+| NetworkAddonsConfigNotReady
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/NetworkAddonsConfigNotReady.md[Runbook]
 
-[id="virt-runbook-kubevirtnoavailablenodestorunvms_{context}"]
-== KubeVirtNoAvailableNodesToRunVMs
+| NoLeadingVirtOperator
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/NoLeadingVirtOperator.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/KubeVirtNoAvailableNodesToRunVMs.md[View the runbook] for the `KubeVirtNoAvailableNodesToRunVMs` alert.
+| NoReadyVirtController
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/NoReadyVirtController.md[Runbook]
 
-[id="virt-runbook-kubevirtvmhighmemoryusage_{context}"]
-== KubevirtVmHighMemoryUsage
+| NoReadyVirtOperator
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/NoReadyVirtOperator.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/KubevirtVmHighMemoryUsage.md[View the runbook] for the `KubevirtVmHighMemoryUsage` alert.
+| NodeNetworkInterfaceDown
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/NodeNetworkInterfaceDown.md[Runbook]
 
-[id="virt-runbook-kubevirtvmiexcessivemigrations_{context}"]
-== KubeVirtVMIExcessiveMigrations
+| OrphanedVirtualMachineInstances
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/OrphanedVirtualMachineInstances.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/KubeVirtVMIExcessiveMigrations.md[View the runbook] for the `KubeVirtVMIExcessiveMigrations` alert.
+| OutdatedVirtualMachineInstanceWorkloads
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/OutdatedVirtualMachineInstanceWorkloads.md[Runbook]
 
-[id="virt-runbook-lowkvmnodescount_{context}"]
-== LowKVMNodesCount
+| PersistentVolumeFillingUp
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/PersistentVolumeFillingUp.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/LowKVMNodesCount.md[View the runbook] for the `LowKVMNodesCount` alert.
+| SSPCommonTemplatesModificationReverted
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/SSPCommonTemplatesModificationReverted.md[Runbook]
 
-[id="virt-runbook-lowreadyvirtcontrollerscount_{context}"]
-== LowReadyVirtControllersCount
+| SSPDown
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/SSPDown.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/LowReadyVirtControllersCount.md[View the runbook] for the `LowReadyVirtControllersCount` alert.
+| SSPFailingToReconcile
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/SSPFailingToReconcile.md[Runbook]
 
-[id="virt-runbook-lowreadyvirtoperatorscount_{context}"]
-== LowReadyVirtOperatorsCount
+| SSPHighRateRejectedVms
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/SSPHighRateRejectedVms.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/LowReadyVirtOperatorsCount.md[View the runbook] for the `LowReadyVirtOperatorsCount` alert.
+| SSPTemplateValidatorDown
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/SSPTemplateValidatorDown.md[Runbook]
 
-[id="virt-runbook-lowvirtapicount_{context}"]
-== LowVirtAPICount
+| UnsupportedHCOModification
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/UnsupportedHCOModification.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/LowVirtAPICount.md[View the runbook] for the `LowVirtAPICount` alert.
+| VirtAPIDown
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtAPIDown.md[Runbook]
 
-[id="virt-runbook-lowvirtcontrollerscount_{context}"]
-== LowVirtControllersCount
+| VirtApiRESTErrorsBurst
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtApiRESTErrorsBurst.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/LowVirtControllersCount.md[View the runbook] for the `LowVirtControllersCount` alert.
+| VirtControllerDown
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtControllerDown.md[Runbook]
 
-[id="virt-runbook-lowvirtoperatorcount_{context}"]
-== LowVirtOperatorCount
+| VirtControllerRESTErrorsBurst
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtControllerRESTErrorsBurst.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/LowVirtOperatorCount.md[View the runbook] for the `LowVirtOperatorCount` alert.
+| VirtHandlerDaemonSetRolloutFailing
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtHandlerDaemonSetRolloutFailing.md[Runbook]
 
-[id="virt-runbook-networkaddonsconfignotready_{context}"]
-== NetworkAddonsConfigNotReady
+| VirtHandlerRESTErrorsBurst
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtHandlerRESTErrorsBurst.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/NetworkAddonsConfigNotReady.md[View the runbook] for the `NetworkAddonsConfigNotReady` alert.
+| VirtLauncherPodsStuckFailed
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtLauncherPodsStuckFailed.md[Runbook]
 
-[id="virt-runbook-noleadingvirtoperator_{context}"]
-== NoLeadingVirtOperator
+| VirtOperatorDown
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtOperatorDown.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/NoLeadingVirtOperator.md[View the runbook] for the `NoLeadingVirtOperator` alert.
+| VirtOperatorRESTErrorsBurst
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtOperatorRESTErrorsBurst.md[Runbook]
 
-[id="virt-runbook-noreadyvirtcontroller_{context}"]
-== NoReadyVirtController
+| VirtualMachineStuckInUnhealthyState
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtualMachineStuckInUnhealthyState.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/NoReadyVirtController.md[View the runbook] for the `NoReadyVirtController` alert.
+| VirtualMachineStuckOnNode
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtualMachineStuckOnNode.md[Runbook]
 
-[id="virt-runbook-noreadyvirtoperator_{context}"]
-== NoReadyVirtOperator
+| VMCannotBeEvicted
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VMCannotBeEvicted.md[Runbook]
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/NoReadyVirtOperator.md[View the runbook] for the `NoReadyVirtOperator` alert.
+| VMStorageClassWarning
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VMStorageClassWarning.md[Runbook]
+|===
 
-[id="virt-runbook-orphanedvirtualmachineinstances_{context}"]
-== OrphanedVirtualMachineInstances
+[id="virt-runbooks-deprecated"]
+== Runbooks for deprecated alerts
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/OrphanedVirtualMachineInstances.md[View the runbook] for the `OrphanedVirtualMachineInstances` alert.
+Deprecated alerts no longer report actual issues and you can safely ignore them.
 
-[id="virt-runbook-outdatedvirtualmachineinstanceWorkloads_{context}"]
-== OutdatedVirtualMachineInstanceWorkloads
+.Runbooks for deprecated {VirtProductName} alerts
+[id="virt-runbooks-deprecated-table"]
+[cols="2m,1,1"]
+|===
+| Alert | GitHub link | Notes
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/OutdatedVirtualMachineInstanceWorkloads.md[View the runbook] for the `OutdatedVirtualMachineInstanceWorkloads` alert.
+| DuplicateWaspAgentDSDetected
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/DuplicateWaspAgentDSDetected.md[Runbook]
+| -
 
-[id="virt-runbook-singlestackipv6unsupported_{context}"]
-== SingleStackIPv6Unsupported
+| KubeMacPoolDuplicateMacsFound
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/KubeMacPoolDuplicateMacsFound.md[Runbook]
+| -
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/SingleStackIPv6Unsupported.md[View the runbook] for the `SingleStackIPv6Unsupported` alert.
+| VirtualMachineInstanceHasEphemeralHotplugVolume
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtualMachineInstanceHasEphemeralHotplugVolume.md[Runbook]
+| -
 
-[id="virt-runbook-sspcommontemplatesmodificationreverted_{context}"]
-== SSPCommonTemplatesModificationReverted
+| KubeVirtComponentExceedsRequestedCPU
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/KubeVirtComponentExceedsRequestedCPU.md[Runbook]
+| -
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/SSPCommonTemplatesModificationReverted.md[View the runbook] for the `SSPCommonTemplatesModificationReverted` alert.
+| KubeVirtComponentExceedsRequestedMemory
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/KubeVirtComponentExceedsRequestedMemory.md[Runbook]
+| -
 
-[id="virt-runbook-sspdown_{context}"]
-== SSPDown
+| KubevirtVmHighMemoryUsage
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/KubevirtVmHighMemoryUsage.md[Runbook]
+| -
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/SSPDown.md[View the runbook] for the `SSPDown` alert.
+| OperatorConditionsUnhealthy
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/OperatorConditionsUnhealthy.md[Runbook]
+| -
 
-[id="virt-runbook-sspfailingtoreconcile_{context}"]
-== SSPFailingToReconcile
+| SingleStackIPv6Unsupported
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/SingleStackIPv6Unsupported.md[Runbook]
+| -
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/SSPFailingToReconcile.md[View the runbook] for the `SSPFailingToReconcile` alert.
+| SSPOperatorDown
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/SSPOperatorDown.md[Runbook]
+| -
 
-[id="virt-runbook-ssphighraterejectedvms_{context}"]
-== SSPHighRateRejectedVms
+| VirtApiRESTErrorsHigh
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtApiRESTErrorsHigh.md[Runbook]
+| -
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/SSPHighRateRejectedVms.md[View the runbook] for the `SSPHighRateRejectedVms` alert.
+| VirtControllerRESTErrorsHigh
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtControllerRESTErrorsHigh.md[Runbook]
+| -
 
-[id="virt-runbook-ssptemplatevalidatordown_{context}"]
-== SSPTemplateValidatorDown
+| VirtHandlerRESTErrorsHigh
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtHandlerRESTErrorsHigh.md[Runbook]
+| -
 
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/SSPTemplateValidatorDown.md[View the runbook] for the `SSPTemplateValidatorDown` alert.
+| VirtOperatorRESTErrorsHigh
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtOperatorRESTErrorsHigh.md[Runbook]
+| -
 
-[id="virt-runbook-sspoperatordown_{context}"]
-== SSPOperatorDown
-
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/SSPOperatorDown.md[View the runbook] for the `SSPOperatorDown` alert.
-
-[id="virt-runbook-unsupportedhcomodification_{context}"]
-== UnsupportedHCOModification
-
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/UnsupportedHCOModification.md[View the runbook] for the `UnsupportedHCOModification` alert.
-
-[id="virt-runbook-virtapidown_{context}"]
-== VirtAPIDown
-
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtAPIDown.md[View the runbook] for the `VirtAPIDown` alert.
-
-[id="virt-runbook-virtapiresterrorsburst_{context}"]
-== VirtApiRESTErrorsBurst
-
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtApiRESTErrorsBurst.md[View the runbook] for the `VirtApiRESTErrorsBurst` alert.
-
-[id="virt-runbook-virtapiresterrorshigh_{context}"]
-== VirtApiRESTErrorsHigh
-
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtApiRESTErrorsHigh.md[View the runbook] for the `VirtApiRESTErrorsHigh` alert.
-
-[id="virt-runbook-virtcontrollerdown_{context}"]
-== VirtControllerDown
-
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtControllerDown.md[View the runbook] for the `VirtControllerDown` alert.
-
-[id="virt-runbook-virtcontrollerresterrorsburst_{context}"]
-== VirtControllerRESTErrorsBurst
-
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtControllerRESTErrorsBurst.md[View the runbook] for the `VirtControllerRESTErrorsBurst` alert.
-
-[id="virt-runbook-virtcontrollerresterrorshigh_{context}"]
-== VirtControllerRESTErrorsHigh
-
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtControllerRESTErrorsHigh.md[View the runbook] for the `VirtControllerRESTErrorsHigh` alert.
-
-[id="virt-runbook-virthandlerdaemonsetrolloutfailing_{context}"]
-== VirtHandlerDaemonSetRolloutFailing
-
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtHandlerDaemonSetRolloutFailing.md[View the runbook] for the `VirtHandlerDaemonSetRolloutFailing` alert.
-
-[id="virt-runbook-virthandlerresterrorsburst_{context}"]
-== VirtHandlerRESTErrorsBurst
-
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtHandlerRESTErrorsBurst.md[View the runbook] for the `VirtHandlerRESTErrorsBurst` alert.
-
-[id="virt-runbook-virthandlerresterrorshigh_{context}"]
-== VirtHandlerRESTErrorsHigh
-
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtHandlerRESTErrorsHigh.md[View the runbook] for the `VirtHandlerRESTErrorsHigh` alert.
-
-[id="virt-runbook-virtoperatordown_{context}"]
-== VirtOperatorDown
-
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtOperatorDown.md[View the runbook] for the `VirtOperatorDown` alert.
-
-[id="virt-runbook-virtoperatorresterrorsburst_{context}"]
-== VirtOperatorRESTErrorsBurst
-
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtOperatorRESTErrorsBurst.md[View the runbook] for the `VirtOperatorRESTErrorsBurst` alert.
-
-[id="virt-runbook-virtoperatorresterrorshigh_{context}"]
-== VirtOperatorRESTErrorsHigh
-
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtOperatorRESTErrorsHigh.md[View the runbook] for the `VirtOperatorRESTErrorsHigh` alert.
-
-[id="virt-runbook-virtualmachinecrcerrors_{context}"]
-== VirtualMachineCRCErrors
-
-* The runbook for the `VirtualMachineCRCErrors` alert is deprecated because the alert was renamed to `VMStorageClassWarning`. 
-** link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VMStorageClassWarning.md[View the runbook] for the `VMStorageClassWarning` alert.
-
-[id="virt-runbook-vmcannotbeevicted_{context}"]
-== VMCannotBeEvicted
-
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VMCannotBeEvicted.md[View the runbook] for the `VMCannotBeEvicted` alert.
-
-[id="virt-runbook-vmstorageclasswarning_{context}"]
-== VMStorageClassWarning
-
-* link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VMStorageClassWarning.md[View the runbook] for the `VMStorageClassWarning` alert.
+| VirtualMachineCRCErrors
+| link:https://github.com/openshift/runbooks/blob/master/alerts/openshift-virtualization-operator/VirtualMachineCRCErrors.md[Runbook]
+| Renamed to `VMStorageClassWarning`.
+|===

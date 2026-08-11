@@ -2,22 +2,20 @@
 //
 // * security/container_security/security-hardening.adoc
 
+:_mod-docs-content-type: CONCEPT
 [id="security-hardening-what_{context}"]
-
 = Choosing what to harden in {op-system}
+
+[role="_abstract"]
 ifdef::openshift-origin[]
-The link:https://docs.fedoraproject.org/en-US/Fedora/19/html/Security_Guide/chap-Security_Guide-Basic_Hardening.html[{op-system-base} Security Hardening] guide describes how you should approach security for any
-{op-system-base} system.
+You can review the information on how to approach security for any {op-system-base} system, in the "Security" category of the Red{nbsp}Hat Enterprise Linux 9 documentation to determine how to harden systems in  {op-system}.
+
+Use these documents to learn about managing security updates, security hardening, securing networks, and other security measures.
 endif::[]
 ifdef::openshift-enterprise,openshift-webscale,openshift-aro[]
-The link:https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html-single/security_hardening/index#scanning-container-and-container-images-for-vulnerabilities_scanning-the-system-for-security-compliance-and-vulnerabilities[{op-system-base} 8 Security Hardening] guide describes how you should approach security for any
-{op-system-base} system.
+You can review the information on how to approach security for any {op-system-base} system in the Red{nbsp}Hat Enterprise Linux 9 Security Hardening guide.
+
+Use this guide to learn how to approach cryptography, evaluate vulnerabilities, and assess threats to various services. Likewise, you can learn how to scan for compliance standards, check file integrity, perform auditing, and encrypt storage devices.
 endif::[]
 
-Use this guide to learn how to approach cryptography, evaluate
-vulnerabilities, and assess threats to various services.
-Likewise, you can learn how to scan for compliance standards, check file
-integrity, perform auditing, and encrypt storage devices.
-
-With the knowledge of what features you want to harden, you can then
-decide how to harden them in {op-system}.
+With the knowledge of what features you want to harden, you can then decide how to harden them in {op-system}.

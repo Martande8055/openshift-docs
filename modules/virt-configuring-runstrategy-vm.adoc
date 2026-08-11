@@ -1,17 +1,18 @@
 // Module included in the following assemblies:
 //
-// * virt/nodes/virt-node-maintenance.adoc
+// * virt/nodes/virt-eviction-strategies.adoc
+// * virt/about_virt/virt-vm-recovery-from-node-failures.adoc
 
 :_mod-docs-content-type: PROCEDURE
 [id="virt-configuring-runstrategy-vm_{context}"]
-= Configuring a VM run strategy by using the command line
+= Configuring a VM run strategy by using the CLI
 
-You can configure a run strategy for a virtual machine (VM) by using the command line.
+[role="_abstract"]
+You can configure a run strategy for a virtual machine (VM) by using the command line. The run strategy controls whether a VM automatically restarts after disruptions such as node failures or maintenance events.
 
-[IMPORTANT]
-====
-The `spec.runStrategy` and `spec.running` keys are mutually exclusive. A VM configuration that contains values for both keys is invalid.
-====
+.Prerequisites
+
+* You have installed the {oc-first}.
 
 .Procedure
 
@@ -22,7 +23,8 @@ The `spec.runStrategy` and `spec.running` keys are mutually exclusive. A VM conf
 $ oc edit vm <vm_name> -n <namespace>
 ----
 +
-.Example run strategy
+Example run strategy:
++
 [source,yaml]
 ----
 apiVersion: kubevirt.io/v1

@@ -1,197 +1,64 @@
 :_mod-docs-content-type: ASSEMBLY
+include::_attributes/common-attributes.adoc[]
 [id="preparing-cluster-for-virt"]
 = Preparing your cluster for {VirtProductName}
-include::_attributes/common-attributes.adoc[]
 :context: preparing-cluster-for-virt
 :toclevels: 3
 
 toc::[]
 
-Review this section before you install {VirtProductName} to ensure that your cluster meets the requirements.
+[role="_abstract"]
+Review platform compatibility information before you install {VirtProductName}. For detailed system requirements, see "Hardware, software, and operational requirements" in the Additional resources section.
 
-// Hiding in ROSA/OSD as not supported
-ifndef::openshift-rosa,openshift-dedicated[]
-[IMPORTANT]
-====
-Installation method considerations::
-You can use any installation method, including user-provisioned, installer-provisioned, or assisted installer, to deploy {product-title}. However, the installation method and the cluster topology might affect {VirtProductName} functionality, such as snapshots or xref:../../virt/install/preparing-cluster-for-virt.adoc#live-migration_preparing-cluster-for-virt[live migration].
+ifndef::openshift-rosa,openshift-dedicated,openshift-rosa-hcp[]
+include::modules/virt-compatible-platforms.adoc[leveloffset=+1]
 
-{rh-storage-first}::
-If you deploy {VirtProductName} with {rh-storage-first}, you must create a dedicated storage class for Windows virtual machine disks. See link:https://access.redhat.com/articles/6978371[Optimizing ODF PersistentVolumes for Windows VMs] for details.
+include::modules/virt-cloud-platforms.adoc[leveloffset=+1]
+endif::openshift-rosa,openshift-dedicated,openshift-rosa-hcp[]
 
-IPv6::
-You cannot run {VirtProductName} on a single-stack IPv6 cluster.
-====
-endif::openshift-rosa,openshift-dedicated[]
+include::modules/virt-aws-bm.adoc[leveloffset=+1]
 
-// Hiding in ROSA/OSD as FIPS not supported
-ifndef::openshift-rosa,openshift-dedicated[]
-.FIPS mode
+ifndef::openshift-dedicated[]
+include::modules/virt-arm-compatibility.adoc[leveloffset=+1]
+endif::openshift-dedicated[]
 
-If you install your cluster in xref:../../installing/overview/installing-fips.adoc#installing-fips-mode_installing-fips[FIPS mode], no additional setup is required for {VirtProductName}.
-endif::openshift-rosa,openshift-dedicated[]
+ifndef::openshift-rosa,openshift-dedicated,openshift-rosa-hcp[]
+include::modules/virt-ibm-z-compatibility.adoc[leveloffset=+1]
 
-[id="supported-platforms_preparing-cluster-for-virt"]
-== Supported platforms
+include::modules/virt-important-considerations.adoc[leveloffset=+1]
 
-You can use the following platforms with {VirtProductName}:
-
-// Hiding in ROSA/OSD, as bare metal not supported
-ifndef::openshift-rosa,openshift-dedicated[]
-* On-premise bare metal servers. See xref:../../installing/installing_bare_metal/preparing-to-install-on-bare-metal.adoc#virt-planning-bare-metal-cluster-for-ocp-virt_preparing-to-install-on-bare-metal[Planning a bare metal cluster for {VirtProductName}].
-
-* Amazon Web Services bare metal instances. See xref:../../installing/installing_aws/ipi/installing-aws-customizations.adoc#installing-aws-customizations[Installing a cluster on AWS with customizations].
-//See link:https://access.redhat.com/articles/6409731[Deploy {VirtProductName} on AWS metal instance types]. // seems outdated with references to OCS - remove?
-
-* {ibm-cloud-name} Bare Metal Servers. See link:https://access.redhat.com/articles/6738731[Deploy {VirtProductName} on {ibm-cloud-name} Bare Metal nodes].
-+
---
-ifdef::openshift-enterprise[]
-:FeatureName: Installing OpenShift Virtualization on {ibm-cloud-name} Bare Metal Servers
-include::snippets/technology-preview.adoc[]
-:!FeatureName:
-endif::[]
---
-endif::openshift-rosa,openshift-dedicated[]
-
-ifdef::openshift-rosa,openshift-dedicated[]
-* Amazon Web Services bare metal instances.
-endif::openshift-rosa,openshift-dedicated[]
-
-// Hiding in ROSA/OSD, as bare metal not supported
-ifndef::openshift-rosa,openshift-dedicated[]
-Bare metal instances or servers offered by other cloud providers are not supported.
-endif::openshift-rosa,openshift-dedicated[]
-
-include::modules/virt-aws-bm.adoc[leveloffset=+2]
+include::modules/virt-object-maximums.adoc[leveloffset=+1]
+endif::openshift-rosa,openshift-dedicated,openshift-rosa-hcp[]
 
 [role="_additional-resources"]
-.Additional resources
+[id="additional-resources_{context}"]
+== Additional resources
+
+ifndef::openshift-rosa,openshift-dedicated,openshift-rosa-hcp[]
+* xref:../../virt/install/installing-virt.adoc#virt-about-installation-methods_installing-virt[About installation methods for {VirtProductName}]
+* xref:../../virt/install/virt-requirements.adoc#virt-requirements[Hardware, software, and operational requirements]
+* xref:../../installing/installing_bare_metal/preparing-to-install-on-bare-metal.adoc#virt-planning-bare-metal-cluster-for-ocp-virt_preparing-to-install-on-bare-metal[Planning a bare-metal cluster for {VirtProductName}]
+* xref:../../installing/installing_ibm_z/preparing-to-install-on-ibm-z.adoc#preparing-to-install-on-ibm-z_preparing-to-install-on-ibm-z[Preparing to install on {ibm-z-title} and {ibm-linuxone-title}]
+* xref:../../installing/installing_aws/ipi/installing-aws-customizations.adoc#installing-aws-customizations[Installing a cluster on {aws-short} with customizations]
+* xref:../../scalability_and_performance/planning-your-environment-according-to-object-maximums.adoc#planning-your-environment-according-to-object-maximums[{product-title} object maximums]
+* xref:../../virt/about_virt/virt-supported-limits.adoc#virt-supported-limits[{VirtProductName} supported limits]
+* xref:../../installing/overview/installing-fips.adoc#installing-fips-mode_installing-fips[Installing a FIPS-compliant cluster]
+* xref:../../virt/managing_vms/cpu_models/virt-configuring-default-cpu-model.adoc#virt-configuring-default-cpu-model[Configure CPU models]
+* xref:../../virt/managing_vms/virt-delete-vms.adoc#virt-delete-vm-web_virt-delete-vms[Deleting a virtual machine by using the web console]
+* xref:../../virt/monitoring/virt-exposing-downward-metrics.adoc#virt-configuring-downward-metrics_virt-exposing-downward-metrics[Configuring a downward metrics device]
+* xref:../../virt/creating_vm/virt-creating-vms-from-instance-types.adoc#virt-creating-vms-from-instance-types[Creating virtual machines from instance types]
+endif::openshift-rosa,openshift-dedicated,openshift-rosa-hcp[]
+* xref:../../virt/vm_networking/virt-networking-overview.adoc#virt-networking[Networking overview]
+ifndef::openshift-dedicated[]
 * xref:../../virt/vm_networking/virt-connecting-vm-to-ovn-secondary-network.adoc#virt-connecting-vm-to-ovn-secondary-network[Connecting a virtual machine to an OVN-Kubernetes secondary network]
+endif::openshift-dedicated[]
 * xref:../../virt/vm_networking/virt-exposing-vm-with-service.adoc#virt-exposing-vm-with-service[Exposing a virtual machine by using a service]
-
-// Section is in assembly so that we can use xrefs
-[id="virt-hardware-os-requirements_preparing-cluster-for-virt"]
-== Hardware and operating system requirements
-
-Review the following hardware and operating system requirements for {VirtProductName}.
-
-[id="cpu-requirements_preparing-cluster-for-virt"]
-=== CPU requirements
-
-* Supported by {op-system-base-full} 9.
-+
-See link:https://catalog.redhat.com[Red Hat Ecosystem Catalog] for supported CPUs.
-+
-[NOTE]
-====
-If your worker nodes have different CPUs, live migration failures might occur because different CPUs have different capabilities. You can mitigate this issue by ensuring that your worker nodes have CPUs with the appropriate capacity and by configuring node affinity rules for your virtual machines.
-
-See xref:../../nodes/scheduling/nodes-scheduler-node-affinity.adoc#nodes-scheduler-node-affinity-configuring-required_nodes-scheduler-node-affinity[Configuring a required node affinity rule] for details.
-====
-
-* Support for AMD and Intel 64-bit architectures (x86-64-v2).
-* Support for Intel 64 or AMD64 CPU extensions.
-* Intel VT or AMD-V hardware virtualization extensions enabled.
-* NX (no execute) flag enabled.
-
-[id="os-requirements_preparing-cluster-for-virt"]
-=== Operating system requirements
-
-* {op-system-first} installed on worker nodes.
-ifndef::openshift-rosa,openshift-dedicated[]
-+
-See xref:../../architecture/architecture-rhcos.adoc#rhcos-about_architecture-rhcos[About RHCOS] for details.
-+
-[NOTE]
-====
-{op-system-base} worker nodes are not supported.
-====
-endif::openshift-rosa,openshift-dedicated[]
-
-[id="storage-requirements_preparing-cluster-for-virt"]
-=== Storage requirements
-
-// Hiding link until PR 65079 merges
-ifndef::openshift-rosa,openshift-dedicated[]
-* Supported by {product-title}. See xref:../../scalability_and_performance/optimization/optimizing-storage.adoc#_optimizing-storage[Optimizing storage].
-endif::openshift-rosa,openshift-dedicated[]
-ifdef::openshift-rosa,openshift-dedicated[]
-* Supported by {product-title}.
-endif::openshift-rosa,openshift-dedicated[]
-ifndef::openshift-rosa,openshift-dedicated[]
-* You must create a default {VirtProductName} or {product-title} storage class. The purpose of this is to address the unique storage needs of VM workloads and offer optimized performance, reliability, and user experience. If both {VirtProductName} and {product-title} default storage classes exist, the {VirtProductName} class takes precedence when creating VM disks.
-
-[NOTE]
-====
-To mark a storage class as the default for virtualization workloads, set the annotation `storageclass.kubevirt.io/is-default-virt-class` to `"true"`.
-====
-endif::openshift-rosa,openshift-dedicated[]
-
-* If the storage provisioner supports snapshots, you must associate a `VolumeSnapshotClass` object with the default storage class.
-
-include::modules/virt-about-storage-volumes-for-vm-disks.adoc[leveloffset=+3]
-
-[id="live-migration_preparing-cluster-for-virt"]
-== Live migration requirements
-
-* Shared storage with `ReadWriteMany` (RWX) access mode.
-* Sufficient RAM and network bandwidth.
-+
-[NOTE]
-====
-You must ensure that there is enough memory request capacity in the cluster to support node drains that result in live migrations. You can determine the approximate required spare memory by using the following calculation:
-
-----
-Product of (Maximum number of nodes that can drain in parallel) and (Highest total VM memory request allocations across nodes)
-----
-
-The default xref:../../virt/live_migration/virt-configuring-live-migration.adoc#virt-configuring-live-migration[number of migrations that can run in parallel] in the cluster is 5.
-====
-
-* If the virtual machine uses a host model CPU, the nodes must support the virtual machine's host model CPU.
-* A xref:../../virt/vm_networking/virt-dedicated-network-live-migration.adoc#virt-dedicated-network-live-migration[dedicated Multus network] for live migration is highly recommended. A dedicated network minimizes the effects of network saturation on tenant workloads during migration.
-
-include::modules/virt-cluster-resource-requirements.adoc[leveloffset=+1]
-
-// Hiding in ROSA/OSD as not supported
-ifndef::openshift-rosa,openshift-dedicated[]
-include::modules/virt-sno-differences.adoc[leveloffset=+1]
-endif::openshift-rosa,openshift-dedicated[]
-
-[role="_additional-resources"]
-.Additional resources
-
+ifndef::openshift-rosa,openshift-dedicated,openshift-rosa-hcp[]
+* link:https://access.redhat.com/articles/6978371[Optimizing ODF PersistentVolumes for Windows VMs]
+endif::openshift-rosa,openshift-dedicated,openshift-rosa-hcp[]
+ifdef::openshift-dedicated[]
+* link:https://cloud.google.com/netapp/volumes/docs[{gcp-full} NetApp Volumes]
+* link:https://docs.cloud.google.com/netapp/volumes/docs/quotas#storage_pool_limits[GCNV storage pool limits]
+endif::openshift-dedicated[]
+* link:https://docs.cloud.google.com/netapp/volumes/docs/discover/service-levels[GCNV service levels]
 * xref:../../storage/index.adoc#openshift-storage-common-terms_storage-overview[Glossary of common terms for {product-title} storage]
-
-ifndef::openshift-rosa,openshift-dedicated[]
-[id="object-maximums_preparing-cluster-for-virt"]
-== Object maximums
-
-You must consider the following tested object maximums when planning your cluster:
-
-* xref:../../scalability_and_performance/planning-your-environment-according-to-object-maximums.adoc#planning-your-environment-according-to-object-maximums[{product-title} object maximums].
-* link:https://access.redhat.com/articles/6571671[{VirtProductName} object maximums].
-
-// The HA section actually belongs to OpenShift, not Virt
-[id="cluster-high-availability-options_preparing-cluster-for-virt"]
-== Cluster high-availability options
-
-You can configure one of the following high-availability (HA) options for your cluster:
-
-* Automatic high availability for xref:../../installing/installing_bare_metal/ipi/ipi-install-overview.adoc#ipi-install-overview[installer-provisioned infrastructure] (IPI) is available by deploying xref:../../machine_management/deploying-machine-health-checks.adoc#machine-health-checks-about_deploying-machine-health-checks[machine health checks].
-+
-[NOTE]
-====
-In {product-title} clusters installed using installer-provisioned infrastructure and with a properly configured `MachineHealthCheck` resource, if a node fails the machine health check and becomes unavailable to the cluster, it is recycled. What happens next with VMs that ran on the failed node depends on a series of conditions. See xref:../../virt/nodes/virt-node-maintenance.adoc#run-strategies[Run strategies] for more detailed information about the potential outcomes and how run strategies affect those outcomes.
-====
-
-* Automatic high availability for both IPI and non-IPI is available by using the *Node Health Check Operator* on the {product-title} cluster to deploy the `NodeHealthCheck` controller. The controller identifies unhealthy nodes and uses a remediation provider, such as the Self Node Remediation Operator or Fence Agents Remediation  Operator, to remediate the unhealthy nodes. For more information on remediation, fencing, and maintaining nodes, see the link:https://access.redhat.com/documentation/en-us/workload_availability_for_red_hat_openshift[Workload Availability for Red Hat OpenShift] documentation.
-
-* High availability for any platform is available by using either a monitoring system or a qualified human to monitor node availability. When a node is lost, shut it down and run `oc delete node <lost_node>`.
-+
-[NOTE]
-====
-Without an external monitoring system or a qualified human monitoring node health, virtual machines lose high availability.
-====
-endif::openshift-rosa,openshift-dedicated[]

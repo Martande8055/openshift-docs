@@ -5,8 +5,9 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="osd-revoke-user-access_{context}"]
-= Revoking user access to a cluster
+= Revoke user access to a cluster
 
+[role="_abstract"]
 You can revoke cluster access from an identity provider user by removing them from your configured identity provider.
 
 You can configure different types of identity providers for your {product-title} cluster. The following example procedure revokes cluster access for a member of a GitHub organization or team that is configured for identity provision to the cluster.
@@ -27,4 +28,4 @@ You can configure different types of identity providers for your {product-title}
 
 .Verification
 
-* After removing the user from your identity provider, the user cannot authenticate into the cluster.
+* After removing the user from your identity provider, the user cannot authenticate to the cluster.

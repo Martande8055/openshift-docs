@@ -6,55 +6,93 @@
 [id="virt-enabling-usb-host-passthrough_{context}"]
 = Enabling USB host passthrough
 
-You can enable USB host passthrough at the cluster level.
+[role="_abstract"]
+To attach a USB device to a virtual machine (VM), you must first enable USB host passthrough at the cluster level.
 
-You specify a resource name and USB device name for each device you want first to add and then assign to a virtual machine (VM). You can allocate more than one device, each of which is known as a `selector` in the HyperConverged (HCO) custom resource (CR), to a single resource name. If you have multiple, identical USB devices on the cluster, you can choose to allocate a VM to a specific device.
+To do this, specify a resource name and USB device name for each device you want first to add and then assign to a VM. You can allocate more than one device, each of which is known as a `selector` in the `HyperConverged` custom resource (CR), to a single resource name. If you have multiple identical USB devices on the cluster, you can choose to allocate a VM to a specific device.
 
 .Prerequisites
 
 * You have access to an {product-title} cluster as a user who has the `cluster-admin` role.
+* You have installed the {oc-first}.
 
 .Procedure
 
-. Identify the USB device vendor and product by running the following command:
+. Identify the USB device vendor and product:
 +
 [source,terminal]
 ----
 $ lsusb
 ----
-
-. Open the HCO CR by running the following commmand:
++
+*Example output*
 +
 [source,terminal]
 ----
-$ oc edit hyperconverged kubevirt-hyperconverged -n openshift-cnv
+Bus 003 Device 007: ID 1b1c:0a60 example_manufacturer example_product_name
 ----
 
-. Add a USB device to the `permittedHostDevices` stanza, as shown in the following example:
-
+** If you cannot use the `lsusb` command, inspect the USB device configurations in the host's `/sys/bus/usb/devices/` directory:
 +
-.Example YAML snippet
-[source,yaml]
+[source,terminal]
 ----
-apiVersion: hco.kubevirt.io/v1beta1
+for dev in *; do
+    if [[ -f "$dev/idVendor" && -f "$dev/idProduct" ]]; then
+        echo "Device: $dev"
+        echo -n "  Manufacturer : "; cat "$dev/manufacturer"
+        echo -n "  Product: "; cat "$dev/product"
+        echo -n "  Vendor ID : "; cat "$dev/idVendor"
+        echo -n "  Product ID: "; cat "$dev/idProduct"
+        echo
+    fi
+done
+----
++
+*Example output*
++
+[source,terminal]
+----
+Device: 3-7
+  Manufacturer : example_manufacturer
+  Product: example_product_name
+  Vendor ID : 1b1c
+  Product ID: 0a60
+----
+
+
+. Open the `HyperConverged` CR in your default editor by running the following command:
++
+[source,terminal,subs="attributes+"]
+----
+$ oc edit {HCOCliKind} kubevirt-hyperconverged -n {CNVNamespace}
+----
+
+
+. Add the required USB device to the `permittedHostDevices` stanza of the `HyperConvered` CR. The following example adds a device with vendor ID `045e` and product ID `07a5`:
++
+[source,yaml,highlight=11..12,subs="attributes+"]
+----
+apiVersion: hco.kubevirt.io/v1
 kind: HyperConverged
 metadata:
-   name: kubevirt-hyperconverged
-   namespace: {CNVNamespace}
+  name: kubevirt-hyperconverged
+  namespace: {CNVNamespace}
 spec:
-  configuration:
-    permittedHostDevices: <1>
-      usbHostDevices: <2>
-        - resourceName: kubevirt.io/peripherals <3>
-          selectors:
-            - vendor: "045e"
-              product: "07a5"
-            - vendor: "062a"
-              product: "4102"
-            - vendor: "072f"
-              product: "b100"
-
+  virtualization:
+    permittedHostDevices:
+      usbHostDevices:
+      - resourceName: kubevirt.io/peripherals
+        selectors:
+        - vendor: "045e"
+          product: "07a5"
+        - vendor: "062a"
+          product: "4102"
+        - vendor: "072f"
+          product: "b100"
 ----
-<1> Lists the host devices that have permission to be used in the cluster.
-<2> Lists the available USB devices.
-<3> Uses `resourceName: deviceName` for each device you want to add and assign to the VM. In this example, the resource is bound to three devices, each of which is identified by `vendor` and `product` and is known as a `selector`.
++
+* `spec.virtualization.permittedHostDevices` defines the host devices that have permission to be used in the cluster.
+* `spec.virtualization.permittedHostDevices.usbHostDevices` defines a list of available USB devices.
+* `spec.virtualization.permittedHostDevices.usbHostDevices.resourceName` defines the USB device that you want to add and assign to the
+  VM. In this example, the resource is bound to three devices, each of which is identified by `vendor` and `product` and
+  is known as a `selector`.

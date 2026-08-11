@@ -8,13 +8,19 @@ ifeval::["{context}" == "installing-gcp-user-infra-vpc"]
 :shared-vpc:
 endif::[]
 
+ifeval::["{context}" == "installing-gcp-user-infra-vpc"]
+:gcp:
+endif::[]
+
 :_mod-docs-content-type: PROCEDURE
 [id="installation-gcp-user-infra-adding-ingress_{context}"]
 ifndef::shared-vpc[]
 = Optional: Adding the ingress DNS records
+
 endif::shared-vpc[]
 ifdef::shared-vpc[]
 = Adding the ingress DNS records
+
 endif::shared-vpc[]
 
 ifndef::shared-vpc[]
@@ -27,15 +33,10 @@ endif::[]
 
 .Prerequisites
 
-* Configure a GCP account.
+* Ensure you defined the variables in the _Exporting common variables_ section.
 * Remove the DNS Zone configuration when creating Kubernetes manifests and
 generating Ignition configs.
-* Create and configure a VPC and associated subnets in GCP.
-* Create and configure networking and load balancers in GCP.
-* Create control plane and compute roles.
-* Create the bootstrap machine.
-* Create the control plane machines.
-* Create the worker machines.
+* Ensure the bootstrap process completed successfully.
 
 .Procedure
 
@@ -54,30 +55,58 @@ router-default   LoadBalancer   172.30.18.154   35.233.157.184   80:32288/TCP,44
 ----
 
 . Add the A record to your zones:
++
 ** To use A records:
++
 ... Export the variable for the router IP address:
 +
 [source,terminal]
 ----
 $ export ROUTER_IP=`oc -n openshift-ingress get service router-default --no-headers | awk '{print $4}'`
 ----
++
 ... Add the A record to the private zones:
 +
 ifndef::shared-vpc[]
 [source,terminal]
 ----
 $ if [ -f transaction.yaml ]; then rm transaction.yaml; fi
+----
++
+[source,terminal]
+----
 $ gcloud dns record-sets transaction start --zone ${INFRA_ID}-private-zone
+----
++
+[source,terminal]
+----
 $ gcloud dns record-sets transaction add ${ROUTER_IP} --name \*.apps.${CLUSTER_NAME}.${BASE_DOMAIN}. --ttl 300 --type A --zone ${INFRA_ID}-private-zone
+----
++
+[source,terminal]
+----
 $ gcloud dns record-sets transaction execute --zone ${INFRA_ID}-private-zone
 ----
 endif::shared-vpc[]
++
 ifdef::shared-vpc[]
 [source,terminal]
 ----
 $ if [ -f transaction.yaml ]; then rm transaction.yaml; fi
+----
++
+[source,terminal]
+----
 $ gcloud dns record-sets transaction start --zone ${INFRA_ID}-private-zone --project ${HOST_PROJECT} --account ${HOST_PROJECT_ACCOUNT}
+----
++
+[source,terminal]
+----
 $ gcloud dns record-sets transaction add ${ROUTER_IP} --name \*.apps.${CLUSTER_NAME}.${BASE_DOMAIN}. --ttl 300 --type A --zone ${INFRA_ID}-private-zone --project ${HOST_PROJECT} --account ${HOST_PROJECT_ACCOUNT}
+----
++
+[source,terminal]
+----
 $ gcloud dns record-sets transaction execute --zone ${INFRA_ID}-private-zone --project ${HOST_PROJECT} --account ${HOST_PROJECT_ACCOUNT}
 ----
 endif::shared-vpc[]
@@ -87,17 +116,42 @@ ifndef::shared-vpc[]
 [source,terminal]
 ----
 $ if [ -f transaction.yaml ]; then rm transaction.yaml; fi
+----
++
+[source,terminal]
+----
 $ gcloud dns record-sets transaction start --zone ${BASE_DOMAIN_ZONE_NAME}
+----
++
+[source,terminal]
+----
 $ gcloud dns record-sets transaction add ${ROUTER_IP} --name \*.apps.${CLUSTER_NAME}.${BASE_DOMAIN}. --ttl 300 --type A --zone ${BASE_DOMAIN_ZONE_NAME}
+----
++
+[source,terminal]
+----
 $ gcloud dns record-sets transaction execute --zone ${BASE_DOMAIN_ZONE_NAME}
 ----
 endif::shared-vpc[]
++
 ifdef::shared-vpc[]
 [source,terminal]
 ----
 $ if [ -f transaction.yaml ]; then rm transaction.yaml; fi
+----
++
+[source,terminal]
+----
 $ gcloud dns record-sets transaction start --zone ${BASE_DOMAIN_ZONE_NAME} --project ${HOST_PROJECT} --account ${HOST_PROJECT_ACCOUNT}
+----
++
+[source,terminal]
+----
 $ gcloud dns record-sets transaction add ${ROUTER_IP} --name \*.apps.${CLUSTER_NAME}.${BASE_DOMAIN}. --ttl 300 --type A --zone ${BASE_DOMAIN_ZONE_NAME} --project ${HOST_PROJECT} --account ${HOST_PROJECT_ACCOUNT}
+----
++
+[source,terminal]
+----
 $ gcloud dns record-sets transaction execute --zone ${BASE_DOMAIN_ZONE_NAME} --project ${HOST_PROJECT} --account ${HOST_PROJECT_ACCOUNT}
 ----
 endif::shared-vpc[]
@@ -122,4 +176,8 @@ prometheus-k8s-openshift-monitoring.apps.your.cluster.domain.example.com
 
 ifeval::["{context}" == "installing-gcp-user-infra-vpc"]
 :!shared-vpc:
+endif::[]
+
+ifeval::["{context}" == "installing-gcp-user-infra-vpc"]
+:!gcp:
 endif::[]

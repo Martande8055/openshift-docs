@@ -5,7 +5,8 @@
 [id="baseline-router-performance_{context}"]
 = Baseline Ingress Controller (router) performance
 
-The {product-title} Ingress Controller, or router, is the ingress point for ingress traffic for applications and services that are configured using routes and ingresses.
+[role="_abstract"]
+You can use the {product-title} Ingress Controller, or router, as the ingress point for ingress traffic for applications and services that are configured by using routes and ingresses.
 
 When evaluating a single HAProxy router performance in terms of HTTP requests handled per second, the performance varies depending on many factors. In particular:
 

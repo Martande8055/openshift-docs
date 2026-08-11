@@ -6,12 +6,13 @@
 [id="monitoring-installation-progress_{context}"]
 = Monitoring installation progress
 
+[role="_abstract"]
 You can monitor high-level installation, bootstrap, and control plane logs as an {product-title} installation progresses. This provides greater visibility into how an installation progresses and helps identify the stage at which an installation failure occurs.
 
 .Prerequisites
 
 * You have access to the cluster as a user with the `cluster-admin` cluster role.
-* You have installed the OpenShift CLI (`oc`).
+* You have installed the {oc-first}.
 * You have SSH access to your hosts.
 * You have the fully qualified domain names of the bootstrap and control plane nodes.
 +

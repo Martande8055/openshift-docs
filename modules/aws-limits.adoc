@@ -2,10 +2,11 @@
 //
 // * osd_planning/aws-ccs.adoc
 
+:_mod-docs-content-type: CONCEPT
 [id="aws-limits_{context}"]
 = AWS account limits
 
-
+[role="_abstract"]
 The {product-title} cluster uses a number of Amazon Web Services (AWS) components, and the default link:https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html[service limits] affect your ability to install {product-title} clusters. If you use certain cluster configurations, deploy your cluster in certain AWS regions, or run multiple clusters from your account, you might need to request additional resources for your AWS account.
 
 The following table summarizes the AWS components whose limits can impact your ability to install and run {product-title} clusters.
@@ -80,7 +81,4 @@ Additional ENIs are created for additional machines and load balancers that are 
 |250
 |2,500 per account
 |Each cluster creates 10 distinct security groups.
-                                                                                                                                        | Fail, optionally surfacing response body to the user
 |===
-
-// TODO: what is this random text/cell on line 82^?

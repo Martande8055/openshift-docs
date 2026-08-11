@@ -4,19 +4,23 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="microshift-OLM-deploy-Operators_{context}"]
-= Adding OLM-based Operators to a networked cluster using the global namespace
+= Adding OLM-based Operators to a networked node using the global namespace
 
-To deploy different operators to different namespaces, use this procedure. For {microshift-short} clusters that have network connectivity, Operator Lifecycle Manager (OLM) can access sources hosted on remote registries. The following procedure lists the basic steps of using configuration files to install an Operator that uses the global namespace.
+[role="_abstract"]
+To deploy different Operators to different namespaces, follow the basic steps to use configuration files to install an Operator that uses the global namespace.
+
+For a {microshift-short} node that has network connectivity, Operator Lifecycle Manager (OLM) can access sources hosted on remote registries.
 
 [NOTE]
 ====
-To use an Operator installed in a different namespace, or in more than one namespace, make sure that the catalog source and the Subscription CR that references the Operator are running in the `openshift-marketplace` namespace.
+To use an Operator installed in a different namespace, or in more than one namespace, make sure that both the catalog source and the Subscription CR that references the Operator are running in the `openshift-marketplace` namespace.
 ====
 
 .Prerequisites
+
 * The {oc-first} is installed.
 * Operator Lifecycle Manager (OLM) is installed.
-* You have created a custom catalog in the global namespace.
+* You created a custom catalog in the global namespace.
 
 .Procedure
 
@@ -47,7 +51,7 @@ $ oc -n openshift-operator-lifecycle-manager get pod -l app=catalog-operator
 NAME                                READY   STATUS    RESTARTS   AGE
 catalog-operator-5fc7f857b6-tj8cf   1/1     Running   0          2m33s
 ----
-
++
 [NOTE]
 ====
 The following steps assume you are using the global namespace, `openshift-marketplace`. The catalog must run in the same namespace as the Operator. The Operator must support the *AllNamespaces* mode.
@@ -62,30 +66,35 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: CatalogSource
 metadata:
   name: operatorhubio-catalog
-  namespace: openshift-marketplace # <1>
+  namespace: openshift-marketplace
 spec:
   sourceType: grpc
   image: quay.io/operatorhubio/catalog:latest
-  displayName: Community Operators # <2>
+  displayName: Community Operators
   publisher: OperatorHub.io
   grpcPodConfig:
-    securityContextConfig: restricted # <3>
+    securityContextConfig: restricted
   updateStrategy:
     registryPoll:
       interval: 60m
 ----
-<1> The global namespace. Setting the `metadata.namespace` to `openshift-marketplace` enables the catalog to run in all namespaces. Subscriptions in any namespace can reference catalogs created in the `openshift-marketplace` namespace.
-<2> Community Operators are not installed by default with OLM for {microshift-short}. Listed here for example only.
-<3> The value of `securityContextConfig` must be set to `restricted` for {microshift-short}.
++
+where:
+
+`metadata.namespace`:: Specifies the global namespace. Setting the `metadata.namespace` to `openshift-marketplace` enables the catalog to run in all namespaces. Subscriptions in any namespace can reference catalogs created in the `openshift-marketplace` namespace.
+
+`spec.displayName`:: Specifies that the Community Operators are not installed by default with OLM for {microshift-short}. Listed here for example only.
+
+`grpcPodConfig.securityContextConfig`:: Specifies the value of `securityContextConfig` must be set to `restricted` for {microshift-short}.
 
 . Apply the `CatalogSource` configuration by running the following command:
 +
-[subs="+quotes"]
-[source,terminal]
+[source,terminal,subs="+quotes"]
 ----
-$ oc apply -f _<catalog_source.yaml>_ # <1>
+$ oc apply -f _<catalog_source.yaml>_
 ----
-<1> Replace `_<catalog_-_source.yaml>_` with your catalog source configuration file name. In this example, `catalogsource.yaml` is used.
++
+Replace `_<catalog_-_source.yaml>_` with your catalog source configuration file name. In this example, `catalogsource.yaml` is used.
 +
 .Example output
 [source,terminal]
@@ -128,7 +137,7 @@ Status:
   Connection State:
     Address:              operatorhubio-catalog.openshift-marketplace.svc:50051
     Last Connect:         2024-01-31T09:55:57Z
-    Last Observed State:  READY # <1>
+    Last Observed State:  READY
   Registry Service:
     Created At:         2024-01-31T09:55:31Z
     Port:               50051
@@ -137,7 +146,8 @@ Status:
     Service Namespace:  openshift-marketplace
 Events:                 <none>
 ----
-<1> The status is reported as `READY`.
++
+The `Last Observed State` field reports the status as `READY`.
 
 . Confirm that the catalog source is running by using the following command:
 +
@@ -167,18 +177,19 @@ spec:
   channel: stable
   name: cert-manager
   source: operatorhubio-catalog
-  sourceNamespace: openshift-marketplace <1>
+  sourceNamespace: openshift-marketplace
 ----
-<1> The global namespace. Setting the `sourceNamespace` value to `openshift-marketplace` enables Operators to run in multiple namespaces if the catalog also runs in the `openshift-marketplace` namespace.
++
+The `sourceNamespace` field defines the global namespace. Setting the `sourceNamespace` value to `openshift-marketplace` enables Operators to run in multiple namespaces if the catalog also runs in the `openshift-marketplace` namespace.
 
 . Apply the Subscription CR configuration by running the following command:
 +
-[subs="+quotes"]
-[source,terminal]
+[source,terminal,subs="+quotes"]
 ----
-$ oc apply -f _<subscription_cr.yaml>_ # <1>
+$ oc apply -f _<subscription_cr.yaml>_
 ----
-<1> Replace `_<subscription_cr.yaml>_` with your Subscription CR filename.
++
+Replace `_<subscription_cr.yaml>_` with your Subscription CR filename.
 +
 .Example output
 [source,terminal]
@@ -189,13 +200,15 @@ subscription.operators.coreos.com/my-cert-manager created
 . You can create a configuration file for the specific Operand you want to use and apply it now.
 
 .Verification
-. Verify that your Operator is running by using the following command:
+
+* Verify that your Operator is running by using the following command:
 +
 [source,terminal]
 ----
 $ oc get pods -n openshift-operators <1>
 ----
-<1> The namespace from the Subscription CR is used.
++
+`openshift-operators` uses the namespace from the Subscription CR.
 +
 [NOTE]
 ====

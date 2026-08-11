@@ -5,6 +5,7 @@
 [id="update-service-uninstall-web-console_{context}"]
 = Uninstalling the OpenShift Update Service Operator by using the web console
 
+[role="_abstract"]
 You can use the {product-title} web console to uninstall the OpenShift Update Service Operator.
 
 .Prerequisites
@@ -13,7 +14,7 @@ You can use the {product-title} web console to uninstall the OpenShift Update Se
 
 .Procedure
 
-. In the web console, click *Operators* -> *Installed Operators*.
+. In the web console, click *Ecosystem* -> *Installed Operators*.
 
 . Select *OpenShift Update Service* from the list of installed Operators and click *Uninstall Operator*.
 

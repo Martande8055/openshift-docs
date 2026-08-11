@@ -1,25 +1,27 @@
 // Module included in the following assemblies:
 //
-// * rosa_install_access_delete_clusters/rosa-classic-creating-a-cluster-quickly-terraform.adoc
-//
+// * rosa_hcp/terraform/rosa-hcp-creating-a-cluster-quickly-terraform.adoc
+// * rosa_install_access_delete_clusters/terraform/rosa-classic-creating-a-cluster-quickly-terraform.adoc
+
 ifeval::["{context}" == "rosa-classic-creating-a-cluster-quickly-terraform"]
 :tf-rosa-classic:
 endif::[]
 ifeval::["{context}" == "rosa-hcp-creating-a-cluster-quickly-terraform"]
 :tf-rosa-hcp:
 endif::[]
-:_content-type: PROCEDURE
+:_mod-docs-content-type: PROCEDURE
 
 [id="rosa-sts-cluster-terraform-execute_{context}"]
-= Using Terraform to create your ROSA cluster
+= Using Terraform to create your {product-title} cluster
 
+[role="_abstract"]
 After you create the Terraform files, you must initiate Terraform to provide all of the required dependencies. Then apply the Terraform plan.
 
 include::snippets/terraform-modification-disclaimer.adoc[]
 
 .Procedure
 
-. Set up Terraform to create your resources based on your Terraform files, run the following command:
+. Configure Terraform to create your resources based on your Terraform files, run the following command:
 +
 [source,terminal]
 ----
@@ -34,7 +36,6 @@ $ terraform validate
 ----
 +
 .Example output
-+
 [source,terminal]
 ----
 Success! The configuration is valid.
@@ -47,26 +48,24 @@ Success! The configuration is valid.
 $ terraform apply
 ----
 +
-The Terraform interface asks two questions to create your cluster, similiar to the following:
+The Terraform interface asks two questions to create your cluster, similar to the following:
 +
-.Example output
 [source,terminal]
 ----
 var.create_vpc
   If you would like to create a new VPC, set this value to 'true'. If you do not want to create a new VPC, set this value to 'false'.
 
-  Enter a value: 
+  Enter a value:
 
 var.private_cluster
   If you want to create a private cluster, set this value to 'true'. If you want a publicly available cluster, set this value to 'false'.
 
-  Enter a value: 
+  Enter a value:
 ----
 
 . Enter `yes` to proceed or `no` to cancel when the Terraform interface lists the resources to be created or changed and prompts for confirmation:
 +
 ifdef::tf-rosa-hcp[]
-.Example output
 [source,terminal]
 ----
 Plan: 63 to add, 0 to change, 0 to destroy.
@@ -90,7 +89,7 @@ Do you want to perform these actions?
 ----
 endif::tf-rosa-classic[]
 +
-If you enter `yes`, your Terraform plan starts, creating your AWS account roles, Operator roles, and your ROSA Classic cluster.
+If you enter `yes`, your Terraform plan starts, creating your AWS account roles, Operator roles, and your {product-title} cluster.
 
 .Verification
 . Verify that your cluster was created by running the following command:
@@ -100,13 +99,22 @@ If you enter `yes`, your Terraform plan starts, creating your AWS account roles,
 $ rosa list clusters
 ----
 +
-.Example output showing a cluster's ID, name, and status
+This example shows a cluster in the `ready` state:
 +
+ifdef::openshift-rosa-hcp[]
+[source,terminal]
+----
+ID                                NAME          STATE  TOPOLOGY
+27c3snjsupa9obua74ba8se5kcj11269  rosa-tf-demo  ready  Hosted CP
+----
+endif::openshift-rosa-hcp[]
+ifdef::openshift-rosa[]
 [source,terminal]
 ----
 ID                                NAME          STATE  TOPOLOGY
 27c3snjsupa9obua74ba8se5kcj11269  rosa-tf-demo  ready  Classic (STS)
 ----
+endif::openshift-rosa[]
 
 . Verify that your account roles were created by running the following command:
 +
@@ -115,7 +123,8 @@ ID                                NAME          STATE  TOPOLOGY
 $ rosa list account-roles
 ----
 +
-.Example output
+This example shows the account roles that were created:
++
 [source,terminal]
 ----
 I: Fetching account roles
@@ -135,7 +144,8 @@ ROSA-demo-Worker-Role                       Worker         arn:aws:iam::<ID>:rol
 $ rosa list operator-roles
 ----
 +
-.Example output showing Terraform-created Operator roles
+This example shows the Terraform-created Operator roles:
++
 [source,terminal]
 ----
 I: Fetching operator roles

@@ -6,7 +6,8 @@ include::_attributes/common-attributes.adoc[]
 
 toc::[]
 
-The OVN-Kubernetes network plugin uses Open Virtual Network (OVN) access control lists (ACLs) to manage `AdminNetworkPolicy`, `BaselineAdminNetworkPolicy`, `NetworkPolicy`, and `EgressFirewall` objects. Audit logging exposes `allow` and `deny` ACL events for `NetworkPolicy`, `EgressFirewall` and `BaselineAdminNetworkPolicy` custom resources (CR). Logging also exposes `allow`, `deny`, and `pass` ACL events for `AdminNetworkPolicy` (ANP) CR.
+[role="_abstract"]
+The OVN-Kubernetes network plugin uses Open Virtual Network (OVN) access control lists (ACLs) to manage `AdminNetworkPolicy`, `BaselineAdminNetworkPolicy`, `NetworkPolicy`, and `EgressFirewall` objects. Audit logging exposes `Allow` and `Deny` ACL events for `NetworkPolicy`, `EgressFirewall` and `BaselineAdminNetworkPolicy` custom resources (CR). Logging also exposes `Allow`, `Deny`, and `Pass` ACL events for `AdminNetworkPolicy` (ANP) CR.
 
 [NOTE]
 ====
@@ -35,9 +36,16 @@ include::modules/nw-networkpolicy-audit-enable.adoc[leveloffset=+1]
 
 include::modules/nw-networkpolicy-audit-disable.adoc[leveloffset=+1]
 
+ifndef::openshift-rosa-hcp[]
 [id="{context}-additional-resources"]
 [role="_additional-resources"]
 == Additional resources
 
+ifdef::openshift-rosa,openshift-enterprise[]
 * xref:../../networking/network_security/network_policy/about-network-policy.adoc#about-network-policy[About network policy]
+endif::openshift-rosa,openshift-enterprise[]
+ifndef::openshift-dedicated,openshift-rosa[]
 * xref:../../networking/network_security/egress_firewall/configuring-egress-firewall-ovn.adoc#configuring-egress-firewall-ovn[Configuring an egress firewall for a project]
+endif::openshift-dedicated,openshift-rosa[]
+endif::openshift-rosa-hcp[]
+

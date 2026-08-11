@@ -6,7 +6,8 @@
 [id="hcp-virt-wildcard-dns_{context}"]
 = Setting up a wildcard DNS
 
-Set up a wildcard DNS record or CNAME that references the external IP of the load balancer service.
+[role="_abstract"]
+If you are customizing the ingress and DNS for your hosted cluster, you need to set up a wildcard DNS record or CNAME that references the external IP of the load balancer service.
 
 .Procedure
 
@@ -14,7 +15,8 @@ Set up a wildcard DNS record or CNAME that references the external IP of the loa
 +
 [source,terminal]
 ----
-$ oc -n clusters-<hosted_cluster_name> get service <hosted-cluster-name>-apps -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
+$ oc -n clusters-<hosted_cluster_name> get service <hosted-cluster-name>-apps \
+  -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
 ----
 +
 .Example output
@@ -40,7 +42,9 @@ dig +short test.apps.example.hypershift.lab
 192.168.20.30
 ----
 
-. Check that hosted cluster status has moved from `Partial` to `Completed` by entering the following command:
+.Verification
+
+* Check that hosted cluster status has moved from `Partial` to `Completed` by entering the following command:
 +
 [source,terminal]
 ----
@@ -51,7 +55,7 @@ $ oc get --namespace clusters hostedclusters
 [source,terminal]
 ----
 NAME            VERSION   KUBECONFIG                       PROGRESS    AVAILABLE   PROGRESSING   MESSAGE
-example         4.x.0     example-admin-kubeconfig         Completed   True        False         The hosted control plane is available
+example         <4.x.0>     example-admin-kubeconfig         Completed   True        False         The hosted control plane is available
 ----
 +
-Replace `4.x.0` with the supported {product-title} version that you want to use.
+Replace `<4.x.0>` with the supported {product-title} version that you want to use.

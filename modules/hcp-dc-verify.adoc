@@ -6,7 +6,8 @@
 [id="hcp-dc-verify_{context}"]
 = Verifying the status of the hosted control plane feature
 
-The hosted control plane feature is enabled by default.
+[role="_abstract"]
+The hosted control plane feature is enabled by default. However, if you are not sure that it is enabled, you can run a command to verify its status.
 
 .Procedure
 
@@ -14,7 +15,8 @@ The hosted control plane feature is enabled by default.
 +
 [source,terminal]
 ----
-$ oc patch mce <multiclusterengine> --type=merge -p '{"spec":{"overrides":{"components":[{"name":"hypershift","enabled": true}]}}}'
+$ oc patch mce <multiclusterengine> --type=merge -p \
+  '{"spec":{"overrides":{"components":[{"name":"hypershift","enabled": true}]}}}'
 ----
 +
 When you enable the feature, the `hypershift-addon` managed cluster add-on is installed in the `local-cluster` managed cluster, and the add-on agent installs the HyperShift Operator on the {mce-short} hub cluster.
@@ -27,6 +29,7 @@ $ oc get managedclusteraddons -n local-cluster hypershift-addon
 ----
 +
 .Example output
+[source,terminal]
 ----
 NAME               AVAILABLE   DEGRADED   PROGRESSING
 hypershift-addon   True        False
@@ -34,14 +37,20 @@ hypershift-addon   True        False
 
 . To avoid a timeout during this process, enter the following commands:
 +
-[source,terminal]
-----
-$ oc wait --for=condition=Degraded=True managedclusteraddons/hypershift-addon -n local-cluster --timeout=5m
-----
+.. To avoid a timeout when the condition is `Degraded`, enter the following command:
 +
 [source,terminal]
 ----
-$ oc wait --for=condition=Available=True managedclusteraddons/hypershift-addon -n local-cluster --timeout=5m
+$ oc wait --for=condition=Degraded=True managedclusteraddons/hypershift-addon \
+  -n local-cluster --timeout=5m
+----
++
+.. To avoid a timeout when the condition is `Available`, enter the following command:
++
+[source,terminal]
+----
+$ oc wait --for=condition=Available=True managedclusteraddons/hypershift-addon \
+  -n local-cluster --timeout=5m
 ----
 +
 When the process is complete, the `hypershift-addon` managed cluster add-on and the HyperShift Operator are installed, and the `local-cluster` managed cluster is available to host and manage hosted clusters.

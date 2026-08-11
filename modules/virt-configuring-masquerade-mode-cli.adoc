@@ -4,8 +4,9 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="virt-configuring-masquerade-mode-cli_{context}"]
-= Configuring masquerade mode from the command line
+= Configuring masquerade mode from the CLI
 
+[role="_abstract"]
 You can use masquerade mode to hide a virtual machine's outgoing traffic behind
 the pod IP address. Masquerade mode uses Network Address Translation (NAT) to
 connect virtual machines to the pod network backend through a Linux bridge.
@@ -15,6 +16,7 @@ editing your virtual machine configuration file.
 
 .Prerequisites
 
+* You have installed the {oc-first}.
 * The virtual machine must be configured to use DHCP to acquire IPv4 addresses.
 
 .Procedure
@@ -35,16 +37,17 @@ spec:
         devices:
           interfaces:
             - name: default
-              masquerade: {} <1>
-              ports: <2>
+              masquerade: {}
+              ports:
                 - port: 80
 # ...
       networks:
       - name: default
         pod: {}
 ----
-<1> Connect using masquerade mode.
-<2> Optional: List the ports that you want to expose from the virtual machine, each specified by the `port` field. The `port` value must be a number between 0 and 65536. When the `ports` array is not used, all ports in the valid range are open to incoming traffic. In this example, incoming traffic is allowed on port `80`.
++
+* `spec.template.spec.domain.devices.interfaces.masquerade` connects the virtual machine using masquerade mode.
+* `spec.template.spec.domain.devices.interfaces.ports` is optional and defines the list of ports that you want to expose from the virtual machine, each specified by the `port` field. The `port` value must be a number between 0 and 65536. When the `ports` array is not used, all ports in the valid range are open to incoming traffic. In this example, incoming traffic is allowed on port `80`.
 +
 [NOTE]
 ====

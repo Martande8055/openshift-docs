@@ -6,7 +6,8 @@
 [id="virt-set-guest-log-single-vm-web_{context}"]
 = Setting guest system log access for a single VM with the web console
 
-You can configure access to VM guest system logs for a single VM by using the web console. This setting takes precedence over the cluster-wide default configuration.
+[role="_abstract"]
+To troubleshoot a specific virtual machine (VM) without changing global settings, you can configure the guest system log access by using the web console.
 
 .Procedure
 

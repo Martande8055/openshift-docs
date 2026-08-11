@@ -6,35 +6,43 @@
 [id="capi-yaml-machine-set-vsphere_{context}"]
 = Sample YAML for a Cluster API compute machine set resource on {vmw-full}
 
-The compute machine set resource defines additional properties of the machines that it creates.
-The compute machine set also references the infrastructure resource and machine template when creating machines.
+[role="_abstract"]
+The compute machine set resource defines additional properties of the machines that the resource creates.
+The compute machine set also references the cluster resource and machine template when creating machines.
 
 [source,yaml]
 ----
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: MachineSet
 metadata:
-  name: <machine_set_name> # <1>
+  name: <machine_set_name>
   namespace: openshift-cluster-api
+  labels:
+    cluster.x-k8s.io/cluster-name: <cluster_name>
 spec:
-  clusterName: <cluster_name> # <2>
+  clusterName: <cluster_name>
   replicas: 1
   selector:
     matchLabels:
       test: example
+      cluster.x-k8s.io/cluster-name: <cluster_name>
+      cluster.x-k8s.io/set-name: <machine_set_name>
   template:
     metadata:
       labels:
         test: example
+        cluster.x-k8s.io/cluster-name: <cluster_name>
+        cluster.x-k8s.io/set-name: <machine_set_name>
+        node-role.kubernetes.io/<role>: ""
     spec:
       bootstrap:
-         dataSecretName: worker-user-data # <3>
+         dataSecretName: worker-user-data
       clusterName: <cluster_name>
       infrastructureRef:
         apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
-        kind: VSphereMachineTemplate # <4>
-        name: <template_name> # <5>
-      failureDomain: # <6>
+        kind: VSphereMachineTemplate
+        name: <template_name>
+      failureDomain:
         - name: <failure_domain_name>
           region: <region_a>
           zone: <zone_a>
@@ -47,18 +55,22 @@ spec:
             networks:
             - port-group
 ----
-<1> Specify a name for the compute machine set.
-<2> Specify the cluster ID as the name of the cluster.
-<3> For the Cluster API Technology Preview, the Operator can use the worker user data secret from the `openshift-machine-api` namespace.
-<4> Specify the machine template kind.
+
+where:
+
+`metadata.name`:: Specifies a name for the compute machine set.
+The cluster ID, machine role, and region form a typical pattern for this value in the following format: `<cluster_name>-<role>-<region>`.
+`metadata.labels.cluster.x-k8s.io/cluster-name`:: Specifies the cluster ID as the name of the cluster.
+`spec.clusterName`:: Specifies the cluster ID as the name of the cluster.
+`spec.template.spec.infrastructureRef.kind`:: Specifies the machine template kind.
 This value must match the value for your platform.
-<5> Specify the machine template name.
-<6> Specify the failure domain configuration details.
-+
+`spec.template.spec.infrastructureRef.name`:: Specifies the machine template name.
+`spec.template.spec.failureDomain`:: Specifies the failure domain configuration details.
+
 [NOTE]
 ====
 Using multiple regions and zones on a {vmw-short} cluster that uses the Cluster API is not a validated configuration.
 ====
 // This callout section can be updated if this configuration is validated. (see also: additional resources in cluster-api-config-options-vsphere.adoc)
-// <6> Specify one or more failure domains.
-// For more information about specifying multiple regions and zones on a {vmw-short} cluster, see "Multiple regions and zones configuration for a cluster on {vmw-full}."
+// <5> Specify one or more failure domains.
+// For more information about specifying multiple regions and zones on a {vmw-short} cluster, see "Multiple regions and zones configuration for a cluster on {vmw-full}".

@@ -18,9 +18,8 @@
 [id="installation-registry-storage-non-production_{context}"]
 = Configuring storage for the image registry in non-production clusters
 
-You must configure storage for the Image Registry Operator. For non-production
-clusters, you can set the image registry to an empty directory. If you do so,
-all images are lost if you restart the registry.
+[role="_abstract"]
+You must configure storage for the Image Registry Operator. For non-production clusters, you can set the image registry to an empty directory. If you do so, all images are lost if you restart the registry.
 
 .Procedure
 
@@ -33,7 +32,7 @@ $ oc patch configs.imageregistry.operator.openshift.io cluster --type merge --pa
 +
 [WARNING]
 ====
-Configure this option for only non-production clusters.
+Configure this option only for non-production clusters.
 ====
 +
 If you run this command before the Image Registry Operator initializes its

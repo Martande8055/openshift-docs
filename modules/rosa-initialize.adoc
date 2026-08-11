@@ -3,15 +3,17 @@
 //
 // * rosa_cli/rosa-get-started-cli.adoc
 
+:_mod-docs-content-type: REFERENCE
 [id="rosa-initialize_{context}"]
-= Initializing ROSA
+= Initializing {product-title}
 
-Use the `init` command to initialize {product-title} (ROSA) only if you are using non-STS.
+[role="_abstract"]
+Use the `init` command to initialize {product-title} only if you are using non-STS.
 
 [id="rosa-init_{context}"]
 == init
 
-Perform a series of checks to verify that you are ready to deploy a ROSA cluster.
+Perform a series of checks to verify that you are ready to deploy a {product-title} cluster.
 
 The list of checks includes the following:
 
@@ -74,9 +76,10 @@ $ rosa init [arguments]
 |Specifies an AWS profile (string) from your credentials file.
 |===
 
-.Examples
-Configure your AWS account to allow ROSA clusters:
 
+Configure your AWS account to allow {product-title} clusters:
+
+.Example
 [source,terminal]
 ----
 $ rosa init
@@ -84,6 +87,7 @@ $ rosa init
 
 Configure a new AWS account using pre-existing {cluster-manager} credentials:
 
+.Example
 [source,terminal]
 ----
 $ rosa init --token=$OFFLINE_ACCESS_TOKEN

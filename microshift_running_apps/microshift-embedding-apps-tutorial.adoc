@@ -1,12 +1,13 @@
 :_mod-docs-content-type: ASSEMBLY
-include::_attributes/attributes-microshift.adoc[]
 [id="microshift-embedding-apps-tutorial"]
 = Embedding {microshift-short} applications tutorial
+include::_attributes/attributes-microshift.adoc[]
 :context: microshift-embedding-apps-tutorial
 
 toc::[]
 
-The following tutorial gives a detailed example of how to embed applications in a {op-system-ostree} image for use in a {microshift-short} cluster in various environments.
+[role="_abstract"]
+The following tutorial gives a detailed example of how to embed applications in a {op-system-ostree} image for use in a {microshift-short} node in various environments.
 
 include::modules/microshift-embed-app-rpms-tutorial.adoc[leveloffset=+1]
 
@@ -19,7 +20,7 @@ include::modules/microshift-adding-app-rpms-to-blueprint.adoc[leveloffset=+2]
 //additional resources for adding app rpms to blueprint
 [role="_additional-resources"]
 .Additional resources
-* link:https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/composing_installing_and_managing_rhel_for_edge_images/composing-a-rhel-for-edge-image-using-image-builder-command-line_composing-installing-managing-rhel-for-edge-images#doc-wrapper[Composing a {op-system-ostree} image using the Image Builder CLI]
+* link:https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/composing_installing_and_managing_rhel_for_edge_images/composing-a-rhel-for-edge-image-using-image-builder-command-line_composing-installing-managing-rhel-for-edge-images#doc-wrapper[Composing a {op-system-ostree} image using the image builder CLI]
 
 * link:https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/composing_installing_and_managing_rhel_for_edge_images/composing-a-rhel-for-edge-image-using-image-builder-command-line_composing-installing-managing-rhel-for-edge-images#network_based_deployments_workflow[Network-based deployments workflow]
 
@@ -41,4 +42,4 @@ include::modules/microshift-adding-app-rpms-to-blueprint.adoc[leveloffset=+2]
 
 * link:https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/{op-system-version-major}/html-single/composing_installing_and_managing_rhel_for_edge_images/index#composing-a-rhel-for-edge-image-using-image-builder-command-line_composing-installing-managing-rhel-for-edge-images[Composing a {op-system-ostree} image using image builder command-line]
 
-* link:https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/{op-system-version-major}/html-single/composing_installing_and_managing_rhel_for_edge_images/index#edge-image-builder-system-requirements_setting-up-image-builder[Image Builder system requirements]
+* link:https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/{op-system-version-major}/html-single/composing_installing_and_managing_rhel_for_edge_images/index#edge-image-builder-system-requirements_setting-up-image-builder[Image builder system requirements]

@@ -6,7 +6,8 @@
 [id="configure-network-traffic-console_{context}"]
 = Configuring network traffic menu entry in the {product-title} console
 
-Manually configure the network traffic menu entry in the {product-title} console when the network traffic menu entry is not listed in *Observe* menu in the {product-title} console.
+[role="_abstract"]
+Restore a missing network traffic menu entry in the *Observe* menu of the {product-title} console by manually registering the console plugin in the `FlowCollector` resource and the console operator configuration.
 
 .Prerequisites
 
@@ -82,7 +83,7 @@ $ oc delete pods -n openshift-console -l app=console
 
 . Clear your browser cache and history.
 
-. Check the status of Network Observability plugin pods by running the following command:
+. Check the status of network observability plugin pods by running the following command:
 +
 [source,terminal]
 ----
@@ -95,7 +96,7 @@ NAME                                READY   STATUS    RESTARTS   AGE
 netobserv-plugin-68c7bbb9bb-b69q6   1/1     Running   0          21s
 ----
 
-. Check the logs of the Network Observability plugin pods by running the following command:
+. Check the logs of the network observability plugin pods by running the following command:
 +
 [source,terminal]
 ----

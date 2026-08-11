@@ -6,7 +6,8 @@
 [id="hcp-virt-scale-nodpool_{context}"]
 = Scaling a node pool
 
-You can manually scale a node pool by using the `oc scale` command.
+[role="_abstract"]
+You can manually scale a node pool for a hosted cluster on {VirtProductName} by using the `oc scale` command.
 
 .Procedure
 
@@ -17,7 +18,8 @@ You can manually scale a node pool by using the `oc scale` command.
 NODEPOOL_NAME=${CLUSTER_NAME}-work
 NODEPOOL_REPLICAS=5
 
-$ oc scale nodepool/$NODEPOOL_NAME --namespace clusters --replicas=$NODEPOOL_REPLICAS
+$ oc scale nodepool/$NODEPOOL_NAME --namespace clusters \
+  --replicas=$NODEPOOL_REPLICAS
 ----
 
 . After a few moments, enter the following command to see the status of the node pool:

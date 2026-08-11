@@ -6,7 +6,8 @@
 [id="hcp-aws-create-role-sts-creds_{context}"]
 = Creating an {aws-short} IAM role and STS credentials
 
-Before creating a hosted cluster on {aws-first}, you must create an {aws-short} IAM role and STS credentials.
+[role="_abstract"]
+Before you create a hosted cluster on {aws-first}, you must create an {aws-short} IAM role and STS credentials.
 
 .Procedure
 
@@ -23,9 +24,9 @@ $ aws sts get-caller-identity --query "Arn" --output text
 arn:aws:iam::1234567890:user/<aws_username>
 ----
 +
-Use this output as the value for `<arn>` in the next step.
+Use this output as the value for the `<arn>` value in the next step.
 
-. Create a JSON file named `trust-relationship.json` that contains the trust relationship configuration for your role. See the following example:
+. Create a JSON file that contains the trust relationship configuration for your role. See the following example:
 +
 [source,json]
 ----
@@ -35,26 +36,32 @@ Use this output as the value for `<arn>` in the next step.
         {
             "Effect": "Allow",
             "Principal": {
-                "AWS": <arn> <1>
+                "AWS": "<arn>"
             },
             "Action": "sts:AssumeRole"
         }
     ]
 }
 ----
-<1> Replace `<arn>` with the ARN of your user that you noted in the previous step.
++
+Replace `<arn>` with the ARN of your user that you noted in the previous step.
 
 . Create the Identity and Access Management (IAM) role by running the following command:
 +
 [source,terminal]
 ----
 $ aws iam create-role \
---role-name <name> \// <1>
---assume-role-policy-document file://<file_name>.json \// <2>
---query "Role.Arn"
+  --role-name <name> \
+  --assume-role-policy-document file://<file_name>.json \
+  --query "Role.Arn"
 ----
-<1> Replace `<name>` with the role name, for example, `hcp-cli-role`.
-<2> Replace `<file_name>` with the file name, for example, `assume-role-policy.json`.
++
+where:
++
+--
+`<name>`:: Specifies the role name, for example, `hcp-cli-role`.
+`<file_name>`:: Specifies the name of the JSON file you created in the previous step.
+--
 +
 .Example output
 [source,terminal]
@@ -149,6 +156,7 @@ arn:aws:iam::820196288204:role/myrole
             "Action": [
                 "iam:CreateInstanceProfile",
                 "iam:DeleteInstanceProfile",
+                "iam:TagInstanceProfile",
                 "iam:GetRole",
                 "iam:UpdateAssumeRolePolicy",
                 "iam:GetInstanceProfile",
@@ -159,11 +167,15 @@ arn:aws:iam::820196288204:role/myrole
                 "iam:PutRolePolicy",
                 "iam:AddRoleToInstanceProfile",
                 "iam:CreateOpenIDConnectProvider",
+                "iam:TagOpenIDConnectProvider",
                 "iam:ListOpenIDConnectProviders",
                 "iam:DeleteRolePolicy",
                 "iam:UpdateRole",
                 "iam:DeleteOpenIDConnectProvider",
-                "iam:GetRolePolicy"
+                "iam:GetRolePolicy",
+                "iam:ListAttachedRolePolicies",
+                "iam:ListRolePolicies",
+                "iam:DetachRolePolicy"
             ],
             "Resource": "*"
         },
@@ -197,18 +209,22 @@ arn:aws:iam::820196288204:role/myrole
 }
 ----
 
-. Attach the `policy.json` file to your role by running the following command:
+. Attach the `policy.json` file that contains the permissions policies for your role by running the following command:
 +
 [source,terminal]
 ----
 $ aws iam put-role-policy \
-  --role-name <role_name> \// <1>
-  --policy-name <policy_name> \// <2>
-  --policy-document file://policy.json <3>
+  --role-name <role_name> \
+  --policy-name <policy_name> \
+  --policy-document file://policy.json
 ----
-<1> Replace `<role_name>` with the name of your role.
-<2> Replace `<policy_name>` with your policy name.
-<3> The `policy.json` file contains the permission policies for your role.
++
+where:
++
+--
+`<role_name>`:: Specifies the name of your role.
+`<policy_name>`:: Specifies your policy name.
+--
 
 . Retrieve STS credentials in a JSON file named `sts-creds.json` by running the following command:
 +
@@ -221,11 +237,11 @@ $ aws sts get-session-token --output json > sts-creds.json
 [source,json]
 ----
 {
-              "Credentials": {
-                  "AccessKeyId": "ASIA1443CE0GN2ATHWJU",
-                  "SecretAccessKey": "XFLN7cZ5AP0d66KhyI4gd8Mu0UCQEDN9cfelW1”,
-                  "SessionToken": "IQoJb3JpZ2luX2VjEEAaCXVzLWVhc3QtMiJHMEUCIDyipkM7oPKBHiGeI0pMnXst1gDLfs/TvfskXseKCbshAiEAnl1l/Html7Iq9AEIqf////KQburfkq4A3TuppHMr/9j1TgCj1z83SO261bHqlJUazKoy7vBFR/a6LHt55iMBqtKPEsIWjBgj/jSdRJI3j4Gyk1//luKDytcfF/tb9YrxDTPLrACS1lqAxSIFZ82I/jDhbDs=",
-                  "Expiration": "2025-05-16T04:19:32+00:00"
-              }
-          }
+    "Credentials": {
+        "AccessKeyId": "<access_key_id",
+        "SecretAccessKey": "<secret_access_key>”,
+        "SessionToken": "<session_token>",
+        "Expiration": "<time_stamp>"
+    }
+}
 ----

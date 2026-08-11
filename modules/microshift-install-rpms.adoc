@@ -6,6 +6,7 @@
 [id="installing-microshift-from-rpm-package_{context}"]
 = Installing {microshift-short} from an RPM package
 
+[role="_abstract"]
 Use the following procedure to install {microshift-short} from an RPM package.
 
 .Prerequisites
@@ -15,13 +16,29 @@ Use the following procedure to install {microshift-short} from an RPM package.
 
 .Procedure
 
-. As a root user, enable the {microshift-short} repositories by running the following command:
+. For all lifecycles, enable the repository for your release by running the following command:
 +
 [source,terminal,subs="attributes+"]
 ----
 $ sudo subscription-manager repos \
-    --enable rhocp-{ocp-version}-for-{rhel-major}-$(uname -m)-rpms \
-    --enable fast-datapath-for-{rhel-major}-$(uname -m)-rpms
+    --enable rhocp-{ocp-version}-for-rhel-{op-system-version-major}-$(uname -m)-rpms \
+    --enable fast-datapath-for-rhel-{op-system-version-major}-$(uname -m)-rpms
+----
+
+. For extended support (EUS) releases, also enable the EUS repositories by running the following command:
++
+[source,terminal,subs="attributes+"]
+----
+$ sudo subscription-manager repos \
+    --enable rhel-{op-system-version-major}-for-$(uname -m)-appstream-eus-rpms \
+    --enable rhel-{op-system-version-major}-for-$(uname -m)-baseos-eus-rpms
+----
+
+. Avoid unintended future updates into an unsupported configuration by locking your operating system version with the following command:
++
+[source,terminal,subs="attributes+"]
+----
+$ sudo subscription-manager release --set={op-system-version}
 ----
 
 . Install {microshift-short} by running the following command:
@@ -71,4 +88,4 @@ $ sudo firewall-cmd --permanent --zone=trusted --add-source=169.254.169.1
 $ sudo firewall-cmd --reload
 ----
 
-If the Volume Group (VG) that you have prepared for {microshift-short} used the default name `rhel`, no further configuration is necessary. If you have used a different name, or if you want to change more configuration settings, see the Configuring {microshift-short} section.
+. If the Volume Group (VG) that you have prepared for {microshift-short} used the default name `rhel`, no further configuration is necessary. If you have used a different name, or if you want to change more configuration settings, see the "Using the {microshift-short} configuration file" section.

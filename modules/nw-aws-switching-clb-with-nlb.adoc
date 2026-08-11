@@ -6,22 +6,19 @@
 [id="nw-aws-switching-clb-with-nlb_{context}"]
 = Switching the Ingress Controller from using a Classic Load Balancer to a Network Load Balancer
 
-You can switch the Ingress Controller that is using a Classic Load Balancer (CLB) to one that uses a Network Load Balancer (NLB) on AWS.
+[role="_abstract"]
+To improve performance and reduce latency for cluster traffic in {product-title} on {aws-full}, switch an Ingress Controller using a Classic Load Balancer (CLB) to one that uses a Network Load Balancer (NLB).
 
-Switching between these load balancers will not delete the `IngressController` object.
+Switching between these load balancers does not delete the `IngressController` object.
 
 [WARNING]
 ====
-This procedure might cause the following issues:
-
-* An outage that can last several minutes due to new DNS records propagation, new load balancers provisioning, and other factors. IP addresses and canonical names of the Ingress Controller load balancer might change after applying this procedure.
-
-* Leaked load balancer resources due to a change in the annotation of the service.
+This procedure might cause an outage that can last several minutes due to new DNS records propagation, new load balancers provisioning, and other factors. IP addresses and canonical names of the Ingress Controller load balancer might change after applying this procedure.
 ====
 
 .Procedure
 
-. Modify the existing Ingress Controller that you want to switch to using an NLB. This example assumes that your default Ingress Controller has an `External` scope and no other customizations:
+. Modify the existing Ingress Controller that you want to switch to by using an NLB. This example assumes that your default Ingress Controller has an `External` scope and no other customizations:
 +
 .Example `ingresscontroller.yaml` file
 [source,yaml]
@@ -59,5 +56,29 @@ If your Ingress Controller has other customizations that you want to update, suc
 ----
 $ oc apply -f ingresscontroller.yaml
 ----
+
+. Check that the `Progressing` condition of the Ingress Controller is set to `True` by running the following command:
++
+[source,terminal]
+----
+$ oc get ingresscontroller default -n openshift-ingress-operator -o jsonpath='{.status.conditions[?(@.type=="Progressing")]}'
+----
+
+. Delete the service associated with the Ingress Controller by running the following command:
++
+[source,terminal]
+----
+$ oc -n openshift-ingress delete svc/router-<name>
+----
+* Replace `<name>` with the specific instance name of your Ingress Controller.
 +
 Expect several minutes of outages while the Ingress Controller updates.
+
+.Verification
+
+* Confirm that the Ingress Controller updated successfully by running the following command:
++
+[source,terminal]
+----
+$ oc get ingresscontroller -n openshift-ingress-operator default -o jsonpath="{.status.conditions}" | yq -PC
+----

@@ -6,6 +6,7 @@
 [id="spo-base-syscalls_{context}"]
 = Base syscalls for a container runtime
 
+[role="_abstract"]
 You can use the `baseProfileName` attribute to establish the minimum required `syscalls` for a given runtime to start a container.
 
 .Procedure
@@ -17,7 +18,6 @@ You can use the `baseProfileName` attribute to establish the minimum required `s
 apiVersion: security-profiles-operator.x-k8s.io/v1beta1
 kind: SeccompProfile
 metadata:
-  namespace: my-namespace
   name: example-name
 spec:
   defaultAction: SCMP_ACT_ERRNO

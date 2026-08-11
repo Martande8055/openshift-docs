@@ -5,9 +5,10 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="support-submitting-a-case-enable-approved-access_{context}"]
-= Enabling Approved Access for ROSA clusters by submitting a support case
+= Enabling approved access for ROSA clusters by submitting a support case
 
-{product-rosa} _Approved Access_ is not enabled by default. To enable _Approved Access_ for your {product-rosa} clusters, you should create a support ticket.
+[role="_abstract"]
+Enable the Approved Access feature for your {product-rosa} clusters by creating a support ticket so that you can control when Red{nbsp}Hat Site Reliability Engineering (SRE) accesses your cluster resources.
 
 .Procedure
 
@@ -23,7 +24,12 @@
 
 . Enter the following information:
 
-.. In the *Product* field, select *{product-title}* or *{product-title} {hcp-capital}*.
+ifdef::openshift-rosa[]
+.. In the *Product* field, select *{product-title}*.
+endif::openshift-rosa[]
+ifdef::openshift-rosa-hcp[]
+.. In the *Product* field, select *{product-title} {hcp-capital}*.
+endif::openshift-rosa-hcp[]
 .. In the *Problem statement* field, enter *Enable ROSA Access Protection*.
 .. Click *See more options*.
 
@@ -41,4 +47,3 @@
 . Select *Severity* as *4(Low)* and click *Continue*.
 
 . Preview the case details and click *Submit*.
-

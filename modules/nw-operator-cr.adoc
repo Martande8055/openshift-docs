@@ -1,7 +1,6 @@
 // Module included in the following assemblies:
 //
 // * installing/installing_aws/installing-aws-network-customizations.adoc
-// * installing/installing_azure/installing-azure-network-customizations.adoc
 // * installing/installing_bare_metal/upi/installing-bare-metal-network-customizations.adoc
 // * installing/installing_gcp/installing-gcp-network-customizations.adoc
 // * installing/installing_ibm_power/installing-ibm-power.adoc
@@ -12,12 +11,9 @@
 // * installing/installing_ibm_z/installing-restricted-networks-ibm-z-kvm.adoc
 // * installing/installing_ibm_z/installing-ibm-z-lpar.adoc
 // * installing/installing_ibm_z/installing-restricted-networks-ibm-z-lpar.adoc
-// * installing/installing_vsphere/installing-vsphere-installer-provisioned-network-customizations.adoc
-// * installing/installing_vsphere/installing-vsphere-network-customizations.adoc
 // * networking/cluster-network-operator.adoc
 // * networking/network_security/logging-network-security.adoc
 // * post_installation_configuration/network-configuration.adoc
-// * installing/installing_ibm_cloud/installing-ibm-cloud-network-customizations.adoc
 // * installing/installing_ibm_power/installing-ibm-power.adoc
 // * installing/installing_ibm_power/installing-restricted-networks-ibm-power.adoc
 // * installing/installing_azure_stack_hub/installing-azure-stack-hub-network-customizations.adoc
@@ -30,7 +26,7 @@ endif::[]
 ifeval::["{context}" == "post-install-network-configuration"]
 :post-install-network-configuration:
 endif::[]
-ifeval::["{context}" == "installing-ibm-cloud-network-customizations"]
+ifeval::["{context}" == "installing-ibm-cloud-customizations"]
 :ibm-cloud:
 endif::[]
 
@@ -38,7 +34,8 @@ endif::[]
 [id="nw-operator-cr_{context}"]
 = Cluster Network Operator configuration
 
-The configuration for the cluster network is specified as part of the Cluster Network Operator (CNO) configuration and stored in a custom resource (CR) object that is named `cluster`. The CR specifies the fields for the `Network` API in the `operator.openshift.io` API group.
+[role="_abstract"]
+To manage cluster networking, configure the Cluster Network Operator (CNO) `Network` custom resource (CR) named `cluster` so the cluster uses the correct IP ranges and network plugin settings for reliable pod and service connectivity. Some settings and fields are inherited at the time of install or by the `default.Network.type` plugin, OVN-Kubernetes.
 
 The CNO configuration inherits the following fields during cluster installation from the `Network` API in the `Network.config.openshift.io` API group:
 
@@ -52,7 +49,7 @@ The CNO configuration inherits the following fields during cluster installation 
 ifdef::post-install-network-configuration,operator[]
 [NOTE]
 ====
-After cluster installation, you can only modify the `clusterNetwork` IP address range.
+After cluster installation, you can only modify the `clusterNetwork` IP address range. The `serviceNetwork` range cannot be modified post-installation, either directly or by using the `ServiceCIDR` API.
 ====
 endif::[]
 
@@ -75,8 +72,7 @@ The fields for the Cluster Network Operator (CNO) are described in the following
 
 |`spec.clusterNetwork`
 |`array`
-|A list specifying the blocks of IP addresses from which pod IP addresses are
-allocated and the subnet prefix length assigned to each individual node in the cluster. For example:
+|A list specifying the blocks of IP addresses from which pod IP addresses are allocated and the subnet prefix length assigned to each individual node in the cluster. If you use dual-stack networking, specify IPv4 and IPv6 address families. For example:
 
 [source,yaml]
 ----
@@ -84,20 +80,25 @@ spec:
   clusterNetwork:
   - cidr: 10.128.0.0/19
     hostPrefix: 23
-  - cidr: 10.128.32.0/19
-    hostPrefix: 23
+  - cidr: fd01::/48
+    hostPrefix: 64
 ----
+
+If you install a cluster on {aws-short} with dual-stack networking, the order of addresses must match the dual-stack configuration you selected. For example, if you specified the `DualStackIPv4Primary`, list the IPv4 address first.
 
 |`spec.serviceNetwork`
 |`array`
-|A block of IP addresses for services. The OVN-Kubernetes network plugin supports only a single IP address block for the service network. For example:
+|A block of IP addresses for services. If you use dual-stack networking, specify IPv4 and IPv6 address families. For example:
 
 [source,yaml]
 ----
 spec:
   serviceNetwork:
   - 172.30.0.0/14
+  - fd02::/112
 ----
+
+If you install a cluster on {aws-short} with dual-stack networking, the order of addresses must match the dual-stack configuration you selected. For example, if you specified the `DualStackIPv4Primary`, list the IPv4 address first.
 
 ifdef::operator[]
 This value is ready-only and inherited from the `Network.config.openshift.io` object named `cluster` during cluster installation.
@@ -110,16 +111,32 @@ endif::operator[]
 |`object`
 |Configures the network plugin for the cluster network.
 
-|`spec.kubeProxyConfig`
-|`object`
-|
-The fields for this object specify the kube-proxy configuration.
-If you are using the OVN-Kubernetes cluster network plugin, the kube-proxy configuration has no effect.
+|`spec.additionalRoutingCapabilities.providers`
+|`array`
+|This setting enables a dynamic routing provider. The FRR routing capability provider is required for the route advertisement feature. The only supported value is `FRR`.
+
+--
+- `FRR`: The FRR routing provider
+--
+
+[source,yaml]
+----
+spec:
+  additionalRoutingCapabilities:
+    providers:
+    - FRR
+----
+
 |====
 
-[discrete]
+[IMPORTANT]
+====
+For a cluster that needs to deploy objects across multiple networks, ensure that you specify the same value for the `clusterNetwork.hostPrefix` parameter for each network type that is defined in the `install-config.yaml` file. Setting a different value for each `clusterNetwork.hostPrefix` parameter can impact the OVN-Kubernetes network plugin, where the plugin cannot effectively route object traffic among different nodes.
+====
+
+
 [id="nw-operator-cr-defaultnetwork_{context}"]
-=== defaultNetwork object configuration
+== defaultNetwork object configuration
 
 The values for the `defaultNetwork` object are defined in the following table:
 
@@ -133,7 +150,7 @@ The values for the `defaultNetwork` object are defined in the following table:
 |`OVNKubernetes`. The {openshift-networking} network plugin is selected during installation. This value cannot be changed after cluster installation.
 [NOTE]
 ====
-{product-title} uses the OVN-Kubernetes network plugin by default. OpenShift SDN is no longer available as an installation choice for new clusters.
+{product-title} uses the OVN-Kubernetes network plugin by default.
 ====
 
 |`ovnKubernetesConfig`
@@ -142,9 +159,9 @@ The values for the `defaultNetwork` object are defined in the following table:
 
 |====
 
-[discrete]
+
 [id="nw-operator-configuration-parameters-for-ovn-sdn_{context}"]
-==== Configuration for the OVN-Kubernetes network plugin
+== Configuration for the OVN-Kubernetes network plugin
 
 The following table describes the configuration fields for the OVN-Kubernetes network plugin:
 
@@ -199,9 +216,17 @@ endif::operator[]
 |`object`
 |Specify a configuration object for customizing network policy audit logging. If unset, the defaults audit log settings are used.
 
+|`routeAdvertisements`
+|`string`
+a|Specifies whether to advertise cluster network routes. The default value is `Disabled`.
+--
+- `Enabled`: Import routes to the cluster network and advertise cluster network routes as configured in `RouteAdvertisements` objects.
+- `Disabled`: Do not import routes to the cluster network or advertise cluster network routes.
+--
+
 |`gatewayConfig`
 |`object`
-|Optional: Specify a configuration object for customizing how egress traffic is sent to the node gateway.
+|Optional: Specify a configuration object for customizing how egress traffic is sent to the node gateway. Valid values are `Shared` and `Local`. The default value is `Shared`. In the default setting, the Open vSwitch (OVS) outputs traffic directly to the node IP interface. If you are using hardware offloading, Red Hat recommends to use the default `Shared` gateway mode to bypass the host routing plane. In the `Local` setting, it traverses the host network; consequently, it gets applied to the routing table of the host.
 
 [NOTE]
 ====
@@ -306,6 +331,10 @@ If you set this field to `true`, you do not receive the performance benefits of 
 |`ipForwarding`
 |`object`
 |You can control IP forwarding for all traffic on OVN-Kubernetes managed interfaces by using the `ipForwarding` specification in the `Network` resource. Specify `Restricted` to only allow IP forwarding for Kubernetes related traffic. Specify `Global` to allow forwarding of all IP traffic. For new installations, the default is `Restricted`. For updates to {product-title} 4.14 or later, the default is `Global`.
+[NOTE]
+====
+The default value of `Restricted` sets the IP forwarding to drop.
+====
 
 |`ipv4`
 |`object`
@@ -384,8 +413,8 @@ defaultNetwork:
   ovnKubernetesConfig:
     mtu: 1400
     genevePort: 6081
-      ipsecConfig:
-        mode: Full
+    ipsecConfig:
+      mode: Full
 ----
 
 ifdef::operator[]
@@ -408,7 +437,6 @@ spec:
   serviceNetwork:
   - 172.30.0.0/16
   networkType: OVNKubernetes
-      clusterNetworkMTU: 8900
 ----
 endif::operator[]
 endif::post-install-network-configuration[]
@@ -420,6 +448,6 @@ endif::[]
 ifeval::["{context}" == "post-install-network-configuration"]
 :!post-install-network-configuration:
 endif::[]
-ifeval::["{context}" == "installing-ibm-cloud-network-customizations"]
+ifeval::["{context}" == "installing-ibm-cloud-customizations"]
 :!ibm-cloud:
 endif::[]

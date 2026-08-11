@@ -6,20 +6,19 @@
 [id="recovering-from-missing-lvms-or-operator-components_{context}"]
 = Recovering from a missing storage class
 
-If you encounter the `storage class not found` error, check the `LVMCluster` custom resource (CR) and ensure that all the {lvms-first} pods are in the `Running` state. 
+[role="_abstract"]
+Resolve the "storage class not found" error by verifying that the LVMCluster custom resource (CR) exists and all {lvms-first} pods are running, then reviewing logs to identify configuration issues.
 
 .Prerequisites
-
 * You have installed the {oc-first}.
 * You have logged in to the {oc-first} as a user with `cluster-admin` permissions.
 
 .Procedure
-
 . Verify that the `LVMCluster` CR is present by running the following command:
 +
 [source,terminal]
 ----
-$ oc get lvmcluster -n openshift-storage
+$ oc get lvmcluster -n <namespace>
 ----
 +
 .Example output
@@ -31,11 +30,11 @@ my-lvmcluster   65m
 
 . If the `LVMCluster` CR is not present, create an `LVMCluster` CR. For more information, see "Ways to create an LVMCluster custom resource".
 
-. In the `openshift-storage` namespace, check that all the {lvms} pods are in the `Running` state by running the following command:
+. In the namespace where the operator is installed, check that all the {lvms} pods are in the `Running` state by running the following command:
 +
 [source,terminal]
 ----
-$ oc get pods -n openshift-storage
+$ oc get pods -n <namespace>
 ----
 +
 .Example output
@@ -57,5 +56,5 @@ If the `vg-manager` pod is stuck while loading a configuration file, it is due t
 +
 [source,terminal]
 ----
-$ oc logs -l app.kubernetes.io/component=vg-manager -n openshift-storage
+$ oc logs -l app.kubernetes.io/component=vg-manager -n <namespace>
 ----

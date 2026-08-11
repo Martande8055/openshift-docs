@@ -6,12 +6,8 @@
 [id="installing-infw-operator_{context}"]
 = Installing the Ingress Node Firewall Operator
 
-As a cluster administrator, you can install the Ingress Node Firewall Operator by using the {product-title} CLI or the web console.
-
-[id="install-operator-cli_{context}"]
-== Installing the Ingress Node Firewall Operator using the CLI
-
-As a cluster administrator, you can install the Operator using the CLI.
+[role="_abstract"]
+As a cluster administrator, you can install the Ingress Node Firewall Operator to enable node-level ingress firewalling by using the {product-title} CLI.
 
 .Prerequisites
 
@@ -49,8 +45,7 @@ EOF
 ----
 
 . Subscribe to the Ingress Node Firewall Operator.
-
-.. To create a `Subscription` CR for the Ingress Node Firewall Operator, enter the following command:
+** To create a `Subscription` CR for the Ingress Node Firewall Operator, enter the following command:
 +
 [source,terminal]
 ----

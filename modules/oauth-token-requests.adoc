@@ -2,12 +2,14 @@
 //
 // * authentication/understanding-authentication.adoc
 
+:_mod-docs-content-type: REFERENCE
 [id="oauth-token-requests_{context}"]
-== OAuth token requests
+= OAuth token requests
 
-Every request for an OAuth token must specify the OAuth client that will
-receive and use the token. The following OAuth clients are automatically
-created when starting the {product-title} API:
+[role="_abstract"]
+{product-title} automatically creates OAuth clients to handle token requests from different user agents, including browser-based and CLI tools. These clients interact with OAuth endpoints to authenticate users through interactive login flows or WWW-Authenticate challenges.
+
+The following OAuth clients are automatically created when starting the {product-title} API:
 
 [options="header"]
 |===
@@ -41,11 +43,13 @@ cannot display interactive login pages, such as the CLI. Therefore,
 {product-title} supports authenticating using a `WWW-Authenticate`
 challenge in addition to interactive login flows.
 
+ifndef::openshift-rosa-hcp[]
 If an authenticating proxy is placed in front of the
 `<namespace_route>/oauth/authorize` endpoint, it sends unauthenticated,
 non-browser user-agents `WWW-Authenticate` challenges rather than
 displaying an interactive login page or redirecting to an interactive
 login flow.
+endif::openshift-rosa-hcp[]
 
 [NOTE]
 ====

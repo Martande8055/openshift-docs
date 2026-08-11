@@ -2,16 +2,17 @@
 //
 // * installing/installing_aws/installing-aws-account.adoc
 
+:_mod-docs-content-type: REFERENCE
 [id="installation-aws-permissions-iam-roles_{context}"]
 = Default permissions for IAM instance profiles
 
-By default, the installation program creates IAM instance profiles for the bootstrap, control plane and worker instances with the necessary permissions for the cluster to operate.
+[role="_abstract"]
+To ensure your cluster operates with the correct security permissions in {product-title}, review the default IAM instance profiles created by the installation program.
 
-The following lists specify the default permissions for control plane and compute machines:
+By default, the installation program creates IAM instance profiles for the bootstrap, control plane, and compute instances with the necessary permissions for the cluster to operate.
 
-.Default IAM role permissions for control plane instance profiles
-[%collapsible]
-====
+The following list specifies the default IAM role permissions for control plane instance profiles:
+
 * `ec2:AttachVolume`
 * `ec2:AuthorizeSecurityGroupIngress`
 * `ec2:CreateSecurityGroup`
@@ -50,11 +51,8 @@ The following lists specify the default permissions for control plane and comput
 * `elasticloadbalancing:SetLoadBalancerPoliciesForBackendServer`
 * `elasticloadbalancing:SetLoadBalancerPoliciesOfListener`
 * `kms:DescribeKey`
-====
 
-.Default IAM role permissions for compute instance profiles
-[%collapsible]
-====
+The following list specifies the default IAM permissions for compute instance profiles:
+
 * `ec2:DescribeInstances`
 * `ec2:DescribeRegions`
-====

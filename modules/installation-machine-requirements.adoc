@@ -12,10 +12,7 @@
 // * installing/installing_platform_agnostic/installing-platform-agnostic.adoc
 // * installing/installing_ibm_power/installing-ibm-power.adoc
 // * installing/installing_ibm_power/installing-restricted-networks-ibm-power.adoc
-// * installing/installing_ibm_z/installing-ibm-z.adoc
-// * installing/installing_ibm_z/installing-restricted-networks-ibm-z.adoc
-// * installing/installing_ibm_z/installing-ibm-z-lpar.adoc
-// * installing/installing_ibm_z/installing-restricted-networks-ibm-z-lpar.adoc
+// * installing/installing_ibm_z/installing-ibm-z-reqs.adoc
 // * installing/installing_azure/installing-restricted-networks-azure-user-provisioned.adoc
 // * installing/installing_vsphere/upi/upi-vsphere-installation-reqs.adoc
 
@@ -28,10 +25,7 @@ endif::[]
 ifeval::["{context}" == "installing-restricted-networks-bare-metal"]
 :bare-metal:
 endif::[]
-ifeval::["{context}" == "installing-ibm-z"]
-:ibm-z:
-endif::[]
-ifeval::["{context}" == "installing-restricted-networks-ibm-z"]
+ifeval::["{context}" == "installing-ibm-z-reqs"]
 :ibm-z:
 endif::[]
 ifeval::["{context}" == "installing-ibm-power"]
@@ -45,7 +39,15 @@ endif::[]
 [id="installation-machine-requirements_{context}"]
 = Required machines for cluster installation
 
+[role="_abstract"]
+You must specify the minimum required machines or hosts for your cluster so that your cluster remains stable if a node fails.
+
 The smallest {product-title} clusters require the following hosts:
+
+[IMPORTANT]
+====
+For a cluster that contains user-provisioned infrastructure, you must deploy all of the required machines.
+====
 
 .Minimum required hosts
 [options="header"]
@@ -76,7 +78,7 @@ endif::bare-metal[]
 [IMPORTANT]
 ====
 ifdef::ibm-z[]
-To improve high availability of your cluster, distribute the control plane machines over different z/VM instances on at least two physical machines.
+To improve high availability of your cluster, distribute the control plane machines over different hypervisor instances on at least two physical machines.
 endif::ibm-z[]
 ifndef::ibm-z[]
 To maintain high availability of your cluster, use separate physical hosts for
@@ -92,7 +94,7 @@ The bootstrap, control plane, and compute machines must use {op-system-first} as
 endif::ibm-z,ibm-power[]
 
 ifndef::openshift-origin[]
-Note that {op-system} is based on {op-system-base-full} 9.2 and inherits all of its hardware certifications and requirements.
+Note that {op-system} is based on {op-system-base-full} 9.8 and inherits all of its hardware certifications and requirements.
 endif::[]
 See link:https://access.redhat.com/articles/rhel-limits[Red Hat Enterprise Linux technology capabilities and limits].
 
@@ -105,10 +107,7 @@ endif::[]
 ifeval::["{context}" == "installing-restricted-networks-bare-metal"]
 :!bare-metal:
 endif::[]
-ifeval::["{context}" == "installing-ibm-z"]
-:!ibm-z:
-endif::[]
-ifeval::["{context}" == "installing-restricted-networks-ibm-z"]
+ifeval::["{context}" == "installing-ibm-z-reqs"]
 :!ibm-z:
 endif::[]
 ifeval::["{context}" == "installing-ibm-power"]

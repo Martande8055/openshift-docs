@@ -6,7 +6,10 @@ include::_attributes/attributes-openshift-dedicated.adoc[]
 
 toc::[]
 
-include::snippets/rosa-sts.adoc[]
+[role="_abstract"]
+If you have already created your first cluster and users, this list can serve as a command quick reference list when creating additional clusters and users.
+
+include::snippets/snip_rosa-sts.adoc[]
 
 include::modules/rosa-quickstart-instructions.adoc[leveloffset=+1]
 

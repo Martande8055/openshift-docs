@@ -6,11 +6,13 @@
 [id="adding-node-iso-yaml_{context}"]
 = Adding one or more nodes using a configuration file
 
+[role="_abstract"]
 You can add one or more nodes to your cluster by using the `nodes-config.yaml` file to specify configurations for the new nodes.
 
 .Prerequisites
 
 * You have installed the OpenShift CLI (`oc`)
+* You have installed the Rsync utility
 * You have an active connection to your target cluster
 * You have a kubeconfig file available
 
@@ -66,7 +68,7 @@ hosts:
 +
 [source,terminal]
 ----
-$ oc adm node-image create nodes-config.yaml
+$ oc adm node-image create
 ----
 +
 [IMPORTANT]

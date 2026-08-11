@@ -6,6 +6,9 @@ include::_attributes/common-attributes.adoc[]
 
 toc::[]
 
+[role="_abstract"]
+After installing {product-title}, you can configure, scale, and maintain your cluster to meet operational requirements, including managing nodes and infrastructure workloads, enabling features, applying autoscaling, and maintaining etcd.
+
 After installing {product-title}, you can further expand and customize your cluster to your requirements.
 
 [id="available_cluster_customizations"]
@@ -18,12 +21,9 @@ You complete most of the cluster configuration and customization after you deplo
 If you install your cluster on {ibm-z-name}, not all features and functions are available.
 ====
 
-You modify the configuration resources to configure the major features of the
-cluster, such as the image registry, networking configuration, image build
-behavior, and the identity provider.
+You modify the configuration resources to configure the major features of the cluster, such as the image registry, networking configuration, image build behavior, and the identity provider.
 
-For current documentation of the settings that you control by using these resources, use
-the `oc explain` command, for example `oc explain builds --api-version=config.openshift.io/v1`
+For current documentation of the settings that you control by using these resources, use the `oc explain` command, for example `oc explain builds --api-version=config.openshift.io/v1`
 
 [id="configuration-resources_{context}"]
 === Cluster configuration resources
@@ -53,14 +53,14 @@ to @api-approvers (github) or #forum-api-review (slack).
 |Configures the behavior of the web console interface, including the xref:../web_console/configuring-web-console.adoc#configuring-web-console[logout behavior].
 
 |`featuregate.config.openshift.io`
-|Enables xref:../nodes/clusters/nodes-cluster-enabling-features.adoc#nodes-cluster-enabling[FeatureGates]
+|Enables xref:../nodes/clusters/nodes-cluster-enabling-features.adoc#nodes-cluster-enabling-features[FeatureGates]
 so that you can use Tech Preview features.
 
 |`image.config.openshift.io`
 |Configures how specific xref:../openshift_images/image-configuration.adoc#image-configuration[image registries] should be treated (allowed, disallowed, insecure, CA details).
 
 |`ingress.config.openshift.io`
-|Configuration details related to xref:../networking/ingress-operator.adoc#nw-installation-ingress-config-asset_configuring-ingress[routing] such as the default domain for routes.
+|Configuration details related to xref:../networking/networking_operators/ingress-operator.adoc#nw-installation-ingress-config-asset_ingress-operator[routing] such as the default domain for routes.
 
 |`oauth.config.openshift.io`
 |Configures identity providers and other behavior related to xref:../authentication/configuring-internal-oauth.adoc#configuring-internal-oauth[internal OAuth server] flows.
@@ -100,7 +100,6 @@ to control which example image streams and templates are installed on the cluste
 
 |===
 
-
 [id="additional-configuration-resources_{context}"]
 === Additional configuration resources
 
@@ -119,15 +118,14 @@ documentation for details on how and when you can create additional resource ins
 |`alertmanager.monitoring.coreos.com`
 |`main`
 |`openshift-monitoring`
-|Controls the xref:../observability/monitoring/managing-alerts.adoc#managing-alerts[Alertmanager] deployment parameters.
+|Controls the link:https://docs.redhat.com/en/documentation/monitoring_stack_for_red_hat_openshift/latest/html/configuring_core_platform_monitoring/configuring-alerts-and-notifications[Alertmanager] deployment parameters.
 
 |`ingresscontroller.operator.openshift.io`
 |`default`
 |`openshift-ingress-operator`
-|Configures xref:../networking/ingress-operator.adoc#configuring-ingress[Ingress Operator] behavior such as domain, number of replicas, certificates, and controller placement.
+|Configures xref:../networking/networking_operators/ingress-operator.adoc#configuring-ingress-controller[Ingress Operator] behavior such as domain, number of replicas, certificates, and controller placement.
 
 |===
-
 
 [id="informational-resources_{context}"]
 === Informational Resources
@@ -147,7 +145,7 @@ xref:../updating/updating_a_cluster/updating-cluster-web-console.adoc#updating-c
 |`dns.config.openshift.io`
 |`cluster`
 |You cannot modify the DNS settings for your cluster. You can
-xref:../networking/dns-operator.adoc#dns-operator[view the DNS Operator status].
+xref:../networking/networking_operators/dns-operator.adoc#nw-dns-operator-status_dns-operator[check the DNS Operator status].
 
 |`infrastructure.config.openshift.io`
 |`cluster`
@@ -156,7 +154,7 @@ xref:../networking/dns-operator.adoc#dns-operator[view the DNS Operator status].
 |`network.config.openshift.io`
 |`cluster`
 |You cannot modify your cluster networking after installation. To customize your network, follow the process to
-xref:../installing/installing_aws/ipi/installing-aws-network-customizations.adoc#installing-aws-network-customizations[customize networking during installation].
+xref:../installing/installing_aws/ipi/installing-aws-customizations.adoc#installing-aws-customizations[customize networking during installation].
 
 |===
 
@@ -188,15 +186,13 @@ To add a bare-metal host, you must configure all network prerequisites, configur
 
 * xref:../scalability_and_performance/managing-bare-metal-hosts.adoc#adding-bare-metal-host-to-cluster-using-yaml_managing-bare-metal-hosts[Adding worker nodes using YAML in the web console]
 
-* xref:../installing/installing_bare_metal/ipi/ipi-install-expanding-the-cluster.adoc#preparing-the-bare-metal-node_ipi-install-expanding[Manually adding a worker node to an installer-provisioned infrastructure cluster]
+* xref:../installing/installing_bare_metal/bare-metal-expanding-the-cluster.adoc#preparing-the-bare-metal-node_bare-metal-expanding[Manually adding a worker node to an installer-provisioned infrastructure cluster]
 
 === Adding worker nodes to user-provisioned infrastructure clusters
 
 For user-provisioned infrastructure clusters, you can add worker nodes by using a {op-system-base} or {op-system} ISO image and connecting it to your cluster using cluster Ignition config files. For RHEL worker nodes, the following example uses Ansible playbooks to add worker nodes to the cluster. For RHCOS worker nodes, the following example uses an ISO image and network booting to add worker nodes to the cluster.
 
 * xref:../post_installation_configuration/node-tasks.adoc#post-install-config-adding-fcos-compute[Adding RHCOS worker nodes to a user-provisioned infrastructure cluster]
-
-* xref:../post_installation_configuration/node-tasks.adoc#post-install-config-adding-rhel-compute[Adding RHEL worker nodes to a user-provisioned infrastructure cluster]
 
 === Adding worker nodes to clusters managed by the Assisted Installer
 
@@ -240,12 +236,13 @@ include::modules/nodes-cluster-worker-latency-profiles-using.adoc[leveloffset=+2
 
 xref:../machine_management/control_plane_machine_management/cpmso-about.adoc#cpmso-about[Control plane machine sets] provide management capabilities for control plane machines that are similar to what compute machine sets provide for compute machines. The availability and initial status of control plane machine sets on your cluster depend on your cloud provider and the version of {product-title} that you installed. For more information, see xref:../machine_management/control_plane_machine_management/cpmso-getting-started.adoc#cpmso-getting-started[Getting started with control plane machine sets].
 
+// Adding a control plane node to your cluster
+include::modules/creating-control-plane-node.adoc[leveloffset=+2]
+
 [id="post-install-creating-infrastructure-machinesets-production"]
 == Creating infrastructure machine sets for production environments
 
 You can create a compute machine set to create machines that host only infrastructure components, such as the default router, the integrated container image registry, and components for cluster metrics and monitoring. These infrastructure machines are not counted toward the total number of subscriptions that are required to run the environment.
-
-In a production deployment, it is recommended that you deploy at least three compute machine sets to hold infrastructure components. Both OpenShift Logging and {SMProductName} deploy Elasticsearch, which requires three instances to be installed on different nodes. Each of these nodes can be deployed to different availability zones for high availability. A configuration like this requires three different compute machine sets, one for each availability zone. In global Azure regions that do not have multiple availability zones, you can use availability sets to ensure high availability.
 
 For information on infrastructure nodes and which components can run on infrastructure nodes, see xref:../machine_management/creating-infrastructure-machinesets.adoc#creating-infrastructure-machinesets[Creating infrastructure machine sets].
 
@@ -262,14 +259,14 @@ include::modules/creating-an-infra-node.adoc[leveloffset=+2]
 [role="_additional-resources"]
 .Additional resources
 
-* For information on how to configure project node selectors to avoid cluster-wide node selector key conflicts, see xref:../nodes/scheduling/nodes-scheduler-node-selectors.adoc#project-node-selectors_nodes-scheduler-node-selectors[Project node selectors].
+* xref:../nodes/scheduling/nodes-scheduler-node-selectors.adoc#project-node-selectors_nodes-scheduler-node-selectors[Project node selectors]
 
 include::modules/creating-infra-machines.adoc[leveloffset=+2]
 
 [role="_additional-resources"]
 .Additional resources
 
-* See xref:../architecture/control-plane.adoc#architecture-machine-config-pools_control-plane[Node configuration management with machine config pools] for more information on grouping infra machines in a custom pool.
+* xref:../architecture/control-plane.adoc#architecture-machine-config-pools_control-plane[Node configuration management with machine config pools]
 
 [id="assigning-machine-set-resources-to-infra-nodes"]
 == Assigning machine set resources to infrastructure nodes
@@ -283,7 +280,7 @@ include::modules/binding-infra-node-workloads-using-taints-tolerations.adoc[leve
 [role="_additional-resources"]
 .Additional resources
 
-* See xref:../nodes/scheduling/nodes-scheduler-about.adoc#nodes-scheduler-about[Controlling pod placement using the scheduler] for general information on scheduling a pod to a node.
+* xref:../nodes/scheduling/nodes-scheduler-about.adoc#nodes-scheduler-about[Controlling pod placement using the scheduler]
 
 [id="moving-resources-to-infrastructure-machinesets"]
 == Moving resources to infrastructure machine sets
@@ -296,31 +293,20 @@ include::modules/infrastructure-moving-registry.adoc[leveloffset=+2]
 
 include::modules/infrastructure-moving-monitoring.adoc[leveloffset=+2]
 
-[id="custer-tasks-moving-logging-resources"]
-=== Moving {logging} resources
-
-For information about moving {logging} resources, see:
-
-* xref:../observability/logging/scheduling_resources/logging-node-selectors.adoc#logging-node-selectors[Using node selectors to move logging resources]
-* xref:../observability/logging/scheduling_resources/logging-taints-tolerations.adoc#cluster-logging-logstore-tolerations_logging-taints-tolerations[Using taints and tolerations to control logging pod placement]
-
 include::modules/cluster-autoscaler-about.adoc[leveloffset=+1]
+
 include::modules/cluster-autoscaler-cr.adoc[leveloffset=+2]
+
 :FeatureName: cluster autoscaler
 :FeatureResourceName: ClusterAutoscaler
 include::modules/deploying-resource.adoc[leveloffset=+2]
 
-include::modules/machine-autoscaler-about.adoc[leveloffset=+1]
-include::modules/machine-autoscaler-cr.adoc[leveloffset=+2]
-:FeatureName: machine autoscaler
-:FeatureResourceName: MachineAutoscaler
-include::modules/deploying-resource.adoc[leveloffset=+2]
+[id="custer-tasks-applying-autoscaling"]
+== Applying autoscaling to your cluster
 
-include::modules/nodes-clusters-cgroups-2.adoc[leveloffset=+1]
+Applying autoscaling to an {product-title} cluster involves deploying a cluster autoscaler and then deploying machine autoscalers for each machine type in your cluster.
 
-[role="_additional-resources"]
-.Additional resources
-* xref:../nodes/clusters/nodes-cluster-cgroups-2.adoc#nodes-cluster-cgroups-2[Configuring the Linux cgroup version on your nodes]
+For more information, see xref:../machine_management/applying-autoscaling.adoc#applying-autoscaling[Applying autoscaling to an {product-title} cluster].
 
 [id="post-install-tp-tasks"]
 == Enabling Technology Preview features using FeatureGates
@@ -328,7 +314,9 @@ include::modules/nodes-clusters-cgroups-2.adoc[leveloffset=+1]
 You can turn on a subset of the current Technology Preview features on for all nodes in the cluster by editing the `FeatureGate` custom resource (CR).
 
 include::modules/nodes-cluster-enabling-features-about.adoc[leveloffset=+2]
+
 include::modules/nodes-cluster-enabling-features-console.adoc[leveloffset=+2]
+
 include::modules/nodes-cluster-enabling-features-cli.adoc[leveloffset=+2]
 
 [id="post-install-etcd-tasks"]
@@ -337,22 +325,32 @@ Back up etcd, enable or disable etcd encryption, or defragment etcd data.
 
 [NOTE]
 ====
-If you deployed a bare-metal cluster, you can scale the cluster up to 5 nodes as part of your post-installation tasks. For more information, see xref:../scalability_and_performance/recommended-performance-scale-practices/recommended-etcd-practices.adoc#etcd-node-scaling_recommended-etcd-practices[Node scaling for etcd].
+If you deployed a bare-metal cluster, you can scale the cluster up to 5 nodes as part of your post-installation tasks. For more information, see xref:../etcd/etcd-performance.adoc#etcd-node-scaling_etcd-performance[Node scaling for etcd].
 ====
 
 include::modules/about-etcd-encryption.adoc[leveloffset=+2]
+
 include::modules/etcd-encryption-types.adoc[leveloffset=+2]
+
 include::modules/enabling-etcd-encryption.adoc[leveloffset=+2]
+
 include::modules/disabling-etcd-encryption.adoc[leveloffset=+2]
+
 include::modules/backup-etcd.adoc[leveloffset=+2]
+
+include::modules/etcd-defrag-about.adoc[leveloffset=+2]
+
+include::modules/etcd-defrag-automatic.adoc[leveloffset=+2]
+
 include::modules/etcd-defrag.adoc[leveloffset=+2]
+
 include::modules/dr-restoring-cluster-state.adoc[leveloffset=+2]
 
 [role="_additional-resources"]
 .Additional resources
-* xref:../scalability_and_performance/recommended-performance-scale-practices/recommended-etcd-practices.adoc#recommended-etcd-practices[Recommended etcd practices]
+* xref:../etcd/etcd-practices.adoc#recommended-etcd-practices[Recommended etcd practices]
 * xref:../installing/installing_bare_metal/upi/installing-bare-metal.adoc#installing-bare-metal[Installing a user-provisioned cluster on bare metal]
-* xref:../installing/overview/index.adoc#replacing-a-bare-metal-control-plane-node_ipi-install-expanding[Replacing a bare-metal control plane node]
+* xref:../installing/overview/index.adoc#replacing-a-bare-metal-control-plane-node_bare-metal-expanding[Replacing a bare-metal control plane node]
 
 include::modules/dr-scenario-cluster-state-issues.adoc[leveloffset=+2]
 
@@ -362,10 +360,12 @@ include::modules/dr-scenario-cluster-state-issues.adoc[leveloffset=+2]
 Understand and configure pod disruption budgets.
 
 include::modules/nodes-pods-pod-disruption-about.adoc[leveloffset=+2]
+
 include::modules/nodes-pods-pod-disruption-configuring.adoc[leveloffset=+2]
+
 include::modules/pod-disruption-eviction-policy.adoc[leveloffset=+2]
 
 [role="_additional-resources"]
 .Additional resources
-* xref:../nodes/clusters/nodes-cluster-enabling-features.adoc#nodes-cluster-enabling[Enabling features using feature gates]
-* link:https://kubernetes.io/docs/tasks/run-application/configure-pdb/#unhealthy-pod-eviction-policy[Unhealthy Pod Eviction Policy] in the Kubernetes documentation
+* xref:../nodes/clusters/nodes-cluster-enabling-features.adoc#nodes-cluster-enabling-features[Enabling features using feature gates]
+* link:https://kubernetes.io/docs/tasks/run-application/configure-pdb/#unhealthy-pod-eviction-policy[Unhealthy Pod Eviction Policy in the Kubernetes documentation]

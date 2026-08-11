@@ -2,9 +2,12 @@
 //
 // * scalability_and_performance/low_latency_tuning/cnf-tuning-low-latency-nodes-with-perf-profile.adoc
 
-
+:_mod-docs-content-type: REFERENCE
 [id="performance-profile-creator-arguments_{context}"]
 = Performance Profile Creator arguments
+
+[role="_abstract"]
+To customize the generation of performance profiles, review the arguments for the Performance Profile Creator.
 
 .Required Performance Profile Creator arguments
 [cols="30%,70%",options="header"]
@@ -43,7 +46,7 @@ Default: `false`.
 
 [WARNING]
 ====
-If this argument is set to `true` you should not disable Hyper-Threading in the BIOS. Disabling Hyper-Threading is accomplished with a kernel command line argument.
+If this argument is set to `true` you should not disable Hyper-Threading in the BIOS. Disabling Hyper-Threading is accomplished with a kernel command-line argument.
 ====
 
 |enable-hardware-tuning 

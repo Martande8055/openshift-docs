@@ -70,6 +70,11 @@ Type::
 |===
 | Property | Type | Description
 
+| `additionalNTPServers`
+| `array (string)`
+| AdditionalNTPServers is a list of NTP Servers to be used by the
+provisioning service
+
 | `bootIsoSource`
 | `string`
 | BootIsoSource provides a way to set the location where the iso image
@@ -87,10 +92,23 @@ by the metal3 pod.
 | DisableVirtualMediaTLS turns off TLS on the virtual media server,
 which may be required for hardware that cannot accept HTTPS links.
 
+| `externalIPs`
+| `array (string)`
+| ExternalIPs are the external-facing IP addresses used to access the Ironic service.
+Most users will not need this set. It is recommended to leave this unset unless
+actually necessary.
+
 | `preProvisioningOSDownloadURLs`
 | `object`
 | PreprovisioningOSDownloadURLs is set of CoreOS Live URLs that would be necessary to provision a worker
 either using virtual media or PXE.
+
+| `prometheusExporter`
+| `object`
+| PrometheusExporter configures sensor data collection and Prometheus metrics export.
+When enabled, this configures Ironic to collect sensor data, deploys the
+ironic-prometheus-exporter container, and creates supporting resources
+(ServiceMonitor, Service ports) to expose hardware sensor metrics for Prometheus.
 
 | `provisioningDHCPExternal`
 | `boolean`
@@ -173,11 +191,31 @@ IPs in the dhcpRange all come from within this network. When using IPv6
 and in a network managed by the Baremetal IPI solution this cannot be a
 network larger than a /64.
 
+| `provisioningNetworkGateway`
+| `string`
+| ProvisioningNetworkGateway is the IP address of the default gateway
+for the provisioning network. This gateway is provided to baremetal
+hosts via DHCP to enable routing to external networks during
+inspection and provisioning. This field is optional and only
+used when ProvisioningNetwork is set to Managed. The gateway IP
+must be within the ProvisioningNetworkCIDR but outside of the
+ProvisioningDHCPRange and must not be the same as ProvisioningIP.
+
 | `provisioningOSDownloadURL`
 | `string`
 | ProvisioningOSDownloadURL is the location from which the OS
 Image used to boot baremetal host machines can be downloaded
 by the metal3 cluster.
+
+| `unsupportedConfigOverrides`
+| `object`
+| UnsupportedConfigOverrides are site-specific overrides that are not
+officially supported in the Metal platform and may cause the
+deployment to fail. Carefully check the description of each field
+you modify to understand its implications for stability and
+upgradability of your cluster.
+When reporting a bug, please make sure to reproduce it with
+UnsupportedConfigOverrides set to nil.
 
 | `virtualMediaViaExternalNetwork`
 | `boolean`
@@ -235,6 +273,78 @@ Type::
 | RootfsURL Image URL to be used for PXE deployments
 
 |===
+=== .spec.prometheusExporter
+Description::
++
+--
+PrometheusExporter configures sensor data collection and Prometheus metrics export.
+When enabled, this configures Ironic to collect sensor data, deploys the
+ironic-prometheus-exporter container, and creates supporting resources
+(ServiceMonitor, Service ports) to expose hardware sensor metrics for Prometheus.
+--
+
+Type::
+  `object`
+
+Required::
+  - `enabled`
+
+
+
+[cols="1,1,1",options="header"]
+|===
+| Property | Type | Description
+
+| `disableDefaultPrometheusRules`
+| `boolean`
+| DisableDefaultPrometheusRules controls whether default hardware health
+alerting rules should NOT be deployed alongside the prometheus exporter.
+When false (default), default prometheus rules are deployed.
+
+| `enabled`
+| `boolean`
+| Enabled controls whether sensor data collection is active.
+When true, configures Ironic to collect sensor data, deploys the
+ironic-prometheus-exporter container, and creates supporting resources.
+
+| `sensorCollectionInterval`
+| `integer`
+| SensorCollectionInterval defines how often (in seconds) sensor data
+is collected from BMCs using Ironic. Must be at least 60 seconds.
+
+|===
+=== .spec.unsupportedConfigOverrides
+Description::
++
+--
+UnsupportedConfigOverrides are site-specific overrides that are not
+officially supported in the Metal platform and may cause the
+deployment to fail. Carefully check the description of each field
+you modify to understand its implications for stability and
+upgradability of your cluster.
+When reporting a bug, please make sure to reproduce it with
+UnsupportedConfigOverrides set to nil.
+--
+
+Type::
+  `object`
+
+
+
+
+[cols="1,1,1",options="header"]
+|===
+| Property | Type | Description
+
+| `ironicAgentImage`
+| `string`
+| Override for the IPA container image.
+The image must be based on openshift/ironic-agent-image of the same
+release as the cluster. After each cluster upgrade, it must be
+rebased and updated immediately, before any BareMetalHosts are
+enrolled, provisioned or deprovisioned.
+
+|===
 === .status
 Description::
 +
@@ -267,6 +377,10 @@ Type::
 | `generations[]`
 | `object`
 | GenerationStatus keeps track of the generation for a given resource so that decisions about forced updates can be made.
+
+| `latestAvailableRevision`
+| `integer`
+| latestAvailableRevision is the deploymentID of the most recent deployment
 
 | `observedGeneration`
 | `integer`
@@ -305,6 +419,8 @@ Type::
   `object`
 
 Required::
+  - `lastTransitionTime`
+  - `status`
   - `type`
 
 
@@ -315,7 +431,8 @@ Required::
 
 | `lastTransitionTime`
 | `string`
-| 
+| lastTransitionTime is the last time the condition transitioned from one status to another.
+This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
 
 | `message`
 | `string`
@@ -327,11 +444,11 @@ Required::
 
 | `status`
 | `string`
-| 
+| status of the condition, one of True, False, Unknown.
 
 | `type`
 | `string`
-| 
+| type of condition in CamelCase or in foo.example.com/CamelCase.
 
 |===
 === .status.generations
@@ -357,6 +474,11 @@ GenerationStatus keeps track of the generation for a given resource so that deci
 Type::
   `object`
 
+Required::
+  - `group`
+  - `name`
+  - `namespace`
+  - `resource`
 
 
 

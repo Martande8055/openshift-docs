@@ -2,10 +2,11 @@
 //
 // * virt/virtual_machines/virtual_disks/virt-configuring-shared-volumes-for-vms.adoc
 
-:_content-type: PROCEDURE
-[id="virt-configuring-vm-disk-sharing{context}"]
+:_mod-docs-content-type: PROCEDURE
+[id="virt-configuring-vm-disk-sharing_{context}"]
 = Configuring disk sharing by using virtual machine disks
 
+[role="_abstract"]
 You can configure block volumes so that multiple virtual machines (VMs) can share storage.
 
 The application running on the guest operating system determines the storage option you must configure for the VM. A disk of type `disk` exposes the volume as an ordinary disk to the VM.
@@ -23,6 +24,12 @@ You can accept the default behavior, or you can set the error policy to one of t
 * The volume access mode must be `ReadWriteMany` (RWX) if the VMs that are sharing disks are running on different nodes.
 +
 If the VMs that are sharing disks are running on the same node, `ReadWriteOnce` (RWO) volume access mode is sufficient.
++
+[NOTE]
+====
+Not all filesystem and format combinations support RWX mode. For example, XFS format does not support RWX mode. When multiple VMs write to an XFS-formatted volume, data corruption occurs and only the writing VM can access the data.
+====
+
 
 * The storage provider must support the required Container Storage Interface (CSI) driver.
 
@@ -46,19 +53,17 @@ spec:
           - disk:
               bus: virtio
             name: rootdisk
-            errorPolicy: report <1>
-            disk1: disk_one <2>
+            errorPolicy: report
           - disk:
               bus: virtio
-            name: cloudinitdisk
-            disk2: disk_two
-            shareable: true <3>
+            name: cluster
+            shareable: true
           interfaces:
           - masquerade: {}
             name: default
 ----
-<1> Identifies the error policy.
-<2> Identifies a device as a disk.
-<3> Identifies a shared disk.
++
+* `spec.template.spec.domain.devices.disks.errorPolicy` defines how the hypervisor should behave when an IO error occurs.
+* `spec.template.spec.domain.devices.disks.shareable` defines whether multiple virtual machines (VMs) can use the same underlying disk.
 
 . Save the `VirtualMachine` manifest file to apply your changes.

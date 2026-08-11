@@ -6,12 +6,13 @@
 [id="microshift-deploying-a-load-balancer_{context}"]
 = Deploying a load balancer for an application
 
-The following example procedure uses the node IP address as the external IP address for the `LoadBalancer` service configuration file. Use this example as guidance for how to deploy load balancers.
+[role="_abstract"]
+To expose an application through a `LoadBalancer` service that uses the node IP as the external IP in {microshift-short}, you can create a namespace, deploy the example workload, and apply the service manifest. 
 
 .Prerequisites
 
-* The OpenShift CLI (`oc`) is installed.
-* You installed a cluster on an infrastructure configured with the OVN-Kubernetes network plugin.
+* The {oc-first} is installed.
+* You installed a node on an infrastructure configured with the OVN-Kubernetes network plugin.
 * The `KUBECONFIG` environment variable is set.
 
 .Procedure
@@ -29,7 +30,6 @@ $ oc get pods -A
 NAMESPACE                            NAME                                                     READY   STATUS   RESTARTS  AGE
 default                              i-06166fbb376f14a8bus-west-2computeinternal-debug-qtwcr  1/1     Running	   0		   46m
 kube-system                          csi-snapshot-controller-5c6586d546-lprv4                 1/1     Running	   0		   51m
-kube-system                          csi-snapshot-webhook-6bf8ddc7f5-kz6k9                    1/1     Running	   0		   51m
 openshift-dns                        dns-default-45jl7                                        2/2     Running	   0		   50m
 openshift-dns                        node-resolver-7wmzf                                      1/1     Running	   0		   51m
 openshift-ingress                    router-default-78b86fbf9d-qvj9s                          1/1     Running 	 0		   51m
@@ -48,16 +48,16 @@ openshift-storage                    topolvm-node-rht2m                         
 +
 [source,terminal]
 ----
-$ NAMESPACE=<nginx-lb-test> <1>
+$ NAMESPACE=_<nginx_lb_test>_
 ----
-<1> Replace _<nginx-lb-test> with the application namespace that you want to create.
++
+* Replace _<nginx_lb_test>_ with the application namespace that you want to create.
 +
 [source,terminal]
 ----
 $ oc create ns $NAMESPACE
 ----
 +
-.Example namespace
 The following example deploys three replicas of the test `nginx` application in the created namespace:
 +
 [source,terminal]
@@ -159,7 +159,7 @@ nginx   LoadBalancer   10.43.183.104   192.168.1.241   81:32434/TCP   2m
 
 .Verification
 
-The following command forms five connections to the example `nginx` application using the external IP address of the `LoadBalancer` service configuration. The result of the command is a list of those server IP addresses.
+The following command forms five connections to the example `nginx` application by using the external IP address of the `LoadBalancer` service configuration. The result of the command is a list of those server IP addresses.
 
 * Verify that the load balancer sends requests to all the running applications by running the following command:
 +

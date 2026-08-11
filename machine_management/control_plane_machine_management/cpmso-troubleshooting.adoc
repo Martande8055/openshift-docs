@@ -6,7 +6,8 @@ include::_attributes/common-attributes.adoc[]
 
 toc::[]
 
-Use the information in this section to understand and recover from issues you might encounter.
+[role="_abstract"]
+Use the following information to understand and recover from issues you might encounter.
 
 //Checking the control plane machine set custom resource status
 include::modules/cpmso-checking-status.adoc[leveloffset=+1]
@@ -30,14 +31,14 @@ include::modules/cpmso-ts-mhc-etcd-degraded.adoc[leveloffset=+1]
 .Additional resources
 * xref:../../backup_and_restore/control_plane_backup_and_restore/disaster_recovery/scenario-2-restoring-cluster-state.adoc#dr-restoring-cluster-state[Restoring to a previous cluster state]
 
-[id="cpmso-troubleshooting-shiftstack-upgrade_{context}"]
-== Upgrading clusters that run on {rh-openstack}
+//Upgrading clusters that run on Red Hat OpenStack Platform
+include::modules/cpmso-ts-openstack-upgrade.adoc[leveloffset=+1]
 
-For clusters that run on {rh-openstack-first} that were created with {product-title} 4.13 or earlier, you might have to perform post-upgrade tasks before you can use control plane machine sets.
-
-// TODO: Rejigger
 // Post-upgrade config for ShiftStack with machine AZs explicitly defined and rootVolumes w/out AZs
 include::modules/cpmso-openstack-ts-root-volume-azs.adoc[leveloffset=+2]
 
 // Post-upgrade config for ShiftStack with control plane AZs explicitly defined
 include::modules/cpmso-openstack-with-az-config.adoc[leveloffset=+2]
+
+//Improving reliability for multiple subnet configurations on Nutanix
+include::modules/cpmso-ts-nutanix-multiple-subnet.adoc[leveloffset=+1]

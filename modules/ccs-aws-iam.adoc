@@ -2,9 +2,11 @@
 //
 // * osd_planning/aws-ccs.adoc
 
+:_mod-docs-content-type: REFERENCE
 [id="ccs-aws-iam_{context}"]
 = Red Hat managed IAM references for AWS
 
+[role="_abstract"]
 Red Hat is responsible for creating and managing the following Amazon Web Services (AWS) resources: IAM policies, IAM users, and IAM roles.
 
 [id="aws-policy-iam-policies_{context}"]

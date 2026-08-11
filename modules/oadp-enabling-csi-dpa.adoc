@@ -1,3 +1,4 @@
+
 // Module included in the following assemblies:
 //
 // * backup_and_restore/application_backup_and_restore/installing/installing-oadp-aws.adoc
@@ -10,6 +11,7 @@
 [id="oadp-enabling-csi-dpa_{context}"]
 = Enabling CSI in the DataProtectionApplication CR
 
+[role="_abstract"]
 You enable the Container Storage Interface (CSI) in the `DataProtectionApplication` custom resource (CR) in order to back up persistent volumes with CSI snapshots.
 
 .Prerequisites
@@ -30,6 +32,9 @@ spec:
     velero:
       defaultPlugins:
       - openshift
-      - csi <1>
+      - csi
 ----
-<1> Add the `csi` default plugin.
++
+where:
++
+`csi`:: Specifies the `csi` default plugin.

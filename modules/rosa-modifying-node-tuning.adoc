@@ -1,37 +1,41 @@
 // Module included in the following assemblies:
 //
-// * rosa_hcp/rosa-tuning-config.adoc
+// * nodes/nodes/nodes-node-tuning-operator.adoc
 
 :_mod-docs-content-type: PROCEDURE
 [id="rosa-modifying-node-tuning_{context}"]
-= Modifying your node tuning configurations
+= Modify node tuning configurations
 
-You can view and update the node tuning configurations using the {product-title} (ROSA) CLI, `rosa`.
+[role="_abstract"]
+View and update node tuning configurations to adjust performance settings for your cluster by using the {rosa-cli-first}.
 
 .Prerequisites
 
-* You have downloaded the latest version of the ROSA CLI.
-* You have a cluster on the latest version
-* Your cluster has a node tuning configuration added to it
+* You have downloaded the latest version of the {rosa-cli}.
+* You have a cluster on the latest version.
+* Your cluster has a node tuning configuration added to it.
 
 .Procedure
 
-. You view the tuning configurations with the `rosa describe` command:
+. View the tuning configurations with the `rosa describe` command:
 +
 [source,terminal]
 ----
-$ rosa describe tuning-config -c <cluster_id> <1>
-       --name <name_of_tuning> <2>
-       [-o json] <3>
+$ rosa describe tuning-config -c <cluster_id> \
+       --name <name_of_tuning> \
+       [-o json]
 ----
 +
-The following items in this spec file are:
+where:
 +
-<1> Provide the cluster ID for the cluster that you own that you want to apply a node tuning configurations.
-<2> Provide the name of your tuning configuration.
-<3> Optionally, you can provide the output type. If you do not specify any outputs, you only see the ID and name of the tuning configuration.
+--
+`<cluster_id>`:: Specifies the cluster ID for the cluster that you own that you want to apply a node tuning configuration.
+`<name_of_tuning>`:: Specifies the name of your tuning configuration.
+`-o json`:: Specifies the output type. This parameter is optional. If you do not specify any outputs, you see only the ID and name of the tuning configuration.
+--
 +
-.Example output without specifying output type
+*Example output without specifying output type*
++
 [source,terminal]
 ----
 Name:    sample-tuning
@@ -53,7 +57,8 @@ Spec:    {
 
 ----
 +
-.Example output specifying JSON output
+*Example output specifying JSON output*
++
 [source,terminal]
 ----
 {
@@ -78,8 +83,9 @@ Spec:    {
 }
 ----
 
-. After verifying the tuning configuration, you edit the existing configurations with the `rosa edit` command:
+. After verifying the tuning configuration, edit the existing configuration with the `rosa edit` command:
 +
+[source,terminal]
 ----
 $ rosa edit tuning-config -c <cluster_id> --name <name_of_tuning> --spec-path <path_to_spec_file>
 ----
@@ -88,14 +94,15 @@ In this command, you use the `spec.json` file to edit your configurations.
 
 .Verification
 
-* Run the `rosa describe` command again, to see that the changes you made to the `spec.json` file are updated in the tuning configurations:
+* Run the `rosa describe` command again to see that the changes you made to the `spec.json` file are updated in the tuning configurations:
 +
 [source,terminal]
 ----
 $ rosa describe tuning-config -c <cluster_id> --name <name_of_tuning>
 ----
 +
-.Example output
+*Example output*
++
 [source,terminal]
 ----
 Name:  sample-tuning

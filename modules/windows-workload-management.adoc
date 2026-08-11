@@ -2,10 +2,14 @@
 //
 // * windows_containers/understanding-windows-container-workloads.adoc
 
+:_mod-docs-content-type: CONCEPT
 [id="windows-workload-management_{context}"]
 = Windows workload management
 
-To run Windows workloads in your cluster, you must first install the Windows Machine Config Operator (WMCO). The WMCO is a Linux-based Operator that runs on Linux-based control plane and compute nodes. The WMCO orchestrates the process of deploying and managing Windows workloads on a cluster.
+[role="_abstract"]
+To run Windows workloads in your cluster, you must install the Windows Machine Config Operator (WMCO). 
+
+The WMCO is a Linux-based Operator that runs on the Linux-based control plane and compute nodes. The WMCO orchestrates the process of deploying and managing Windows workloads on a cluster.
 
 .WMCO design
 image::wmco-design.png[WMCO workflow]
@@ -26,4 +30,4 @@ After the cluster establishes a connection with the Windows VM, you can manage t
 The {product-title} web console provides most of the same monitoring capabilities for Windows nodes that are available for Linux nodes. However, the ability to monitor workload graphs for pods running on Windows nodes is not available at this time.
 ====
 
-Scheduling Windows workloads to a Windows node can be done with typical pod scheduling practices like taints, tolerations, and node selectors; alternatively, you can differentiate your Windows workloads from Linux workloads and other Windows-versioned workloads by using a `RuntimeClass` object.
+Scheduling Windows workloads to a Windows node can be done with typical pod scheduling practices, such as taints, tolerations, and node selectors. Alternatively, you can differentiate your Windows workloads from Linux workloads and other Windows-versioned workloads by using a `RuntimeClass` object.

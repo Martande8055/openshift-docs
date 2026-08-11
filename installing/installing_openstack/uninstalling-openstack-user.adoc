@@ -6,8 +6,10 @@ include::_attributes/common-attributes.adoc[]
 
 toc::[]
 
+[role="_abstract"]
 You can remove a cluster that you deployed to {rh-openstack-first} on user-provisioned infrastructure.
 
 // include::modules/installation-uninstall-clouds.adoc[leveloffset=+1]
 include::modules/installation-osp-downloading-modules.adoc[leveloffset=+1]
+
 include::modules/installation-uninstall-infra.adoc[leveloffset=+1]

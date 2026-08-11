@@ -4,8 +4,10 @@
 
 
 :_mod-docs-content-type: PROCEDURE
-[id="rosa-delete-users"]
+[id="rosa-delete-users_{context}"]
 = Revoking administrator access using {cluster-manager} console
+
+[role="_abstract"]
 You can revoke the `dedicated-admin` or `cluster-admin` access of users through {cluster-manager} console. Users will be able to access the cluster without administrator privileges.
 
 .Prerequisites
@@ -18,4 +20,4 @@ You can revoke the `dedicated-admin` or `cluster-admin` access of users through 
 
 . On the *Cluster List* tab of {cluster-manager}, select the name of your cluster to view the cluster details.
 . Select *Access control* > *Cluster Roles and Access*.
-. For the user that you want to remove, click the *Options* menu {kebab} to the right of the user and group combination and click *Delete*.
+. For the user that you want to remove, click the Options menu {kebab} to the right of the user and group combination and click *Delete*.

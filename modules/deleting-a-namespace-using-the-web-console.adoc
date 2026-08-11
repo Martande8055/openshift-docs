@@ -6,11 +6,12 @@
 [id="deleting-a-namespace-using-the-web-console_{context}"]
 = Deleting a namespace using the web console
 
+[role="_abstract"]
 You can delete a namespace by using the {product-title} web console.
 
 .Prerequisites
 
-* You have access to an {product-title} cluster using an account with `cluster-admin` permissions.
+* You have access to the {product-title} cluster using an account with `cluster-admin` permissions.
 
 .Procedure
 

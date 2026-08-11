@@ -6,6 +6,7 @@
 [id="cnf-about-topology-aware-lifecycle-manager-about-policies_{context}"]
 = About managed policies used with {cgu-operator-full}
 
+[role="_abstract"]
 The {cgu-operator-first} uses {rh-rhacm} policies for cluster updates.
 
 {cgu-operator} can be used to manage the rollout of any policy CR where the `remediationAction` field is set to `inform`.
@@ -13,6 +14,11 @@ Supported use cases include the following:
 
 * Manual user creation of policy CRs
 * Automatically generated policies from the `PolicyGenerator` or `PolicyGentemplate` custom resource definition (CRD)
+
+[NOTE]
+====
+Using the `PolicyGentemplate` CRD is the recommended method for automatic policy generation.
+====
 
 For policies that update an Operator subscription with manual approval, {cgu-operator} provides additional functionality that approves the installation of the updated Operator.
 

@@ -6,6 +6,7 @@
 [id="microshift-firewall-allow-traffic_{context}"]
 = Allowing network traffic through the firewall
 
+[role="_abstract"]
 You can allow network traffic through the firewall by configuring the IP address range and inserting the DNS server to allow internal traffic from pods through the network gateway.
 
 .Procedure
@@ -31,4 +32,11 @@ $ sudo firewall-offline-cmd --permanent --zone=trusted --add-source=<custom IP r
 [source,terminal]
 ----
 $ sudo firewall-offline-cmd --permanent --zone=trusted --add-source=169.254.169.1
+----
+
+. If you are using a load balancer, allow the IPv6 traffic through the firewall by running the following command:
++
+[source,terminal]
+----
+$ sudo firewall-cmd --permanent --zone=trusted --add-source=fd01::/48
 ----

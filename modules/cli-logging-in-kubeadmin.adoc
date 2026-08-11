@@ -6,7 +6,6 @@
 // * installing/installing_aws/installing-aws-china.adoc
 // * installing/installing_aws/installing-aws-government-region.adoc
 // * installing/installing_aws/installing-aws-secret-region.adoc
-// * installing/installing_aws/installing-aws-network-customizations.adoc
 // * installing/installing_aws/installing-aws-private.adoc
 // * installing/installing_aws/installing-aws-vpc.adoc
 // * installing/installing-aws-localzone.adoc
@@ -31,9 +30,9 @@
 // * installing/installing_gcp/installing-restricted-networks-gcp.adoc
 // * installing/installing_gcp/installing-restricted-networks-gcp-installer-provisioned.adoc
 // * installing/installing_ibm_cloud/installing-ibm-cloud-customizations.adoc
-// * installing/installing_ibm_cloud/installing-ibm-cloud-network-customizations.adoc
 // * installing/installing_ibm_cloud/installing-ibm-cloud-vpc.adoc
 // * installing/installing_ibm_cloud/installing-ibm-cloud-private.adoc
+// * installing/installing_ibm_powervc/installing-ibm-powervc-installer-custom.adoc
 // * installing/installing_ibm_powervs/installing-ibm-power-vs-private-cluster.adoc
 // * installing/installing_ibm_powervs/installing-restricted-networks-ibm-power-vs.adoc
 // * installing/installing_ibm_powervs/installing-ibm-powervs-vpc.adoc
@@ -47,7 +46,6 @@
 // * installing/installing_vsphere/installing-vsphere.adoc
 // * installing/installing_vsphere/installing-vsphere-installer-provisioned.adoc
 // * installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.adoc
-// * installing/installing_vsphere/installing-vsphere-installer-provisioned-network-customizations.adoc
 // * installing/installing_vsphere/installing-restricted-networks-installer-provisioned-vsphere.adoc
 // * installing/installing_ibm_z/installing-ibm-z.adoc
 // * installing/installing_ibm_z/installing-restricted-networks-ibm-z.adoc
@@ -58,32 +56,51 @@
 // * installing/installing-restricted-networks-azure-installer-provisioned.adoc
 // * installing/installing_azure/installing-restricted-networks-azure-user-provisioned.adoc
 
+ifeval::["{context}" == "installing-gcp-user-infra"]
+:gcp:
+:three-node-cluster:
+endif::[]
+ifeval::["{context}" == "installing-gcp-user-infra-vpc"]
+:gcp:
+:user-infra-vpc:
+endif::[]
+ifeval::["{context}" == "installing-restricted-networks-gcp"]
+:gcp:
+:restricted:
+endif::[]
 
 :_mod-docs-content-type: PROCEDURE
 [id="cli-logging-in-kubeadmin_{context}"]
 = Logging in to the cluster by using the CLI
 
-You can log in to your cluster as a default system user by exporting the cluster `kubeconfig` file.
-The `kubeconfig` file contains information about the cluster that is used by the CLI to connect a client to the correct cluster and API server.
-The file is specific to a cluster and is created during {product-title} installation.
+[role="_abstract"]
+To log in to your cluster as the default system user, export the `kubeconfig` file. This configuration enables the CLI to authenticate and connect to the specific API server created during {product-title} installation.
+
+The `kubeconfig` file is specific to a cluster and is created during {product-title} installation.
 
 .Prerequisites
-
+ifndef::gcp[]
 * You deployed an {product-title} cluster.
-* You installed the `oc` CLI.
+endif::gcp[]
+* You installed the {oc-first}.
+ifdef::gcp[]
+* Ensure the bootstrap process completed successfully.
+endif::gcp[]
 
 .Procedure
 
-. Export the `kubeadmin` credentials:
+. Export the `kubeadmin` credentials by running the following command:
 +
 [source,terminal]
 ----
-$ export KUBECONFIG=<installation_directory>/auth/kubeconfig <1>
+$ export KUBECONFIG=<installation_directory>/auth/kubeconfig
 ----
-<1> For `<installation_directory>`, specify the path to the directory that you stored
-the installation files in.
++
+where:
++
+`<installation_directory>`:: Specifies the path to the directory that stores the installation files.
 
-. Verify you can run `oc` commands successfully using the exported configuration:
+. Verify you can run `oc` commands successfully using the exported configuration by running the following command:
 +
 [source,terminal]
 ----
@@ -95,3 +112,21 @@ $ oc whoami
 ----
 system:admin
 ----
+
+.Next steps
+
+* "Customize your cluster"
+* "Remote health reporting"
+
+ifeval::["{context}" == "installing-gcp-user-infra"]
+:!gcp:
+:!three-node-cluster:
+endif::[]
+ifeval::["{context}" == "installing-gcp-user-infra-vpc"]
+:!gcp:
+:!user-infra-vpc:
+endif::[]
+ifeval::["{context}" == "installing-restricted-networks-gcp"]
+:!gcp:
+:!restricted:
+endif::[]

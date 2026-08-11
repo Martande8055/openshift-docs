@@ -6,18 +6,23 @@
 [id="olm-updating-sqlite-catalog-to-a-new-opm-version_{context}"]
 = Rebuilding SQLite database catalog images
 
+[role="_abstract"]
 You can rebuild your SQLite database catalog image with the latest version of the `opm` CLI tool that is released with your version of {product-title}.
 
 .Prerequisites
 
 * You have a SQLite database catalog source.
-ifndef::openshift-dedicated,openshift-rosa[]
+ifndef::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
 * You have access to the cluster as a user with the `cluster-admin` role.
-endif::openshift-dedicated,openshift-rosa[]
-ifdef::openshift-dedicated,openshift-rosa[]
+endif::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
+ifdef::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
 * You have access to the cluster as a user with the `dedicated-admin` role.
-endif::openshift-dedicated,openshift-rosa[]
-* You have the latest version of the `opm` CLI tool released with {product-title} {product-version} on your workstation.
+endif::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
+* You have the latest version of the `opm` CLI tool released with {product-title} 
+ifndef::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
+{product-version} 
+endif::openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
+on your workstation.
 
 .Procedure
 
@@ -26,7 +31,7 @@ endif::openshift-dedicated,openshift-rosa[]
 [source,terminal,subs="attributes+"]
 ----
 $ opm index add --binary-image \
-  registry.redhat.io/openshift4/ose-operator-registry:v{product-version} \
+  registry.redhat.io/openshift4/ose-operator-registry-rhel9:v{product-version} \
   --from-index <your_registry_image> \
   --bundles "" -t \<your_registry_image>
 ----

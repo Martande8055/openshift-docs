@@ -6,15 +6,16 @@
 [id="installation-azure-subscription-tenant-id_{context}"]
 = Recording the subscription and tenant IDs
 
-The installation program requires the subscription and tenant IDs that are associated with your Azure account. You can use the Azure CLI to gather this information.
+[role="_abstract"]
+To record the subscription and tenant IDs that the installation program requires for your {azure-short} account, you can use the {azure-short} CLI.
 
 .Prerequisites
 
-* You have installed or updated the link:https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-yum?view=azure-cli-latest[Azure CLI].
+* You have installed or updated the link:https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-yum?view=azure-cli-latest[{azure-short} CLI].
 
 .Procedure
 
-. Log in to the Azure CLI by running the following command:
+. Log in to the {azure-short} CLI by running the following command:
 +
 [source,terminal]
 ----

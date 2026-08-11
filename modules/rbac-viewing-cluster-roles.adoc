@@ -7,6 +7,9 @@
 [id="viewing-cluster-roles_{context}"]
 = Viewing cluster roles and bindings
 
+[role="_abstract"]
+You can view cluster roles and bindings by using the `oc` CLI to determine the permissions associated with roles and identify the users, groups, and service accounts assigned to them.
+
 You can use the `oc` CLI to view cluster roles and bindings by using the
 `oc describe` command.
 
@@ -24,7 +27,7 @@ endif::[]
 
 . To view the cluster roles and their associated rule sets:
 +
-ifdef::openshift-enterprise,openshift-webscale,openshift-origin,openshift-dedicated,openshift-rosa[]
+ifdef::openshift-enterprise,openshift-webscale,openshift-origin,openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
 [source,terminal]
 ----
 $ oc describe clusterrole.rbac
@@ -224,7 +227,7 @@ endif::[]
 . To view the current set of cluster role bindings, which shows the users and
 groups that are bound to various roles:
 +
-ifdef::openshift-enterprise,openshift-webscale,openshift-origin,openshift-dedicated,openshift-rosa[]
+ifdef::openshift-enterprise,openshift-webscale,openshift-origin,openshift-dedicated,openshift-rosa,openshift-rosa-hcp[]
 [source,terminal]
 ----
 $ oc describe clusterrolebinding.rbac

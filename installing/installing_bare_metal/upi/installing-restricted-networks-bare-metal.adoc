@@ -1,6 +1,10 @@
+ifeval::["{context}" == "installing-with-agent-based-installer"]
+:agent:
+endif::[]
+
 :_mod-docs-content-type: ASSEMBLY
 [id="installing-restricted-networks-bare-metal"]
-= Installing a user-provisioned bare metal cluster on a restricted network
+= Installing a user-provisioned bare metal cluster on a disconnected environment
 include::_attributes/common-attributes.adoc[]
 :context: installing-restricted-networks-bare-metal
 
@@ -22,14 +26,14 @@ before you attempt to install an {product-title} cluster in such an environment.
 
 * You reviewed details about the xref:../../../architecture/architecture-installation.adoc#architecture-installation[{product-title} installation and update] processes.
 * You read the documentation on xref:../../../installing/overview/installing-preparing.adoc#installing-preparing[selecting a cluster installation method and preparing it for users].
-* You xref:../../../disconnected/mirroring/installing-mirroring-installation-images.adoc#installing-mirroring-installation-images[created a registry on your mirror host] and obtained the `imageContentSources` data for your version of {product-title}.
+* You xref:../../../disconnected/installing-mirroring-installation-images.adoc#installing-mirroring-installation-images[created a registry on your mirror host] and obtained the `imageContentSources` data for your version of {product-title}.
 +
 [IMPORTANT]
 ====
 Because the installation media is on the mirror host, you can use that computer to complete all installation steps.
 ====
 * You provisioned xref:../../../storage/understanding-persistent-storage.adoc#understanding-persistent-storage[persistent storage] for your cluster. To deploy a private image registry, your storage must provide ReadWriteMany access modes.
-* If you use a firewall and plan to use the Telemetry service, you xref:../../../installing/install_config/configuring-firewall.adoc#configuring-firewall[configured the firewall to allow the sites] that your cluster requires access to.
+* If you use a firewall and plan to use the Telemetry service, you xref:../../../installing/install_config/configuring-firewall.adoc#configuring-firewall-module_configuring-firewall[configured the firewall to allow the sites] that your cluster requires access to.
 +
 [NOTE]
 ====
@@ -49,6 +53,7 @@ of the required machines.
 This section describes the requirements for deploying {product-title} on user-provisioned infrastructure.
 
 include::modules/installation-machine-requirements.adoc[leveloffset=+2]
+
 include::modules/installation-minimum-resource-requirements.adoc[leveloffset=+2]
 
 [role="_additional-resources"]
@@ -74,15 +79,28 @@ include::modules/installation-network-user-infra.adoc[leveloffset=+2]
 
 include::modules/installation-dns-user-infra.adoc[leveloffset=+2]
 
+include::modules/installation-dns-user-infra-example.adoc[leveloffset=+3]
+
 [role="_additional-resources"]
 .Additional resources
 
 * xref:../../../installing/installing_bare_metal/upi/installing-restricted-networks-bare-metal.adoc#installation-user-provisioned-validating-dns_installing-restricted-networks-bare-metal[Validating DNS resolution for user-provisioned infrastructure]
 
+include::modules/installation-bare-metal-dns-record-type.adoc[leveloffset=+2]
+
 include::modules/installation-load-balancing-user-infra.adoc[leveloffset=+2]
+
+include::modules/installation-load-balancing-user-infra-example.adoc[leveloffset=+3]
 
 // Creating a manifest object that includes a customized `br-ex` bridge
 include::modules/creating-manifest-file-customized-br-ex-bridge.adoc[leveloffset=+1]
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:../../../networking/ovn_kubernetes_network_provider/converting-to-dual-stack.adoc#nw-dual-stack-convert_converting-to-dual-stack[Converting to a dual-stack cluster network]
+
+* xref:../../../installing/installing_bare_metal/bare-metal-expanding-the-cluster.adoc#bare-metal-expanding-the-cluster[Expanding the cluster]
 
 // Scale each machine set to compute nodes
 include::modules/creating-scaling-machine-sets-compute-nodes-networking.adoc[leveloffset=+2]
@@ -148,11 +166,30 @@ include::modules/installation-special-config-chrony.adoc[leveloffset=+1]
 
 include::modules/creating-machines-bare-metal.adoc[leveloffset=+1]
 
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/coreos-installer/[coreos-installer image mirror]
+
 include::modules/installation-user-infra-machines-iso.adoc[leveloffset=+2]
 
 include::modules/installation-user-infra-machines-pxe.adoc[leveloffset=+2]
 
 include::modules/installation-user-infra-machines-advanced.adoc[leveloffset=+2]
+
+include::modules/installation-user-infra-machines-advanced-network.adoc[leveloffset=+3]
+
+include::modules/installation-user-infra-machines-advanced-disk.adoc[leveloffset=+3]
+
+include::modules/installation-user-infra-machines-advanced-retain-disk.adoc[leveloffset=+3]
+
+include::modules/installation-user-infra-machines-advanced-ignition.adoc[leveloffset=+3]
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html-single/configuring_and_managing_networking/index#getting-started-with-nmcli_configuring-and-managing-networking[Getting started with nmcli]
+* link:https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html-single/configuring_and_managing_networking/index#getting-started-with-nmtui_configuring-and-managing-networking[Getting started with nmtui]
 
 include::modules/installation-user-infra-machines-advanced-console-configuration.adoc[leveloffset=+3]
 
@@ -172,7 +209,18 @@ include::modules/installation-user-infra-machines-advanced-customizing-live-netw
 
 include::modules/installation-user-infra-machines-advanced-customizing-live-iscsi-manual.adoc[leveloffset=+4]
 
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://www.man7.org/linux/man-pages/man7/dracut.cmdline.7.html[`dracut.cmdline` manual page]
+
 include::modules/installation-user-infra-machines-advanced-customizing-live-iscsi-ibft.adoc[leveloffset=+4]
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://www.man7.org/linux/man-pages/man7/dracut.cmdline.7.html[`dracut.cmdline` manual page]
+
 :boot-media!:
 :boot!:
 
@@ -189,10 +237,32 @@ include::modules/installation-user-infra-machines-advanced-customizing-live-netw
 include::modules/installation-user-infra-machines-advanced-customizing-live-iscsi-manual.adoc[leveloffset=+4]
 
 include::modules/installation-user-infra-machines-advanced-customizing-live-iscsi-ibft.adoc[leveloffset=+4]
+
 :boot-media!:
 :boot!:
 
-include::modules/installation-user-infra-machines-static-network.adoc[leveloffset=+3]
+include::modules/installation-user-infra-machines-static-network.adoc[leveloffset=+2]
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://www.man7.org/linux/man-pages/man7/dracut.cmdline.7.html[`dracut.cmdline` manual page]
+
+include::modules/configuring-dhcp-or-static-ip-addresses.adoc[leveloffset=+3]
+
+include::modules/configuring-ip-address-without-static-hostname.adoc[leveloffset=+3]
+
+include::modules/specifying-multiple-network-interfaces.adoc[leveloffset=+3]
+
+include::modules/configuring-default-gateway-route.adoc[leveloffset=+3]
+
+include::modules/configuring-vlans-individual-interfaces.adoc[leveloffset=+3]
+
+include::modules/bonding-multiple-network-interfaces-to-single-interface.adoc[leveloffset=+3]
+
+include::modules/bonding-multiple-sriov-network-interfaces-to-dual-port.adoc[leveloffset=+3]
+
+include::modules/installation-user-infra-machines-coreos-installer-options.adoc[leveloffset=+3]
 
 include::modules/rhcos-enabling-multipath.adoc[leveloffset=+2]
 
@@ -251,5 +321,9 @@ include::modules/cluster-telemetry.adoc[leveloffset=+1]
 * Learn how to xref:../../../disconnected/using-olm.adoc#olm-restricted-networks[use Operator Lifecycle Manager in disconnected environments].
 * If the mirror registry that you used to install your cluster has a trusted CA, add it to the cluster by xref:../../../openshift_images/image-configuration.adoc#images-configuration-cas_image-configuration[configuring additional trust stores].
 * If necessary, you can
-xref:../../../support/remote_health_monitoring/opting-out-of-remote-health-reporting.adoc#opting-out-remote-health-reporting_opting-out-remote-health-reporting[opt out of remote health reporting].
-* If necessary, see xref:../../../support/remote_health_monitoring/opting-out-of-remote-health-reporting.adoc#insights-operator-register-disconnected-cluster_opting-out-remote-health-reporting[Registering your disconnected cluster]
+xref:../../../support/remote_health_monitoring/remote-health-reporting.adoc#remote-health-reporting[Remote health reporting].
+* If necessary, see xref:../../../support/remote_health_monitoring/remote-health-reporting.adoc#insights-operator-register-disconnected-cluster_remote-health-reporting[Registering your disconnected cluster]
+
+ifeval::["{context}" == "installing-with-agent-based-installer"]
+:!agent:
+endif::[]

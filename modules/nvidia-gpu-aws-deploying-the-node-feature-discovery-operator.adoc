@@ -8,13 +8,16 @@
 [id="nvidia-gpu-aws-deploying-the-node-feature-discovery-operator_{context}"]
 = Deploying the Node Feature Discovery Operator
 
-After the GPU-enabled node is created, you need to discover the GPU-enabled node so it can be scheduled. To do this, install the Node Feature Discovery (NFD) Operator. The NFD Operator identifies hardware device features in nodes. It solves the general problem of identifying and cataloging hardware resources in the infrastructure nodes so they can be made available to {product-title}.
+[role="_abstract"]
+After the GPU-enabled node is created, you need to discover the GPU-enabled node so it can be scheduled. To do this, install the Node Feature Discovery (NFD) Operator.
+
+The NFD Operator identifies hardware device features in nodes. It solves the general problem of identifying and cataloging hardware resources in the infrastructure nodes so they can be made available to {product-title}.
 
 .Procedure
 
-. Install the Node Feature Discovery Operator from *OperatorHub* in the {product-title} console.
+. Install the Node Feature Discovery Operator from the software catalog in the {product-title} console.
 
-. After installing the NFD Operator into *OperatorHub*, select *Node Feature Discovery* from the installed Operators list and select *Create instance*. This installs the `nfd-master` and `nfd-worker` pods, one `nfd-worker` pod for each compute node, in the `openshift-nfd` namespace.
+. After installing the NFD Operator, select *Node Feature Discovery* from the installed Operators list and select *Create instance*. This installs the `nfd-master` and `nfd-worker` pods, one `nfd-worker` pod for each compute node, in the `openshift-nfd` namespace.
 
 . Verify that the Operator is installed and running by running the following command:
 +
@@ -23,8 +26,6 @@ After the GPU-enabled node is created, you need to discover the GPU-enabled node
 $ oc get pods -n openshift-nfd
 ----
 +
-.Example output
-+
 [source,terminal]
 ----
 NAME                                       READY    STATUS     RESTARTS   AGE
@@ -32,9 +33,9 @@ NAME                                       READY    STATUS     RESTARTS   AGE
 nfd-controller-manager-8646fcbb65-x5qgk    2/2      Running 7  (8h ago)   1d
 ----
 
-. Browse to the installed Oerator in the console and select *Create Node Feature Discovery*.
+. Browse to the installed Operator in the console and select *Create Node Feature Discovery*.
 
-. Select *Create* to build a NFD custom resource. This creates NFD pods in the `openshift-nfd` namespace that poll the {product-title} nodes for hardware resources and catalogue them.
+. Select *Create* to build a NFD custom resource. This creates NFD pods in the `openshift-nfd` namespace that poll the {product-title} nodes for hardware resources and catalog them.
 
 .Verification
 

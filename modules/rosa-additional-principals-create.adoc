@@ -5,9 +5,10 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="rosa-additional-principals-create_{context}"]
-= Adding additional principals while creating your {hcp-title} cluster
+= Adding additional principals while creating your {product-title} cluster
 
-Use the `--additional-allowed-principals` argument to permit access through other roles.
+[role="_abstract"]
+By default, only the IAM role that created the cluster can access the cluster's API. If other IAM roles in your AWS account need access to the cluster API, you can grant them access by specifying additional allowed principals during cluster creation.
 
 .Procedure
 
@@ -23,7 +24,6 @@ You can use `arn:aws:iam::account_id:role/role_name` to approve a specific role.
 . When the cluster creation command runs, you receive a summary of your cluster with the `--additional-allowed-principals` specified:
 +
 .Example output
-+
 [source,terminal]
 ----
 Name:                       mycluster

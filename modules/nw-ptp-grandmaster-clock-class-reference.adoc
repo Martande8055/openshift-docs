@@ -6,7 +6,9 @@
 [id="nw-ptp-grandmaster-clock-class-reference_{context}"]
 = Grandmaster clock class sync state reference
 
+[role="_abstract"]
 The following table describes the PTP grandmaster clock (T-GM) `gm.ClockClass` states.
+
 Clock class states categorize T-GM clocks based on their accuracy and stability with regard to the Primary Reference Time Clock (PRTC) or other timing source.
 
 Holdover specification is the amount of time a PTP clock can maintain synchronization without receiving updates from the primary time source.
@@ -24,9 +26,6 @@ For example, the PRTC is traceable to a GNSS time source.
 |`gm.ClockClass 7`
 |T-GM clock is in `HOLDOVER` mode, and within holdover specification.
 The clock source might not be traceable to a category 1 frequency source.
-
-|`gm.ClockClass 140`
-|T-GM clock is in `HOLDOVER` mode, is out of holdover specification, but it is still traceable to the category 1 frequency source.
 
 |`gm.ClockClass 248`
 |T-GM clock is in `FREERUN` mode.

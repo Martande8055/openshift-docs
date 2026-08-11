@@ -6,12 +6,18 @@ include::_attributes/common-attributes.adoc[]
 
 toc::[]
 
-You can create a different compute machine set to serve a specific purpose in your {product-title} cluster on VMware vSphere. For example, you might create infrastructure machine sets and related machines so that you can move supporting workloads to the new machines.
+[role="_abstract"]
+You can define and create a {product-title} compute machine set on VMware vSphere to enable the Machine API to automatically scale and manage compute nodes in vSphere. You can create a different compute machine set to serve a specific purpose in your {product-title} cluster on vSphere. For example, you might create infrastructure machine sets and related machines so that you can move supporting workloads to the new machines.
 
-include::modules/machine-user-provisioned-limitations.adoc[leveloffset=+1]
+include::snippets/machine-user-provisioned-limitations.adoc[leveloffset=+1]
 
 //Sample YAML for a compute machine set custom resource on vSphere
 include::modules/machineset-yaml-vsphere.adoc[leveloffset=+1]
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:../../machine_configuration/mco-update-boot-images-manual.adoc#mco-update-boot-images-manual[Manually updating the boot image]
 
 //Minimum required vCenter privileges for compute machine set management
 include::modules/machineset-vsphere-required-permissions.adoc[leveloffset=+1]
@@ -20,16 +26,17 @@ include::modules/machineset-vsphere-required-permissions.adoc[leveloffset=+1]
 include::modules/compute-machineset-upi-reqs.adoc[leveloffset=+1]
 
 //Obtaining the infrastructure ID
-[discrete]
+
 include::modules/machineset-upi-reqs-infra-id.adoc[leveloffset=+2]
 
 //Satisfying vSphere credentials requirements
-[discrete]
+
 include::modules/machineset-upi-reqs-vsphere-creds.adoc[leveloffset=+2]
 
 //Satisfying ignition configuration requirements
-[discrete]
+
 include::modules/machineset-upi-reqs-ignition-config.adoc[leveloffset=+2]
+
 [role="_additional-resources"]
 .Additional resources
 * xref:../../machine_configuration/index.adoc#machine-config-operator_machine-config-overview[Understanding the Machine Config Operator]
@@ -38,5 +45,18 @@ include::modules/machineset-upi-reqs-ignition-config.adoc[leveloffset=+2]
 //Creating a compute machine set
 include::modules/machineset-creating.adoc[leveloffset=+1]
 
+//Labeling GPU machine sets for the cluster autoscaler
+include::modules/machineset-label-gpu-autoscaler.adoc[leveloffset=+1]
+
+[role="_additional-resources"]
+.Additional resources
+* xref:../../machine_management/applying-autoscaling.adoc#cluster-autoscaler-cr_applying-autoscaling[Cluster autoscaler resource definition]
+
 //Adding tags to machines by using machine sets
 include::modules/machine-api-vmw-add-tags.adoc[leveloffset=+1,tag=!controlplane]
+
+//Configuring multiple NICs by using machine sets
+include::modules/machineset-vsphere-multiple-nics.adoc[leveloffset=+1,tag=!controlplane]
+
+//Configuring data disks by using machine sets
+include::modules/machineset-vsphere-data-disks.adoc[leveloffset=+1,tag=!controlplane]

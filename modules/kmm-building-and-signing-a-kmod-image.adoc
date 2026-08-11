@@ -6,7 +6,8 @@
 [id="kmm-building-and-signing-a-kmod-image_{context}"]
 = Building and signing a kmod image
 
-Use this procedure if you have source code and must build your image first.
+[role="_abstract"]
+To build and sign a kmod image from source code on {product-title}, you can apply a `Module` custom resource that builds an unsigned image and then signs it with your key and certificate secrets.
 
 The following YAML file builds a new container image using the source code from the repository. The image produced is saved back in the registry with a temporary name, and this temporary image is then signed using the parameters in the `sign` section.
 
@@ -33,7 +34,7 @@ metadata:
   name: example-module-dockerfile
   namespace: <namespace> <1>
 data:
-  Dockerfile: |
+  dockerfile: |
     ARG DTK_AUTO
     ARG KERNEL_VERSION
     FROM ${DTK_AUTO} as builder
@@ -77,9 +78,6 @@ spec:
   selector: # top-level selector
     kubernetes.io/arch: amd64
 ----
-
 <1> Replace `default` with a valid namespace.
-
 <2> The default `serviceAccountName` does not have the required permissions to run a module that is privileged. For information on creating a service account, see "Creating service accounts" in the "Additional resources" of this section.
-
 <3> Used as `imagePullSecrets` in the `DaemonSet` object and to pull and push for the build and sign features.

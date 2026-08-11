@@ -1,15 +1,16 @@
 :_mod-docs-content-type: ASSEMBLY
+[id="audit-log-view"]
+= Viewing audit logs
+
 include::_attributes/common-attributes.adoc[]
 ifdef::openshift-rosa,openshift-dedicated[]
 include::_attributes/attributes-openshift-dedicated.adoc[]
 endif::openshift-rosa,openshift-dedicated[]
-
-[id="audit-log-view"]
-= Viewing audit logs
 :context: audit-log-view
 
 toc::[]
 
+[role="_abstract"]
 {product-title} auditing provides a security-relevant chronological set of records documenting the sequence of activities that have affected the system by individual users, administrators, or other components of the system.
 
 include::modules/nodes-nodes-audit-log-basic.adoc[leveloffset=+1]
@@ -31,6 +32,4 @@ include::modules/gathering-data-audit-logs.adoc[leveloffset=+1]
 ifndef::openshift-rosa,openshift-dedicated[]
 * link:https://github.com/kubernetes/apiserver/blob/master/pkg/apis/audit/v1/types.go#L72[API audit log event structure]
 * xref:../security/audit-log-policy-config.adoc#audit-log-policy-config[Configuring the audit log policy]
-endif::[]
-* xref:../observability/logging/log_collection_forwarding/log-forwarding.adoc#log-forwarding[About log forwarding]
-
+endif::openshift-rosa,openshift-dedicated[]

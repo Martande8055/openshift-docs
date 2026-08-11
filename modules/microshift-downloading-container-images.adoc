@@ -1,17 +1,18 @@
 // Module included in the following assemblies:
 //
-// * microshift/running_applications/microshift-deploy-with-mirror-registry.adoc
+// * microshift/microshift_install_get_ready/microshift-deploy-with-mirror-registry.adoc
 
 :_mod-docs-content-type: PROCEDURE
 [id="microshift-downloading-container-images_{context}"]
 = Downloading container images
 
+[role="_abstract"]
 After you have located the container list and completed the mirroring prerequisites, download the container images to a host with internet access.
 
 .Prerequisites
 
-* You are logged into a host with access to the internet.
-* You have ensured that the `.pull-secret-mirror.json` file and `microshift-containers` directory contents are available locally.
+* You logged into a host with access to the internet.
+* The `.pull-secret-mirror.json` file and `microshift-containers` directory contents are available locally.
 
 .Procedure
 
@@ -61,5 +62,3 @@ while read -r src_img ; do
 
 done < "${IMAGE_LIST_FILE}"
 ----
-
-. Transfer the image set to the target environment, such as air-gapped site. Then you can upload the image set into the mirror registry.

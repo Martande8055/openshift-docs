@@ -7,7 +7,8 @@ include::_attributes/common-attributes.adoc[]
 
 toc::[]
 
-You can install a customized cluster on infrastructure that the installation program provisions on {azure-first}. To customize the installation, modify parameters in the `install-config.yaml` file before you install the cluster.
+[role="_abstract"]
+In {product-title} version {product-version}, you can install a cluster with a customized configuration or a customized network configuration on infrastructure that the installation program provisions on {azure-first}. To install a cluster with customizations or with network customizations, modify parameters in the `install-config.yaml` file before you install the cluster. By customizing your network configuration, your cluster can coexist with existing IP address allocations in your environment and integrate with existing MTU and VXLAN configurations. You must set most of the network configuration parameters during installation, and you can modify only the `kubeProxy` configuration parameters in a running cluster.
 
 include::modules/installation-azure-marketplace-subscribe.adoc[leveloffset=+1]
 
@@ -29,11 +30,50 @@ include::modules/installation-azure-tested-machine-types.adoc[leveloffset=+2]
 include::modules/installation-azure-arm-tested-machine-types.adoc[leveloffset=+2]
 
 include::modules/installation-azure-trusted-launch.adoc[leveloffset=+2]
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://learn.microsoft.com/en-us/azure/virtual-machines/trusted-launch#secure-boot[Secure Boot (Microsoft Azure documentation)]
+
+* link:https://learn.microsoft.com/en-us/windows/security/hardware-security/tpm/trusted-platform-module-overview[virtualized Trusted Platform Modules (Microsoft Azure documentation)]
+
+* link:https://learn.microsoft.com/en-us/azure/virtual-machines/trusted-launch#virtual-machines-sizes[Virtual machine sizes (Microsoft Azure documentation)]
+
 include::modules/installation-azure-confidential-vms.adoc[leveloffset=+2]
 
-include::modules/installation-azure-config-yaml.adoc[leveloffset=+2]
+include::modules/installation-azure-dedicated-disks.adoc[leveloffset=+2]
+
+include::modules/installing-azure-managing-dns-solution.adoc[leveloffset=+2]
+
+include::modules/installation-azure-config-yaml-simple.adoc[leveloffset=+2]
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:../../../installing/installing_azure/installation-config-parameters-azure.adoc#installation-config-parameters-azure[Installation configuration parameters for Azure]
+
 
 include::modules/installation-configure-proxy.adoc[leveloffset=+2]
+
+[role="_additional-resources"]
+.Additional resources
+
+* For more details about Accelerated Networking, see xref:../../../machine_management/creating_machinesets/creating-machineset-azure.adoc#machineset-azure-accelerated-networking_creating-machineset-azure[Accelerated Networking for Microsoft Azure VMs].
+
+// Network Operator specific configuration
+include::modules/nw-network-config.adoc[leveloffset=+1]
+
+include::modules/nw-modifying-operator-install-config.adoc[leveloffset=+1]
+
+include::modules/nw-operator-cr.adoc[leveloffset=+1]
+
+include::modules/configuring-hybrid-ovnkubernetes.adoc[leveloffset=+1]
+
+[NOTE]
+====
+For more information about using Linux and Windows nodes in the same cluster, see xref:../../../windows_containers/understanding-windows-container-workloads.adoc#understanding-windows-container-workloads[Understanding Windows container workloads].
+====
 
 [role="_additional-resources"]
 .Additional resources
@@ -75,15 +115,17 @@ include::modules/cco-ccoctl-install-creating-manifests.adoc[leveloffset=+3]
 
 include::modules/installation-launching-installer.adoc[leveloffset=+1]
 
+include::modules/installing-azure-provisioning-dns-records.adoc[leveloffset=+1]
+
 include::modules/cli-logging-in-kubeadmin.adoc[leveloffset=+1]
 
 [role="_additional-resources"]
 .Additional resources
 
-* See xref:../../../web_console/web-console.adoc#web-console[Accessing the web console] for more details about accessing and understanding the {product-title} web console.
+* xref:../../../web_console/web-console.adoc#web-console[Accessing the web console]
 
 == Next steps
 
 * xref:../../../post_installation_configuration/cluster-tasks.adoc#available_cluster_customizations[Customize your cluster].
 * If necessary, you can
-xref:../../../support/remote_health_monitoring/opting-out-of-remote-health-reporting.adoc#opting-out-remote-health-reporting_opting-out-remote-health-reporting[opt out of remote health reporting].
+xref:../../../support/remote_health_monitoring/remote-health-reporting.adoc#remote-health-reporting[Remote health reporting].

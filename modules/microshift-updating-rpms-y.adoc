@@ -6,7 +6,15 @@
 [id="microshift-updating-rpms_{context}"]
 = Applying minor-version updates with RPMs
 
-Updating a {microshift-short} minor version on non `rpm-ostree` systems such as {op-system-base-full} requires downloading then updating the RPMs. For example, use the following procedure to update from 4.16 to 4.18.
+[role="_abstract"]
+Updating a {microshift-short} minor version on non `rpm-ostree` systems such as {op-system-base-full} requires downloading then updating the RPMs. For example, use the following procedure to update from 4.18 to 4.20.
+
+include::snippets/microshift-unsupported-config-warn.adoc[leveloffset=+1]
+
+[NOTE]
+====
+You cannot downgrade {microshift-short} with this process. Downgrades are not supported.
+====
 
 .Prerequisites
 * The system requirements for installing {microshift-short} have been met.
@@ -15,20 +23,31 @@ Updating a {microshift-short} minor version on non `rpm-ostree` systems such as 
 * You have verified that your host operating system is compatible with the version of {microshift-short} you are preparing to install.
 * You have completed a system backup.
 
-[NOTE]
-====
-You cannot downgrade {microshift-short} with this process. Downgrades are not supported.
-====
-
 .Procedure
 
-. Enable the {microshift-short} repositories by running the following command:
+. For all lifecycles, enable the repository for the release you want to update to by running the following command:
 +
 [source,terminal,subs="attributes+"]
 ----
 $ sudo subscription-manager repos \
-    --enable rhocp-{ocp-version}-for-{rhel-major}-$(uname -m)-rpms \
-    --enable fast-datapath-for-{rhel-major}-$(uname -m)-rpms
+    --enable rhocp-{ocp-version}-for-rhel-{op-system-version-major}-$(uname -m)-rpms \
+    --enable fast-datapath-for-rhel-{op-system-version-major}-$(uname -m)-rpms
+----
+
+. For extended support (EUS) releases, also enable the EUS repositories by running the following command:
++
+[source,terminal,subs="attributes+"]
+----
+$ sudo subscription-manager repos \
+    --enable rhel-{op-system-version-major}-for-$(uname -m)-appstream-eus-rpms \
+    --enable rhel-{op-system-version-major}-for-$(uname -m)-baseos-eus-rpms
+----
+
+. Avoid unintended future updates into an unsupported configuration by locking your operating system version with the following command:
++
+[source,terminal,subs="attributes+"]
+----
+$ sudo subscription-manager release --set={op-system-version}
 ----
 
 . Update the {microshift-short} RPMs by running the following command:
@@ -44,7 +63,7 @@ $ sudo dnf update microshift
 ----
 $ sudo systemctl reboot
 ----
-
++
 [NOTE]
 ====
 The system health check runs on this update type, but does not perform any actions. If the update fails, an error message appears with the instruction to check the logs.

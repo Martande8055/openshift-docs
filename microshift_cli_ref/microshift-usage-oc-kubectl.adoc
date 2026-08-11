@@ -6,16 +6,15 @@ include::_attributes/attributes-microshift.adoc[]
 
 toc::[]
 
+[role="_abstract"]
 The Kubernetes command-line interface (CLI), `kubectl`, can be used to run commands against a Kubernetes cluster. Because {microshift-short} is a certified Kubernetes distribution, you can use the supported `kubectl` CLI tool or you can gain extended functionality by using the {oc-first}.
 
 [id="microshift-kubectl-binary_{context}"]
 == The kubectl CLI tool
 
-You can use the `kubectl` CLI tool to interact with Kubernetes primitives on your {microshift-short} cluster. You can also use existing `kubectl` workflows and scripts for users coming from another Kubernetes environment, or for those who prefer to use the `kubectl` CLI.
+You can use the `kubectl` CLI tool to interact with Kubernetes primitives on your {microshift-short} node. You can also use existing `kubectl` workflows and scripts for users coming from another Kubernetes environment, or for those who prefer to use the `kubectl` CLI.
 
-* The `kubectl` CLI tool is included in the archive when you download `oc`.
-
-* For more information, see the link:https://kubernetes.io/docs/reference/kubectl/overview/[Kubernetes CLI tool documentation].
+The `kubectl` CLI tool is included in the archive when you download `oc`.
 
 [id="microshift-oc-binary_{context}"]
 == The oc CLI tool
@@ -35,7 +34,7 @@ The additional command `oc new-app`, for example, makes it easier to get new app
 If you installed an earlier version of `oc`, you might not be able use it to complete all of the commands in {microshift-short} {product-version}. If you want the latest features, you must download and install the latest version of `oc` that corresponds with your {microshift-short} version.
 ====
 
-Using new capabilities often requires the latest `oc` binary. A 4.18 server might have additional capabilities that a 4.16 `oc` binary cannot use and a 4.18 `oc` binary might have additional capabilities that are unsupported by a 4.15 server.
+Using new capabilities often requires the latest `oc` binary. A 4.22 server might have additional capabilities that a previous version of the `oc` binary cannot use. In addition, the 4.22 `oc` binary might have additional capabilities that are unsupported by a previous-version server.
 
 .Compatibility Matrix
 
@@ -55,3 +54,9 @@ Using new capabilities often requires the latest `oc` binary. A 4.18 server migh
 |Fully compatible.
 
 |===
+
+[role="_additional-resources"]
+[id="additional-resources_microshift-usage-oc-kubectl"]
+== Additional resources
+
+* link:https://kubernetes.io/docs/reference/kubectl/overview/[Kubernetes CLI tool documentation]

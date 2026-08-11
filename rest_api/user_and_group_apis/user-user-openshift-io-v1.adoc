@@ -35,22 +35,22 @@ Required::
 
 | `fullName`
 | `string`
-| FullName is the full name of user
+| fullName is the full name of user
 
 | `groups`
 | `array (string)`
-| Groups specifies group names this user is a member of. This field is deprecated and will be removed in a future release. Instead, create a Group object containing the name of this User.
+| groups specifies group names this user is a member of. This field is deprecated and will be removed in a future release. Instead, create a Group object containing the name of this User.
 
 | `identities`
 | `array (string)`
-| Identities are the identities associated with this user
+| identities are the identities associated with this user
 
 | `kind`
 | `string`
 | Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 
 | `metadata`
-| xref:../objects/index.adoc#io-k8s-apimachinery-pkg-apis-meta-v1-ObjectMeta_v2[`ObjectMeta_v2`]
+| xref:../objects/index.adoc#io-k8s-apimachinery-pkg-apis-meta-v1-ObjectMeta[`ObjectMeta`]
 | metadata is the standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 
 |===
@@ -100,7 +100,7 @@ Description::
 |===
 | HTTP code | Reponse body
 | 200 - OK
-| xref:../objects/index.adoc#io-k8s-apimachinery-pkg-apis-meta-v1-Status_v11[`Status_v11`] schema
+| xref:../objects/index.adoc#io-k8s-apimachinery-pkg-apis-meta-v1-Status_v2[`Status_v2`] schema
 | 401 - Unauthorized
 | Empty
 |===
@@ -223,9 +223,9 @@ Description::
 |===
 | HTTP code | Reponse body
 | 200 - OK
-| xref:../objects/index.adoc#io-k8s-apimachinery-pkg-apis-meta-v1-Status_v11[`Status_v11`] schema
+| xref:../objects/index.adoc#io-k8s-apimachinery-pkg-apis-meta-v1-Status_v2[`Status_v2`] schema
 | 202 - Accepted
-| xref:../objects/index.adoc#io-k8s-apimachinery-pkg-apis-meta-v1-Status_v11[`Status_v11`] schema
+| xref:../objects/index.adoc#io-k8s-apimachinery-pkg-apis-meta-v1-Status_v2[`Status_v2`] schema
 | 401 - Unauthorized
 | Empty
 |===

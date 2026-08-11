@@ -6,14 +6,15 @@
 [id="microshift-nw-multus-add-pod_{context}"]
 = Adding a pod to an additional network
 
-You can add a pod to an additional network. At the time a pod is created, additional networks are attached to it. The pod continues to send normal cluster-related network traffic over the default network.
+[role="_abstract"]
+You can add a pod to an additional network. At the time a pod is created, additional networks are attached to it. The pod continues to send normal node-related network traffic over the default network.
 
 If you want to attach additional networks to a pod that is already running, you must restart the pod.
 
 .Prerequisites
 
-* The OpenShift CLI (`oc`) is installed.
-* The cluster is running.
+* The {oc-first} is installed.
+* The node is running.
 * A network defined by a `NetworkAttachmentDefinition` object that you want to attach the pod to exists.
 
 .Procedure
@@ -22,19 +23,19 @@ If you want to attach additional networks to a pod that is already running, you 
 
 .. To attach an additional network without any customization, add an annotation with the following format. Replace `_<network>_` with the name of the additional network to associate with the pod:
 +
-[source,yaml]
-[subs="+quotes"]
+[source,yaml,subs="+quotes"]
 ----
 apiVersion: v1
 kind: Pod
 metadata:
   annotations:
-    k8s.v1.cni.cncf.io/networks: __<network>__[,__<network>__,...] # <1>
+    k8s.v1.cni.cncf.io/networks: _<network>_[,_<network>_,...]
 # ...
 ----
-<1> Replace `_<network>_` with the name of the additional network to associate with the pod. To specify more than one additional network, separate each network with a comma. Do not include whitespace between the comma. If you specify the same additional network multiple times, that pod will have multiple network interfaces attached to that network.
 +
-.Example annotation for a bridge-type additional network
+Replace `_<network>_` with the name of each additional network to associate with the pod. To specify more than one additional network, separate each network with a comma. Do not include whitespaces between the commas. If you specify the same additional network multiple times, that pod has multiple network interfaces attached to that network.
++
+The following example annotation specifies a bridge-type additional network:
 +
 [source,yaml]
 ----
@@ -57,27 +58,31 @@ metadata:
     k8s.v1.cni.cncf.io/networks: |-
       [
         {
-          "name": "<network>", # <1>
-          "namespace": "<namespace>", # <2>
-          "default-route": ["<default-route>"] # <3>
+          "name": "<network>",
+          "namespace": "<namespace>",
+          "default-route": ["<default-route>"]
         }
       ]
 # ...
 ----
-<1> Specify the name of the additional network defined by a `NetworkAttachmentDefinition` object.
-<2> Specify the namespace where the `NetworkAttachmentDefinition` object is defined.
-<3> Optional: Specify an override for the default route, such as `192.168.17.1`.
++
+where:
+
+`name`:: Specifies the name of the additional network defined by a `NetworkAttachmentDefinition` object.
+`namespace`:: Specifies the namespace where the `NetworkAttachmentDefinition` object is defined.
+`default-route`:: Specifies an optional field to provide an override for the default route, such as `192.168.17.1`.
 
 . To create a `Pod` YAML file and add the  `NetworkAttachmentDefinition` annotation for an additional network, run the following command and use the example YAML:
 +
-[source,terminal]
-[subs="+quotes"]
+[source,terminal,subs="+quotes"]
 ----
-$ oc apply -f ./__<test_bridge>__.yaml <1>
+$ oc apply -f ./_<test_bridge>_.yaml
 ----
-<1> Replace `_<test_bridge>_` with the pod name that you want to use.
 +
-.Example output
+Replace `_<test_bridge>_` with the pod name that you want to use.
++
+The following example output shows that the `test_bridge` pod has been created:
++
 [source,terminal]
 ----
 pod/test_bridge created
@@ -118,7 +123,7 @@ spec:
 +
 . Make sure that the `NetworkAttachmentDefinition` annotation is correct:
 +
-.Example `NetworkAttachmentDefinition` annotation
+The following example `NetworkAttachmentDefinition` annotation specifies a bridge-type additional network:
 +
 [source,yaml]
 ----
@@ -132,22 +137,26 @@ metadata:
 
 . Optional: To confirm that the `NetworkAttachmentDefinition` annotation exists in a `Pod` YAML, run the following command, replacing `_<name>_` with the name of the pod.
 +
-[source,terminal]
-[subs="+quotes"]
+[source,terminal,subs="+quotes"]
 ----
-$ oc get pod __<name>__ -o yaml <1>
+$ oc get pod _<name>_ -o yaml
 ----
-<1> Replace `_<name>_` with the pod name you want to use. In the following example, `_<test_bridge>_` is used.
++
+Replace `_<name>_` with the pod name you want to use. In the following example, `_<test_bridge>_` is used.
+
 +
 In the following example, the `test_bridge` is attached to the `net1` additional network:
 +
-[source,terminal]
-[subs="+quotes"]
+
+[source,terminal,subs="+quotes"]
 ----
-$ oc get pod __<test_bridge>__ -o yaml
+$ oc get pod _<test_bridge>_ -o yaml
 ----
 +
-.Example output
+Replace `_<test_bridge>_` with the name of the bridge you want to use.
++
+The following example output shows that the `test_bridge` pod is attached to the `net1` additional network:
++
 [source,yaml]
 ----
 apiVersion: v1
@@ -155,7 +164,7 @@ kind: Pod
 metadata:
   annotations:
     k8s.v1.cni.cncf.io/networks: bridge-conf
-    k8s.v1.cni.cncf.io/network-status: |- # <1>
+    k8s.v1.cni.cncf.io/network-status: |-
       [{
           "name": "ovn-kubernetes",
           "interface": "eth0",
@@ -180,7 +189,9 @@ spec:
 status:
 # ...
 ----
-<1> The `k8s.v1.cni.cncf.io/network-status` parameter is a JSON array of objects. Each object describes the status of an additional network attached to the pod. The annotation value is stored as a plain text value.
++
+The `k8s.v1.cni.cncf.io/network-status` parameter is a JSON array of objects. Each object describes the status of an additional network attached to the pod. The annotation value is stored as a plain text value.
+
 
 . Verify that the pod is running by running the following command:
 +

@@ -8,7 +8,8 @@
 [id="nodes-nodes-garbage-collection-containers_{context}"]
 = Understanding how terminated containers are removed through garbage collection
 
-Container garbage collection removes terminated containers by using eviction thresholds.
+[role="_abstract"]
+You can help ensure that your nodes are running efficiently by using container garbage collection to remove terminated containers.
 
 When eviction thresholds are set for garbage collection, the node tries to keep any container for any pod accessible from the API. If the pod has been deleted, the containers will be as well. Containers are preserved as long the pod is not deleted and the eviction threshold is not reached. If the node is under disk pressure, it will remove containers and their logs will no longer be accessible using `oc logs`.
 
@@ -41,4 +42,9 @@ For `evictionHard` you must specify all of these parameters.  If you do not spec
 
 If a node is oscillating above and below a soft eviction threshold, but not exceeding its associated grace period, the corresponding node would constantly oscillate between `true` and `false`. As a consequence, the scheduler could make poor scheduling decisions.
 
-To protect against this oscillation, use the `eviction-pressure-transition-period` flag to control how long {product-title} must wait before transitioning out of a pressure condition. {product-title} will not set an eviction threshold as being met for the specified pressure condition for the period specified before toggling the condition back to false.
+To protect against this oscillation, use the `evictionpressure-transition-period` flag to control how long {product-title} must wait before transitioning out of a pressure condition. {product-title} will not set an eviction threshold as being met for the specified pressure condition for the period specified before toggling the condition back to false.
+
+[NOTE]
+====
+Setting the `evictionPressureTransitionPeriod` parameter to `0` configures the default value of 5 minutes. You cannot set an eviction pressure transition period to zero seconds. 
+====

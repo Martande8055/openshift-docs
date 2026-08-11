@@ -7,7 +7,10 @@
 [id="hcp-bm-scale-np_{context}"]
 = Scaling the NodePool object for a hosted cluster
 
-You can scale up the `NodePool` object by adding nodes to your hosted cluster. When you scale a node pool, consider the following information:
+[role="_abstract"]
+You can scale up the `NodePool` object by adding nodes to your hosted cluster. 
+
+When you scale a node pool, consider the following information:
 
 - When you scale a replica by the node pool, a machine is created. For every machine, the Cluster API provider finds and installs an Agent that meets the requirements that are specified in the node pool specification. You can monitor the installation of an Agent by checking its status and conditions.
 
@@ -51,7 +54,8 @@ da503cf1-a347-44f2-875c-4960ddb04091   hypercluster1   true       auto-assign
 +
 [source,terminal]
 ----
-$ oc -n <hosted_control_plane_namespace> get agent -o jsonpath='{range .items[*]}BMH: {@.metadata.labels.agent-install\.openshift\.io/bmh} Agent: {@.metadata.name} State: {@.status.debugInfo.state}{"\n"}{end}'
+$ oc -n <hosted_control_plane_namespace> get agent \
+  -o jsonpath='{range .items[*]}BMH: {@.metadata.labels.agent-install\.openshift\.io/bmh} Agent: {@.metadata.name} State: {@.status.debugInfo.state}{"\n"}{end}'
 ----
 +
 .Example output
@@ -66,7 +70,9 @@ BMH: ocp-worker-1 Agent: da503cf1-a347-44f2-875c-4960ddb04091 State: insufficien
 +
 [source,terminal]
 ----
-$ oc extract -n <hosted_cluster_namespace> secret/<hosted_cluster_name>-admin-kubeconfig --to=- > kubeconfig-<hosted_cluster_name>
+$ oc extract -n <hosted_cluster_namespace> \
+  secret/<hosted_cluster_name>-admin-kubeconfig --to=- \
+  > kubeconfig-<hosted_cluster_name>
 ----
 
 . After the agents reach the `added-to-existing-cluster` state, verify that you can see the {product-title} nodes in the hosted cluster by entering the following command:
@@ -101,7 +107,7 @@ hypercluster1-c96b6f675-m5vch   hypercluster1-b2qhl   ocp-worker-1   agent://da5
 hypercluster1-c96b6f675-tl42p   hypercluster1-b2qhl   ocp-worker-2   agent://4dac1ab2-7dd5-4894-a220-6a3473b67ee6   Running   15m   4.x.z
 ----
 +
-The `clusterversion` reconcile process eventually reaches a point where only Ingress and Console cluster operators are missing.
+The `clusterversion` reconcile process eventually reaches a point where only Ingress and Console cluster Operators are missing.
 
 . Enter the following command:
 +

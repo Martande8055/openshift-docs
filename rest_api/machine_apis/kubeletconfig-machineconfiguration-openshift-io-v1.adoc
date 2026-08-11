@@ -11,8 +11,9 @@ toc::[]
 Description::
 +
 --
-KubeletConfig describes a customized Kubelet configuration. 
- Compatibility level 1: Stable within a major release for a minimum of 12 months or 3 minor releases (whichever is longer).
+KubeletConfig describes a customized Kubelet configuration.
+
+Compatibility level 1: Stable within a major release for a minimum of 12 months or 3 minor releases (whichever is longer).
 --
 
 Type::
@@ -42,18 +43,18 @@ Required::
 
 | `spec`
 | `object`
-| KubeletConfigSpec defines the desired state of KubeletConfig
+| spec contains the desired kubelet configuration.
 
 | `status`
 | `object`
-| KubeletConfigStatus defines the observed state of a KubeletConfig
+| status contains observed information about the kubelet configuration.
 
 |===
 === .spec
 Description::
 +
 --
-KubeletConfigSpec defines the desired state of KubeletConfig
+spec contains the desired kubelet configuration.
 --
 
 Type::
@@ -68,30 +69,47 @@ Type::
 
 | `autoSizingReserved`
 | `boolean`
-| 
+| autoSizingReserved controls whether system-reserved CPU and memory are automatically
+calculated based on each node's installed capacity. When set to true, this prevents node failure
+from resource starvation of system components (kubelet, CRI-O) without manual configuration.
+When omitted, this means the user has no opinion and the platform is left to choose a reasonable default,
+which is subject to change over time. The current default is true for worker nodes and false for control plane nodes.
+When set to false, automatic resource reservation is disabled and manual settings must be configured.
 
 | `kubeletConfig`
 | ``
-| kubeletConfig fields are defined in kubernetes upstream. Please refer to the types defined in the version/commit used by OpenShift of the upstream kubernetes. It's important to note that, since the fields of the kubelet configuration are directly fetched from upstream the validation of those values is handled directly by the kubelet. Please refer to the upstream version of the relevant kubernetes for the valid values of these fields. Invalid values of the kubelet configuration fields may render cluster nodes unusable.
+| kubeletConfig contains upstream Kubernetes kubelet configuration fields.
+Values are validated by the kubelet itself. Invalid values may render nodes unusable.
+Refer to OpenShift documentation for the Kubernetes version corresponding to your
+OpenShift release to find valid kubelet configuration options.
 
 | `logLevel`
 | `integer`
-| 
+| logLevel sets the kubelet log verbosity, controlling the amount of detail in kubelet logs.
+Valid values range from 0 (minimal logging) to 10 (maximum verbosity with trace-level detail).
+Higher log levels may impact node performance. When omitted, the platform chooses a reasonable default,
+which is subject to change over time. The current default is 2 (standard informational logging).
 
 | `machineConfigPoolSelector`
 | `object`
-| MachineConfigPoolSelector selects which pools the KubeletConfig shoud apply to. A nil selector will result in no pools being selected.
+| machineConfigPoolSelector selects which pools the KubeletConfig should apply to.
+When omitted or set to an empty selector {}, no pools are selected, which is equivalent
+to not matching any MachineConfigPool.
 
 | `tlsSecurityProfile`
 | `object`
-| If unset, the default is based on the apiservers.config.openshift.io/cluster resource. Note that only Old and Intermediate profiles are currently supported, and the maximum available minTLSVersion is VersionTLS12.
+| tlsSecurityProfile configures TLS settings for the kubelet.
+When omitted, the TLS configuration defaults to the value from apiservers.config.openshift.io/cluster.
+When specified, the type field can be set to either "Old", "Intermediate", "Modern", "Custom" or omitted for backward compatibility.
 
 |===
 === .spec.machineConfigPoolSelector
 Description::
 +
 --
-MachineConfigPoolSelector selects which pools the KubeletConfig shoud apply to. A nil selector will result in no pools being selected.
+machineConfigPoolSelector selects which pools the KubeletConfig should apply to.
+When omitted or set to an empty selector {}, no pools are selected, which is equivalent
+to not matching any MachineConfigPool.
 --
 
 Type::
@@ -110,11 +128,14 @@ Type::
 
 | `matchExpressions[]`
 | `object`
-| A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+| A label selector requirement is a selector that contains values, a key, and an operator that
+relates the key and values.
 
 | `matchLabels`
 | `object (string)`
-| matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+| matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
+map is equivalent to an element of matchExpressions, whose key field is "key", the
+operator is "In", and the values array contains only "value". The requirements are ANDed.
 
 |===
 === .spec.machineConfigPoolSelector.matchExpressions
@@ -134,7 +155,8 @@ Type::
 Description::
 +
 --
-A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+A label selector requirement is a selector that contains values, a key, and an operator that
+relates the key and values.
 --
 
 Type::
@@ -156,18 +178,24 @@ Required::
 
 | `operator`
 | `string`
-| operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+| operator represents a key's relationship to a set of values.
+Valid operators are In, NotIn, Exists and DoesNotExist.
 
 | `values`
 | `array (string)`
-| values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+| values is an array of string values. If the operator is In or NotIn,
+the values array must be non-empty. If the operator is Exists or DoesNotExist,
+the values array must be empty. This array is replaced during a strategic
+merge patch.
 
 |===
 === .spec.tlsSecurityProfile
 Description::
 +
 --
-If unset, the default is based on the apiservers.config.openshift.io/cluster resource. Note that only Old and Intermediate profiles are currently supported, and the maximum available minTLSVersion is VersionTLS12.
+tlsSecurityProfile configures TLS settings for the kubelet.
+When omitted, the TLS configuration defaults to the value from apiservers.config.openshift.io/cluster.
+When specified, the type field can be set to either "Old", "Intermediate", "Modern", "Custom" or omitted for backward compatibility.
 --
 
 Type::
@@ -182,94 +210,98 @@ Type::
 
 | `custom`
 | ``
-| custom is a user-defined TLS security profile. Be extremely careful using a custom profile as invalid configurations can be catastrophic. An example custom profile looks like this: 
- ciphers: 
- - ECDHE-ECDSA-CHACHA20-POLY1305 
- - ECDHE-RSA-CHACHA20-POLY1305 
- - ECDHE-RSA-AES128-GCM-SHA256 
- - ECDHE-ECDSA-AES128-GCM-SHA256 
- minTLSVersion: VersionTLS11
+| custom is a user-defined TLS security profile. Be extremely careful using a custom
+profile as invalid configurations can be catastrophic. An example custom profile
+looks like this:
+
+  minTLSVersion: VersionTLS11
+  ciphers:
+    - ECDHE-ECDSA-CHACHA20-POLY1305
+    - ECDHE-RSA-CHACHA20-POLY1305
+    - ECDHE-RSA-AES128-GCM-SHA256
+    - ECDHE-ECDSA-AES128-GCM-SHA256
 
 | `intermediate`
 | ``
-| intermediate is a TLS security profile based on: 
- https://wiki.mozilla.org/Security/Server_Side_TLS#Intermediate_compatibility_.28recommended.29 
- and looks like this (yaml): 
- ciphers: 
- - TLS_AES_128_GCM_SHA256 
- - TLS_AES_256_GCM_SHA384 
- - TLS_CHACHA20_POLY1305_SHA256 
- - ECDHE-ECDSA-AES128-GCM-SHA256 
- - ECDHE-RSA-AES128-GCM-SHA256 
- - ECDHE-ECDSA-AES256-GCM-SHA384 
- - ECDHE-RSA-AES256-GCM-SHA384 
- - ECDHE-ECDSA-CHACHA20-POLY1305 
- - ECDHE-RSA-CHACHA20-POLY1305 
- - DHE-RSA-AES128-GCM-SHA256 
- - DHE-RSA-AES256-GCM-SHA384 
- minTLSVersion: VersionTLS12
+| intermediate is a TLS profile for use when you do not need compatibility with
+legacy clients and want to remain highly secure while being compatible with
+most clients currently in use.
+
+This profile is equivalent to a Custom profile specified as:
+  minTLSVersion: VersionTLS12
+  ciphers:
+    - TLS_AES_128_GCM_SHA256
+    - TLS_AES_256_GCM_SHA384
+    - TLS_CHACHA20_POLY1305_SHA256
+    - ECDHE-ECDSA-AES128-GCM-SHA256
+    - ECDHE-RSA-AES128-GCM-SHA256
+    - ECDHE-ECDSA-AES256-GCM-SHA384
+    - ECDHE-RSA-AES256-GCM-SHA384
+    - ECDHE-ECDSA-CHACHA20-POLY1305
+    - ECDHE-RSA-CHACHA20-POLY1305
 
 | `modern`
 | ``
-| modern is a TLS security profile based on: 
- https://wiki.mozilla.org/Security/Server_Side_TLS#Modern_compatibility 
- and looks like this (yaml): 
- ciphers: 
- - TLS_AES_128_GCM_SHA256 
- - TLS_AES_256_GCM_SHA384 
- - TLS_CHACHA20_POLY1305_SHA256 
- minTLSVersion: VersionTLS13
+| modern is a TLS security profile for use with clients that support TLS 1.3 and
+do not need backward compatibility for older clients.
+
+This profile is equivalent to a Custom profile specified as:
+  minTLSVersion: VersionTLS13
+  ciphers:
+    - TLS_AES_128_GCM_SHA256
+    - TLS_AES_256_GCM_SHA384
+    - TLS_CHACHA20_POLY1305_SHA256
 
 | `old`
 | ``
-| old is a TLS security profile based on: 
- https://wiki.mozilla.org/Security/Server_Side_TLS#Old_backward_compatibility 
- and looks like this (yaml): 
- ciphers: 
- - TLS_AES_128_GCM_SHA256 
- - TLS_AES_256_GCM_SHA384 
- - TLS_CHACHA20_POLY1305_SHA256 
- - ECDHE-ECDSA-AES128-GCM-SHA256 
- - ECDHE-RSA-AES128-GCM-SHA256 
- - ECDHE-ECDSA-AES256-GCM-SHA384 
- - ECDHE-RSA-AES256-GCM-SHA384 
- - ECDHE-ECDSA-CHACHA20-POLY1305 
- - ECDHE-RSA-CHACHA20-POLY1305 
- - DHE-RSA-AES128-GCM-SHA256 
- - DHE-RSA-AES256-GCM-SHA384 
- - DHE-RSA-CHACHA20-POLY1305 
- - ECDHE-ECDSA-AES128-SHA256 
- - ECDHE-RSA-AES128-SHA256 
- - ECDHE-ECDSA-AES128-SHA 
- - ECDHE-RSA-AES128-SHA 
- - ECDHE-ECDSA-AES256-SHA384 
- - ECDHE-RSA-AES256-SHA384 
- - ECDHE-ECDSA-AES256-SHA 
- - ECDHE-RSA-AES256-SHA 
- - DHE-RSA-AES128-SHA256 
- - DHE-RSA-AES256-SHA256 
- - AES128-GCM-SHA256 
- - AES256-GCM-SHA384 
- - AES128-SHA256 
- - AES256-SHA256 
- - AES128-SHA 
- - AES256-SHA 
- - DES-CBC3-SHA 
- minTLSVersion: VersionTLS10
+| old is a TLS profile for use when services need to be accessed by very old
+clients or libraries and should be used only as a last resort.
+
+This profile is equivalent to a Custom profile specified as:
+  minTLSVersion: VersionTLS10
+  ciphers:
+    - TLS_AES_128_GCM_SHA256
+    - TLS_AES_256_GCM_SHA384
+    - TLS_CHACHA20_POLY1305_SHA256
+    - ECDHE-ECDSA-AES128-GCM-SHA256
+    - ECDHE-RSA-AES128-GCM-SHA256
+    - ECDHE-ECDSA-AES256-GCM-SHA384
+    - ECDHE-RSA-AES256-GCM-SHA384
+    - ECDHE-ECDSA-CHACHA20-POLY1305
+    - ECDHE-RSA-CHACHA20-POLY1305
+    - ECDHE-ECDSA-AES128-SHA256
+    - ECDHE-RSA-AES128-SHA256
+    - ECDHE-ECDSA-AES128-SHA
+    - ECDHE-RSA-AES128-SHA
+    - ECDHE-ECDSA-AES256-SHA
+    - ECDHE-RSA-AES256-SHA
+    - AES128-GCM-SHA256
+    - AES256-GCM-SHA384
+    - AES128-SHA256
+    - AES128-SHA
+    - AES256-SHA
+    - DES-CBC3-SHA
 
 | `type`
 | `string`
-| type is one of Old, Intermediate, Modern or Custom. Custom provides the ability to specify individual TLS security profile parameters. Old, Intermediate and Modern are TLS security profiles based on: 
- https://wiki.mozilla.org/Security/Server_Side_TLS#Recommended_configurations 
- The profiles are intent based, so they may change over time as new ciphers are developed and existing ciphers are found to be insecure.  Depending on precisely which ciphers are available to a process, the list may be reduced. 
- Note that the Modern profile is currently not supported because it is not yet well adopted by common software libraries.
+| type is one of Old, Intermediate, Modern or Custom. Custom provides the
+ability to specify individual TLS security profile parameters.
+
+The profiles are based on version 5.7 of the Mozilla Server Side TLS
+configuration guidelines. The cipher lists consist of the configuration's
+"ciphersuites" followed by the Go-specific "ciphers" from the guidelines.
+See: https://ssl-config.mozilla.org/guidelines/5.7.json
+
+The profiles are intent based, so they may change over time as new ciphers are
+developed and existing ciphers are found to be insecure. Depending on
+precisely which ciphers are available to a process, the list may be reduced.
 
 |===
 === .status
 Description::
 +
 --
-KubeletConfigStatus defines the observed state of a KubeletConfig
+status contains observed information about the kubelet configuration.
 --
 
 Type::
@@ -331,7 +363,8 @@ Type::
 
 | `message`
 | `string`
-| message provides additional information about the current condition. This is only to be consumed by humans.
+| message provides additional information about the current condition.
+This is only to be consumed by humans.
 
 | `reason`
 | `string`

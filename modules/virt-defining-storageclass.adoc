@@ -6,7 +6,8 @@
 [id="virt-defining-storageclass_{context}"]
 = Defining a storage class
 
-You can define the storage class that the Containerized Data Importer (CDI) uses when allocating scratch space by adding the `spec.scratchSpaceStorageClass` field to the `HyperConverged` custom resource (CR).
+[role="_abstract"]
+You can define the storage class that the Containerized Data Importer (CDI) uses when allocating scratch space by adding the `spec.storage.scratchSpaceStorageClass` field to the `HyperConverged` custom resource (CR).
 
 .Prerequisites
 
@@ -18,20 +19,20 @@ You can define the storage class that the Containerized Data Importer (CDI) uses
 +
 [source,terminal,subs="attributes+"]
 ----
-$ oc edit hyperconverged kubevirt-hyperconverged -n {CNVNamespace}
+$ oc edit {HCOCliKind} kubevirt-hyperconverged -n {CNVNamespace}
 ----
 
-. Add the `spec.scratchSpaceStorageClass` field to the CR, setting the value to the name of a storage class that exists in the cluster:
+. Add the `spec.storage.scratchSpaceStorageClass` field to the CR and set the value to the name of a storage class that exists in the cluster. If you do not specify a storage class, CDI uses the storage class of the persistent volume claim that is being populated.
 +
 [source,yaml]
 ----
-apiVersion: hco.kubevirt.io/v1beta1
+apiVersion: hco.kubevirt.io/v1
 kind: HyperConverged
 metadata:
   name: kubevirt-hyperconverged
 spec:
-  scratchSpaceStorageClass: "<storage_class>" <1>
+  storage:
+    scratchSpaceStorageClass: "<storage_class>"
 ----
-<1> If you do not specify a storage class, CDI uses the storage class of the persistent volume claim that is being populated.
 
 . Save and exit your default editor to update the `HyperConverged` CR.

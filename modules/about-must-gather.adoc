@@ -11,6 +11,7 @@
 [id="about-must-gather_{context}"]
 = About the must-gather tool
 
+[role="_abstract"]
 The `oc adm must-gather` CLI command collects the information from your cluster that is most likely needed for debugging issues, including:
 
 * Resource definitions
@@ -32,6 +33,7 @@ $ oc adm must-gather \
 
 * To collect the audit logs, use the `-- /usr/bin/gather_audit_logs` argument, as described in a following section.
 +
+
 For example:
 +
 [source,terminal]
@@ -41,7 +43,8 @@ $ oc adm must-gather -- /usr/bin/gather_audit_logs
 +
 [NOTE]
 ====
-Audit logs are not collected as part of the default set of information to reduce the size of the files.
+- Audit logs are not collected as part of the default set of information to reduce the size of the files.
+- On a Windows operating system, install the `cwRsync` client and add to the `PATH`  variable for use with the `oc rsync` command.
 ====
 
 When you run `oc adm must-gather`, a new pod with a random name is created in a new project on the cluster. The data is collected on that pod and saved in a new directory that starts with `must-gather.local` in the current working directory.

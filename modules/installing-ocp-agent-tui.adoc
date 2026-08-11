@@ -1,11 +1,13 @@
 // Module included in the following assemblies:
 //
 // * installing/installing-with-agent-based-installer/installing-with-agent-based-installer.adoc
+// * installing/installing_with_agent_based_installer/installing-with-agent-basic.adoc
 
 :_mod-docs-content-type: PROCEDURE
 [id="installing-ocp-agent-tui_{context}"]
 = Verifying that the current installation host can pull release images
 
+[role="_abstract"]
 After you boot the agent image and network services are made available to the host, the agent console application performs a pull check to verify that the current host can retrieve release images.
 
 If the primary pull check passes, you can quit the application to continue with the installation. If the pull check fails, the application performs additional checks, as seen in the `Additional checks` section of the TUI, to help you troubleshoot the problem. A failure for any of the additional checks is not necessarily critical as long as the primary pull check succeeds.

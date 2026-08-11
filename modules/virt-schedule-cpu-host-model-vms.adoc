@@ -1,11 +1,12 @@
 // Module included in the following assemblies:
 //
-// * virt/virtual_machines/advanced_vm_management/virt-schedule-vms.adoc
+// * virt/managing_vms/cpu_models/virt-schedule-vms.adoc
 
 :_mod-docs-content-type: PROCEDURE
 [id="virt-schedule-cpu-host-model-vms_{context}"]
 = Scheduling virtual machines with the host model
 
+[role="_abstract"]
 When the CPU model for a virtual machine (VM) is set to `host-model`, the VM inherits the CPU model of the node where it is scheduled.
 
 .Procedure
@@ -23,6 +24,6 @@ spec:
     spec:
       domain:
         cpu:
-          model: host-model <1>
+          model: host-model
 ----
-<1> The VM that inherits the CPU model of the node where it is scheduled.
+** `spec.template.spec.domain.cpu.model` defines the VM that inherits the CPU model of the node where it is scheduled.

@@ -4,9 +4,13 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="spo-replicating-controllers_{context}"]
-= Replicating controllers and SecurityContextConstraints
+= Replicate controllers and SecurityContextConstraints
 
-When you deploy SELinux policies for replicating controllers, such as deployments or daemon sets, note that the `Pod` objects spawned by the controllers are not running with the identity of the user who creates the workload. Unless a `ServiceAccount` is selected, the pods might revert to using a restricted `SecurityContextConstraints` (SCC) which does not allow use of custom security policies.
+[role="_abstract"]
+Deploy SELinux policies for replicating controllers such as deployments or daemon sets so the pods those controllers create can use custom SELinux policies.
+
+Pods that the controllers create do not run with the identity of the user who creates the workload. Unless you select a `ServiceAccount`, the pods might use a restricted `SecurityContextConstraints` (SCC) object that does not allow custom security policies.
+
 
 .Procedure
 
@@ -93,18 +97,19 @@ spec:
       serviceAccountName: spo-deploy-test
       securityContext:
         seLinuxOptions:
-          type: nginx-secure_nginx-secure.process <1>
+          type: nginx-secure.process
       containers:
       - name: nginx-unpriv
         image: quay.io/security-profiles-operator/test-nginx-unprivileged:1.21
         ports:
         - containerPort: 8080
 ----
-<1> The `.seLinuxOptions.type` must exist before the Deployment is created.
++
+The `spec.template.spec.securityContext.seLinuxOptions.type` must exist before the Deployment is created.
 +
 [NOTE]
 ====
 The SELinux type is not specified in the workload and is handled by the SCC. When the pods are created by the deployment and the `ReplicaSet`, the pods will run with the appropriate profile.
 ====
-
++
 Ensure that your SCC is usable by only the correct service account. Refer to _Additional resources_ for more information.

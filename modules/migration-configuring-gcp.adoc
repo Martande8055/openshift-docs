@@ -1,35 +1,21 @@
 // Module included in the following assemblies:
 //
-// * migrating_from_ocp_3_to_4/installing-3-4.adoc
-// * migration_toolkit_for_containers/installing-mtc.adoc
 // * backup_and_restore/application_backup_and_restore/installing/installing-oadp-gcp.adoc
 
 :_mod-docs-content-type: PROCEDURE
 [id="migration-configuring-gcp_{context}"]
-= Configuring Google Cloud Platform
+= Configuring {gcp-full}
 
-ifdef::installing-3-4,installing-mtc[]
-You configure a Google Cloud Platform (GCP) storage bucket as a replication repository for the {mtc-first}.
-endif::[]
-ifdef::installing-oadp-gcp[]
-You configure Google Cloud Platform (GCP) for the OpenShift API for Data Protection (OADP).
-endif::[]
+[role="_abstract"]
+You configure {gcp-first} for the OpenShift API for Data Protection (OADP).
 
 .Prerequisites
 
 * You must have the `gcloud` and `gsutil` CLI tools installed. See the link:https://cloud.google.com/sdk/docs/[Google cloud documentation] for details.
 
-ifdef::installing-3-4,installing-mtc[]
-* The GCP storage bucket must be accessible to the source and target clusters.
-* If you are using the snapshot copy method:
-** The source and target clusters must be in the same region.
-** The source and target clusters must have the same storage class.
-** The storage class must be compatible with snapshots.
-endif::[]
-
 .Procedure
 
-. Log in to GCP:
+. Log in to {gcp-short}:
 +
 [source,terminal]
 ----
@@ -40,9 +26,12 @@ $ gcloud auth login
 +
 [source,terminal]
 ----
-$ BUCKET=<bucket> <1>
+$ BUCKET=<bucket>
 ----
-<1> Specify your bucket name.
++
+where:
++
+`bucket`:: Specifies the bucket name.
 
 . Create the storage bucket:
 +
@@ -136,11 +125,5 @@ $ gsutil iam ch serviceAccount:$SERVICE_ACCOUNT_EMAIL:objectAdmin gs://${BUCKET}
 $ gcloud iam service-accounts keys create credentials-velero \
     --iam-account $SERVICE_ACCOUNT_EMAIL
 ----
-ifdef::installing-3-4,installing-mtc[]
 +
-You use the `credentials-velero` file to add GCP as a replication repository.
-endif::[]
-ifdef::installing-oadp-gcp[]
-+
-You use the `credentials-velero` file to create a `Secret` object for GCP before you install the Data Protection Application.
-endif::[]
+You use the `credentials-velero` file to create a `Secret` object for {gcp-short} before you install the Data Protection Application.

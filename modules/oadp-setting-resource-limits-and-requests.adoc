@@ -12,6 +12,7 @@
 [id="oadp-setting-resource-limits-and-requests_{context}"]
 = Setting Velero CPU and memory resource allocations
 
+[role="_abstract"]
 You set the CPU and memory resource allocations for the `Velero` pod by editing the  `DataProtectionApplication` custom resource (CR) manifest.
 
 .Prerequisites
@@ -33,8 +34,8 @@ spec:
   configuration:
     velero:
       podConfig:
-        nodeSelector: <node_selector> <1>
-        resourceAllocations: <2>
+        nodeSelector: <node_selector>
+        resourceAllocations:
           limits:
             cpu: "1"
             memory: 1024Mi
@@ -42,9 +43,12 @@ spec:
             cpu: 200m
             memory: 256Mi
 ----
-<1> Specify the node selector to be supplied to Velero podSpec.
-<2> The `resourceAllocations` listed are for average usage.
-
++
+where:
++
+`nodeSelector`:: Specifies the node selector to be supplied to Velero podSpec.
+`resourceAllocations`:: Specifies the resource allocations listed for average usage.
++
 [NOTE]
 ====
 Kopia is an option in OADP 1.3 and later releases. You can use Kopia for file system backups, and Kopia is your only option for Data Mover cases with the built-in Data Mover.
