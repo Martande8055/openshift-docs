@@ -1,10 +1,13 @@
 // Module included in the following assemblies:
 //
-// * rosa_hcp/rosa-hcp-egress-zero-install.adoc
-
-ifeval::["{context}" == "rosa-hcp-egress-zero-install"]
-:rosa-egress-lockdown-install:
-endif::[]
+// * maps/hcm-jobs/rosa-hcp-create-a-rosa-hcp-cluster-using-the-cli.adoc
+// * maps/hcm-jobs/rosa-hcp-create-a-rosa-hcp-cluster-using-the-hybrid-cloud-console.adoc
+// * maps/hcm-jobs/rosa-hcp-create-a-rosa-hcp-cluster-using-terraform.adoc
+// * maps/hcm-jobs/rosa-hcp-create-a-rosa-hcp-cluster-in-a-shared-vpc-using-the-cli.adoc
+//
+// This is the general (connected-cluster) variant. For the egress-zero
+// install, see modules/rosa-hcp-egress-zero-set-environment-variables.adoc,
+// which additionally lists the suggested variables for disconnected clusters.
 
 :_mod-docs-content-type: PROCEDURE
 [id="rosa-hcp-set-environment-variables_{context}"]
@@ -15,58 +18,18 @@ You can set environment variables to streamline resource creation for your {prod
 
 .Procedure
 
-. Set your environment variable by running the following command:
+* Set your environment variable by running the following command:
 +
 [source,terminal]
 ----
 $ export <variable_name>=<variable_value>
 ----
 
-. You can confirm that your variable has been set by running the following command:
+.Verification
+
+* You can confirm that your variable has been set by running the following command:
 +
 [source,terminal]
 ----
 $ echo <variable_name>
 ----
-+
-ifdef::rosa-egress-lockdown-install[]
-.Suggested variables for disconnected {product-title} clusters
-[cols="3",options="header"]
-|===
-|Variable name
-|Variable value
-|Notes
-
-|`AWS_ACCOUNT_ID`
-|`$(aws sts get-caller-identity --query Account --output text)`
-|You must be logged in to your AWS account with `rosa login`.
-
-|`CLUSTER_NAME`
-|The name you want for your cluster.
-|Your cluster name cannot exceed 26 characters.
-
-|`OIDC_ID`
-|The 32-digit ID for your OpenID Connect (OIDC) configuration.
-|You generate this ID by running `rosa create oidc-config`.
-
-|`OPERATOR_ROLES_PREFIX`
-|The Operator role prefix.
-|If you want to make your AWS account roles use the same prefix as your Operator roles, you can run `ACCOUNT_ROLES_PREFIX=$OPERATOR_ROLES_PREFIX` after setting your Operator role prefix variable.
-
-|`PRIVATE_SUBNET`
-|The ID of your private subnets.
-|You must enclose this value in quotation marks (") and separate the subnet IDs with commas.
-
-|`REGION`
-|Your AWS region.
-| -
-
-|`SUBNET_IDS`
-|The IDs of all your subnets.
-|You must enclose this value in quotation marks (") and separate the subnet IDs with commas.
-|===
-endif::rosa-egress-lockdown-install[]
-
-ifeval::["{context}" == "rosa-hcp-egress-zero-install"]
-:!rosa-egress-lockdown-install:
-endif::[]

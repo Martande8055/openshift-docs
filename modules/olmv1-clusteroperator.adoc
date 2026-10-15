@@ -13,14 +13,7 @@ endif::[]
 :_mod-docs-content-type: CONCEPT
 
 [id="cluster-operators-ref-olmv1_{context}"]
-ifdef::operators[]
 = {olmv1-first} Operator
-
-endif::[]
-ifdef::cluster-caps[]
-= {olmv1-first} capability
-
-endif::[]
 
 [role="_abstract"]
 ifdef::cluster-caps[]
@@ -58,3 +51,7 @@ The `olm` cluster Operator informs cluster administrators if there are any insta
 +
 ** `operator-framework/operator-controller`
 ** `operator-framework/catalogd`
+
+ifeval::["{context}" == "cluster-capabilities"]
+:!cluster-caps:
+endif::[]

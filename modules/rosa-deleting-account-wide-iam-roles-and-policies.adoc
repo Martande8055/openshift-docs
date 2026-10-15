@@ -3,17 +3,9 @@
 // * rosa_install_access_delete_clusters/rosa-sts-deleting-cluster.adoc
 // *rosa_hcp/rosa-hcp-deleting-cluster.adoc
 
-ifeval::["{context}" == "rosa-hcp-deleting-cluster"]
-:hcp:
-endif::[]
-
-ifeval::["{context}" == "rosa-sts-deleting-cluster"]
-:sts:
-endif::[]
-
 :_mod-docs-content-type: PROCEDURE
 [id="rosa-deleting-account-wide-iam-roles-and-policies_{context}"]
-= Deleting the account-wide IAM roles and policies
+= Delete the account-wide IAM roles and policies
 
 [role="_abstract"]
 You can delete the account-wide IAM roles and policies that you created for {product-title} deployments, along with the account-wide Operator policies. You can delete the account-wide IAM roles and policies only after deleting all {product-title} clusters that depend on them.
@@ -26,12 +18,12 @@ The account-wide IAM roles and policies might be used by other {product-title} c
 .Prerequisites
 
 * You have account-wide IAM roles that you want to delete.
-* You have installed and configured the latest ROSA CLI (`rosa`) on your installation host.
+* You have installed and configured the latest {rosa-cli-first} on your installation host.
 
 .Procedure
 
 . Delete the account-wide roles:
-.. List the account-wide roles in your AWS account by using the ROSA CLI (`rosa`):
+.. List the account-wide roles in your AWS account by using the {rosa-cli}:
 +
 [source,terminal]
 ----
@@ -39,7 +31,7 @@ $ rosa list account-roles
 ----
 +
 .Example output
-ifdef::sts[]
+ifdef::openshift-rosa[]
 [source,terminal]
 ----
 I: Fetching account roles
@@ -49,8 +41,8 @@ ManagedOpenShift-Installer-Role     Installer      arn:aws:iam::<aws_account_id>
 ManagedOpenShift-Support-Role       Support        arn:aws:iam::<aws_account_id>:role/ManagedOpenShift-Support-Role       4.22
 ManagedOpenShift-Worker-Role        Worker         arn:aws:iam::<aws_account_id>:role/ManagedOpenShift-Worker-Role        4.22
 ----
-endif::sts[]
-ifdef::hcp[]
+endif::openshift-rosa[]
+ifdef::openshift-rosa-hcp[]
 +
 [source,terminal]
 ----
@@ -60,7 +52,7 @@ ManagedOpenShift-HCP-ROSA-Installer-Role  Installer      arn:aws:iam::<aws_accou
 ManagedOpenShift-HCP-ROSA-Support-Role    Support        arn:aws:iam::<aws_account_id>:role/ManagedOpenShift-HCP-ROSA-Support-Role    4.22               Yes
 ManagedOpenShift-HCP-ROSA-Worker-Role     Worker         arn:aws:iam::<aws_account_id>:role/ManagedOpenShift-HCP-ROSA-Worker-Role     4.22               Yes
 ----
-endif::hcp[]
+endif::openshift-rosa-hcp[]
 +
 .. Delete the account-wide roles by running one of the following commands:
 *** For clusters without a shared Virtual Private Cloud (VPC):
@@ -86,7 +78,7 @@ You must include the `--<prefix>` argument. Replace `<prefix>` with the prefix o
 The account-wide IAM roles might be used by other {product-title} clusters in the same AWS account. Only remove the roles if they are not required by other clusters.
 ====
 +
-ifdef::hcp[]
+ifdef::openshift-rosa-hcp[]
 .Example output
 [source,terminal]
 ----
@@ -100,7 +92,7 @@ I: Deleting account role 'delete-rosa-HCP-ROSA-Support-Role'
 I: Deleting account role 'delete-rosa-HCP-ROSA-Worker-Role'
 I: Successfully deleted the hosted CP account roles
 ----
-endif::hcp[]
+endif::openshift-rosa-hcp[]
 
 . Delete the account-wide in-line and Operator policies:
 .. Under the *Policies* page in the link:https://console.aws.amazon.com/iamv2/home#/policies[AWS IAM Console], filter the list of policies by the prefix that you specified when you created the account-wide roles and policies.

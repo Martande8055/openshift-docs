@@ -128,12 +128,13 @@ Topics:
   File: index
 - Name: Creating a mirror registry with mirror registry for Red Hat OpenShift
   File: installing-mirroring-creating-registry
-- Name: Mirroring images for a disconnected installation using oc-mirror plugin v2
-  File: about-installing-oc-mirror-v2
-- Name: Migrating from oc-mirror plugin v1 to v2
-  File: oc-mirror-migration-v1-to-v2
-- Name: Mirroring images for a disconnected installation using the oc-mirror plugin v1
-  File: installing-mirroring-disconnected
+- Name: Mirroring images by using oc-mirror plugin
+  Dir: oc_mirror_v2
+  Topics:
+  - Name: Mirroring images for a disconnected installation by using the oc-mirror plugin v2
+    File: about-installing-oc-mirror-v2
+  - Name: Migrating from oc-mirror plugin v1 to v2
+    File: oc-mirror-migration-v1-to-v2
 - Name: Mirroring images for a disconnected installation by using the oc adm command
   File: installing-mirroring-installation-images
 - Name: Installing a cluster in a disconnected environment
@@ -335,6 +336,8 @@ Topics:
     File: installing-gcp-shared-vpc
   - Name: Installing a private cluster on Google Cloud
     File: installing-gcp-private
+  - Name: Installing a cluster on Google Cloud Dedicated
+    File: installing-gcp-dedicated
   - Name: Installing a cluster on Google Cloud using Infrastructure Manager templates
     File: installing-gcp-user-infra
   - Name: Installing a cluster into a shared VPC on Google Cloud using Infrastructure Manager templates
@@ -411,8 +414,8 @@ Topics:
     File: installing-with-agent-basic
   - Name: Installing a cluster with customizations
     File: installing-with-agent-based-installer
-  - Name: Installing a cluster without an external registry
-    File: installing-ove
+  # - Name: Installing a cluster without an external registry
+  #   File: installing-ove
   - Name: Preparing PXE assets for OCP
     File: prepare-pxe-assets-agent
   - Name: Preparing installation assets for iSCSI booting
@@ -447,8 +450,12 @@ Topics:
       File: install-tnf
     - Name: Operating a degraded two-node OpenShift cluster with fencing
       File: operating-a-degraded-tnf
+    - Name: Monitoring a two-node OpenShift cluster with fencing
+      File: monitoring-two-node-fencing
     - Name: Post-installation troubleshooting and recovery
       File: install-post-tnf
+    - Name: Tuning the fencing parameters for a two-node OpenShift cluster with fencing
+      File: tuning-fencing-parameters-tnf
 - Name: Installing on bare metal
   Dir: installing_bare_metal
   Distros: openshift-origin,openshift-enterprise
@@ -487,7 +494,7 @@ Topics:
     File: bare-metal-postinstallation-configuration
   - Name: Expanding the cluster
     File: bare-metal-expanding-the-cluster
-  - Name: Using Red Hat Bare Metal as a Service for OpenShift
+  - Name: Using Red Hat Bare-Metal-as-a-Service for OpenShift
     File: bare-metal-using-bare-metal-as-a-service
 - Name: Installing IBM Cloud Bare Metal (Classic)
   Dir: installing_ibm_cloud_classic
@@ -880,6 +887,8 @@ Topics:
 - Name: Performing a cluster update
   Dir: updating_a_cluster
   Topics:
+  - Name: Updating a cluster to OpenShift Container Platform 5.0
+    File: update-ocp-5
   - Name: Updating a cluster using the CLI
     File: updating-cluster-cli
   - Name: Updating a cluster using the web console
@@ -1639,6 +1648,26 @@ Topics:
     Topics:
     - Name: DPU Operator
       File: dpu-operator
+  - Name: NVIDIA DPF Operator
+    Dir: dpf_operator
+    Distros: openshift-enterprise,openshift-origin
+    Topics:
+    - Name: NVIDIA DPF Operator release notes
+      File: dpf-release-notes
+    - Name: About the NVIDIA DPF Operator
+      File: about-dpf-operator
+    - Name: Set up the environment for DPF
+      File: dpf-environment-setup
+    - Name: Install and configure the DPF Operator
+      File: dpf-operator-installation
+    - Name: Provision the DPU hosted cluster
+      File: dpf-hosted-cluster-provisioning
+    - Name: Add worker nodes and provision DPUs
+      File: dpf-worker-nodes-provisioning
+    - Name: Validate traffic and configure telemetry
+      File: dpf-validation-telemetry
+    - Name: Troubleshoot DPF
+      File: dpf-troubleshooting
 - Name: Network Observability Operator
   Dir: network_observability_operator
   Distros: openshift-enterprise,openshift-origin
@@ -1860,20 +1889,22 @@ Topics:
     Dir: configuring_gateway_api
     Distros: openshift-enterprise,openshift-origin
     Topics:
-    - Name: Understand Gateway API
+    - Name: Understanding Gateway API
       File: understand-gateway-api
-    - Name: Enable Gateway API
+    - Name: Enabling Gateway API
       File: enable-gateway-api
     - Name: Controlling incoming traffic with Gateway listeners
       File: controlling-incoming-traffic-gateway-listeners
     - Name: Assigning network addresses to gateways
       File: assigning-network-addresses-gateways
+    - Name: Configure DNS for gateways
+      File: configure-dns-for-gateways
     - Name: Routing HTTP requests to services
       File: routing-http-requests-to-services
-    - Name: Securing HTTPRoutes
-      File: securing-httproutes
     - Name: Routing gRPC requests to services
       File: routing-grpc-requests-to-services
+    - Name: Securing HTTPRoutes
+      File: securing-httproutes
     - Name: Verifying Gateway infrastructure status
       File: verifying-gateway-infrastructure-status
   - Name: Load balancing on OpenStack
@@ -2053,6 +2084,8 @@ Topics:
     File: persistent-storage-csi-sc-manage
   - Name: CSI automatic migration
     File: persistent-storage-csi-migration
+  - Name: Overview of Changed block tracking
+    File: persistent-storage-csi-changed-block-tracking
   - Name: AWS Elastic Block Store CSI Driver Operator
     File: persistent-storage-csi-ebs
   - Name: AWS Elastic File Service CSI Driver Operator
@@ -2508,7 +2541,7 @@ Topics:
     Distros: openshift-enterprise,openshift-origin
 - Name: Using config maps with applications
   File: config-maps
-- Name: Monitoring project and application metrics using the Developer perspective
+- Name: Monitoring project and application metrics by using the Developer perspective
   File: odc-monitoring-project-and-application-metrics-using-developer-perspective
 - Name: Monitoring application health
   File: application-health
@@ -2566,9 +2599,9 @@ Topics:
 - Name: Image mode for OpenShift
   File: mco-coreos-layering
   Distros: openshift-enterprise,openshift-origin
-- Name: Setting the RHCOS version in a cluster
+- Name: Updating the cluster to RHCOS 10.x
   File: mco-image-streams
-  Distros: openshift-enterprise,openshift-origin
+  Distros: openshift-enterprise
 - Name: Machine Config Daemon metrics
   File: machine-config-daemon-metrics
 ---
@@ -2719,6 +2752,8 @@ Topics:
   Topics:
   - Name: Backing up etcd
     File: etcd-backup
+  - Name: Replacing a healthy etcd member
+    File: replace-healthy-etcd-member
   - Name: Replacing an unhealthy etcd member
     File: replace-unhealthy-etcd-member
   - Name: Disaster recovery
@@ -2822,7 +2857,7 @@ Topics:
     File: about-hcp-ha
   - Name: Recovering a failing etcd cluster
     File: hcp-recovering-etcd-cluster
-  - Name: Backing up and restoring etcd in an on-premise environment
+  - Name: Backing up and restoring etcd on a hosted cluster
     File: hcp-backup-restore-on-premise
   - Name: Backing up and restoring etcd on the management cluster
     File: hcp-backup-restore-aws
@@ -2872,14 +2907,16 @@ Name: Virtualized control planes
 Dir: vcp
 Distros: openshift-enterprise
 Topics:
-- Name: Understanding virtualized control planes
+- Name: Virtualized control planes
   File: vcp-overview
-- Name: Prerequisites for virtualized control planes
+- Name: Requirements for virtualized control planes
   File: vcp-prerequisites
 - Name: Preparing the environment for virtualized control planes
   File: vcp-preparing-environment
 - Name: Deploying a virtualized control plane
   File: vcp-installing-cluster
+- Name: Managing the hosting cluster for virtualized control planes
+  File: vcp-managing
 ---
 Name: Nodes
 Dir: nodes
@@ -3515,6 +3552,9 @@ Topics:
   File: cnf-understanding-low-latency
 - Name: Tuning nodes for low latency with the performance profile
   File: cnf-tuning-low-latency-nodes-with-perf-profile
+- Name: Reserving CPUs for OVS-DPDK
+  File: cnf-reserving-cpus-for-ovs-dpdk
+  Distros: openshift-origin,openshift-enterprise
 - Name: Tuning hosted control planes for low latency with the performance profile
   File: cnf-tuning-low-latency-hosted-cp-nodes-with-perf-profile
 - Name: Provisioning real-time and low latency workloads
@@ -3973,6 +4013,8 @@ Topics:
   Topics:
   - Name: Backing up etcd data
     File: backing-up-etcd
+  - Name: Replacing a healthy etcd member
+    File: replacing-healthy-etcd-member
   - Name: Replacing an unhealthy etcd member
     File: replacing-unhealthy-etcd-member
   - Name: Disaster recovery
@@ -4091,6 +4133,8 @@ Topics:
     File: clusterversion-config-openshift-io-v1
   - Name: 'Console [config.openshift.io/v1]'
     File: console-config-openshift-io-v1
+  - Name: 'CRIOCredentialProviderConfig [config.openshift.io/v1]'
+    File: criocredentialproviderconfig-config-openshift-io-v1
   - Name: 'DNS [config.openshift.io/v1]'
     File: dns-config-openshift-io-v1
   - Name: 'FeatureGate [config.openshift.io/v1]'
@@ -4159,6 +4203,10 @@ Topics:
     File: apiservice-apiregistration-k8s-io-v1
   - Name: 'CustomResourceDefinition [apiextensions.k8s.io/v1]'
     File: customresourcedefinition-apiextensions-k8s-io-v1
+  - Name: 'MutatingAdmissionPolicy [admissionregistration.k8s.io/v1]'
+    File: mutatingadmissionpolicy-admissionregistration-k8s-io-v1
+  - Name: 'MutatingAdmissionPolicyBinding [admissionregistration.k8s.io/v1]'
+    File: mutatingadmissionpolicybinding-admissionregistration-k8s-io-v1
   - Name: 'MutatingWebhookConfiguration [admissionregistration.k8s.io/v1]'
     File: mutatingwebhookconfiguration-admissionregistration-k8s-io-v1
   - Name: 'TestExtensionAdmission [testextension.redhat.io/v1]'
@@ -4205,6 +4253,8 @@ Topics:
     File: controllerconfig-machineconfiguration-openshift-io-v1
   - Name: 'ControlPlaneMachineSet [machine.openshift.io/v1]'
     File: controlplanemachineset-machine-openshift-io-v1
+  - Name: 'InternalReleaseImage [machineconfiguration.openshift.io/v1]'
+    File: internalreleaseimage-machineconfiguration-openshift-io-v1
   - Name: 'KubeletConfig [machineconfiguration.openshift.io/v1]'
     File: kubeletconfig-machineconfiguration-openshift-io-v1
   - Name: 'MachineConfig [machineconfiguration.openshift.io/v1]'
@@ -4223,6 +4273,8 @@ Topics:
     File: machineosbuild-machineconfiguration-openshift-io-v1
   - Name: 'MachineOSConfig [machineconfiguration.openshift.io/v1]'
     File: machineosconfig-machineconfiguration-openshift-io-v1
+  - Name: 'OSImageStream [machineconfiguration.openshift.io/v1]'
+    File: osimagestream-machineconfiguration-openshift-io-v1
   - Name: 'PinnedImageSet [machineconfiguration.openshift.io/v1]'
     File: pinnedimageset-machineconfiguration-openshift-io-v1
 - Name: Metadata APIs
@@ -4318,6 +4370,8 @@ Topics:
     File: gatewayclass-gateway-networking-k8s-io-v1
   - Name: 'HTTPRoute [gateway.networking.k8s.io/v1]'
     File: httproute-gateway-networking-k8s-io-v1
+  - Name: 'TLSRoute [gateway.networking.k8s.io/v1]'
+    File: tlsroute-gateway-networking-k8s-io-v1
   - Name: 'Ingress [networking.k8s.io/v1]'
     File: ingress-networking-k8s-io-v1
   - Name: 'IngressClass [networking.k8s.io/v1]'
@@ -4340,14 +4394,16 @@ Topics:
     File: overlappingrangeipreservation-whereabouts-cni-cncf-io-v1alpha1
   - Name: 'PodNetworkConnectivityCheck [controlplane.operator.openshift.io/v1alpha1]'
     File: podnetworkconnectivitycheck-controlplane-operator-openshift-io-v1alpha1
-  - Name: 'ReferenceGrant [gateway.networking.k8s.io/v1beta1]'
-    File: referencegrant-gateway-networking-k8s-io-v1beta1
+  - Name: 'ReferenceGrant [gateway.networking.k8s.io/v1]'
+    File: referencegrant-gateway-networking-k8s-io-v1
   - Name: 'Route [route.openshift.io/v1]'
     File: route-route-openshift-io-v1
   - Name: 'Service [undefined/v1]'
     File: service-v1
   - Name: 'ServiceCIDR [networking.k8s.io/v1]'
     File: servicecidr-networking-k8s-io-v1
+  - Name: 'IPAddress [ipam.cluster.x-k8s.io/v1beta1]'
+    File: ipaddress-ipam-cluster-x-k8s-io-v1beta1
   - Name: 'IPAddressClaim [ipam.cluster.x-k8s.io/v1beta1]'
     File: ipaddressclaim-ipam-cluster-x-k8s-io-v1beta1
   - Name: 'UserDefinedNetwork [k8s.ovn.org/v1]'
@@ -4620,6 +4676,12 @@ Topics:
     File: volumeattributesclass-storage-k8s-io-v1
   - Name: 'VolumePopulator [populator.storage.k8s.io/v1beta1]'
     File: volumepopulator-populator-storage-k8s-io-v1beta1
+  - Name: 'VolumeGroupSnapshot [groupsnapshot.storage.k8s.io/v1]'
+    File: volumegroupsnapshot-groupsnapshot-storage-k8s-io-v1
+  - Name: 'VolumeGroupSnapshotClass [groupsnapshot.storage.k8s.io/v1]'
+    File: volumegroupsnapshotclass-groupsnapshot-storage-k8s-io-v1
+  - Name: 'VolumeGroupSnapshotContent [groupsnapshot.storage.k8s.io/v1]'
+    File: volumegroupsnapshotcontent-groupsnapshot-storage-k8s-io-v1
   - Name: 'VolumeSnapshot [snapshot.storage.k8s.io/v1]'
     File: volumesnapshot-snapshot-storage-k8s-io-v1
   - Name: 'VolumeSnapshotClass [snapshot.storage.k8s.io/v1]'
@@ -4862,6 +4924,8 @@ Topics:
 - Name: Postinstallation configuration
   Dir: post_installation_configuration
   Topics:
+  - Name: Run automated postinstallation configuration
+    File: virt-platform-autopilot
   - Name: Postinstallation configuration
     File: virt-post-install-config
   - Name: Node placement rules
@@ -4896,33 +4960,28 @@ Topics:
   Topics:
   # Web console procedures (unified wizard — CNV-94223, CNV-94224, CNV-94225, CNV-94226)
   # Uncomment when CNV-94227 cleanup is complete:
-  #- Name: Create virtual machines by using the web console
-  #  File: virt-creating-vms-web
+  - Name: Create virtual machines by using the web console
+    File: virt-creating-vms-web
   # CLI procedures (existing content, moved from Chapter 8)
   - Name: Creating virtual machines by using the CLI
     File: virt-creating-vms-from-cli
-  - Name: Creating VMs by importing images from web pages
-    File: virt-creating-vms-from-web-images
-  - Name: Creating VMs by uploading images
-    File: virt-creating-vms-uploading-images
-  - Name: Creating VMs by using container disks
-    File: virt-creating-vms-from-container-disks
-  - Name: Creating VMs by cloning PVCs
-    File: virt-creating-vms-by-cloning-pvcs
+  # Native VirtualMachineTemplate procedures (CNV-85776)
+  - Name: Create virtual machines from native VM templates
+    File: virt-create-vms-from-native-vm-templates
   # Platform-specific
   - Name: Configuring IBM Secure Execution virtual machines on IBM Z and IBM LinuxONE
     File: virt-configuring-ibm-secure-execution-vms-ibm-z
   - Name: Creating AWS EC2 Windows License Included (LI) compliant VMs
     File: virt-creating-vms-aws-li-windows
   # Legacy (preserved until Phase 3 cleanup — CNV-94227)
-  - Name: Creating VMs from instance types
+  - Name: Instance types
     File: virt-creating-vms-from-instance-types
-  - Name: Creating VMs from templates
+  - Name: Managing VM templates
     File: virt-creating-vms-from-templates
-  - Name: Creating virtual machines from Red Hat images
+  - Name: Managing boot sources
     File: virt-creating-vms-from-rh-images-overview
-  - Name: Cloning VMs
-    File: virt-cloning-vms
+  - Name: Import a virtual machine image using the DataVolume API
+    File: virt-import-dv-vms
 - Name: Managing VMs
   Dir: managing_vms
   Topics:
@@ -4936,6 +4995,8 @@ Topics:
     File: virt-update-virtio-drivers
   - Name: Connecting to VM consoles
     File: virt-accessing-vm-consoles
+  - Name: Virtual machine management with the MCP server for OpenShift
+    File: virt-machine-management-with-the-mcp-server-for-openshift
   - Name: SSH access
     Dir: ssh
     Topics:
@@ -4967,8 +5028,10 @@ Topics:
     File: virt-using-vtpm-devices
   - Name: Managing virtual machines with OpenShift Pipelines
     File: virt-managing-vms-openshift-pipelines
-  - Name: Migrating VMs in a single cluster to a different storage class
-    File: virt-migrating-vms-in-single-cluster-to-different-storage-class
+  - Name: Migrating VM storage
+    File: virt-migrating-vm-storage
+  - Name: Virtual machine labels and annotations
+    File: virt-vm-labels-annotations
   - Name: Advanced virtual machine management
     Dir: advanced_vm_management
     Topics:
@@ -5096,8 +5159,6 @@ Topics:
     File: virt-managing-data-volume-annotations
   - Name: Understanding virtual machine storage with the CSI paradigm
     File: virt-storage-with-csi-paradigm
-  - Name: Using OpenShift Virtualization with IBM Fusion Access for SAN
-    File: install-configure-fusion-access-san
 # Virtual machine live migration
 - Name: Live migration
   Dir: live_migration
@@ -5168,6 +5229,8 @@ Topics:
     File: virt-recovering-individual-files-from-vm-backups
   - Name: Use virtual machine file restore
     File: virt-using-vm-file-restore
+#  - Name: File Restore Operator
+#    File: virt-file-restore-operator
   - Name: Disaster recovery
     File: virt-disaster-recovery
 #  - Name: Collecting OKD Virtualization data for community report

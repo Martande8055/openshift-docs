@@ -1,0 +1,6 @@
+:_mod-docs-content-type: MAP
+:context: high-availability-and-disaster-recovery-for-hosted-control-planes
+
+include::modules/high-availability-for-hosted-control-planes-about.adoc[leveloffset=+0]
+
+include::modules/hcp-mgmt-component-loss-impact.adoc[leveloffset=+1]

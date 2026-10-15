@@ -1,0 +1,8 @@
+:_mod-docs-content-type: MAP
+
+= Deploy
+
+include::ocp-jobs/automate-edge-cluster-deployment-with-gitops-ztp.adoc[leveloffset=+1]
+
+include::ocp-jobs/distribute-hosted-cluster-workloads.adoc[leveloffset=+1]
+

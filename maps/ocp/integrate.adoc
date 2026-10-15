@@ -1,0 +1,12 @@
+:_mod-docs-content-type: MAP
+
+= Integrate
+
+include::ocp-jobs/mcp-server.adoc[leveloffset=+1]
+
+include::ocp-jobs/configure-external-dns-integration.adoc[leveloffset=+1]
+
+include::ocp-jobs/automate-cicd-with-image-streams.adoc[leveloffset=+1]
+
+// Moved to networking.adoc
+//include::ocp-jobs/network-observability-deployment-and-management.adoc[leveloffset=+1]

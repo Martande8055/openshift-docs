@@ -4,7 +4,7 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="microshift-custom-cas-configuring_{context}"]
-= Configuring custom certificate authorities
+= Configure custom certificate authorities
 
 [role="_abstract"]
 To configure externally generated certificates and domain names by using custom certificate authorities (CAs), add them to the {microshift-short} `/etc/microshift/config.yaml` configuration file. You must also configure the host operating system trust root.
@@ -81,7 +81,7 @@ $ oc --certificate-authority ~/certs/ca.ca get node
 ----
 oc get node
 NAME                             STATUS   ROLES                         AGE   VERSION
-dhcp-1-235-195.arm.example.com   Ready    control-plane,master,worker   76m   v1.35.4
+dhcp-1-235-195.arm.example.com   Ready    control-plane,master,worker   76m   v1.36.3
 ----
 
 .. Add the new CA file to the $KUBECONFIG environment variable by running the following command:

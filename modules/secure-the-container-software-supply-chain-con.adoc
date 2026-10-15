@@ -1,0 +1,10 @@
+// Module included in the following assemblies:
+//
+// * maps/ocp-jobs/secure-the-container-software-supply-chain.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="secure-the-container-software-supply-chain-con_{context}"]
+= Secure the container software supply chain
+
+[role="_abstract"]
+Securing the path from source code to running container means starting from trusted base images, scanning additions, rebuilding when dependencies change, and verifying signatures before deployment.

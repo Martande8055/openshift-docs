@@ -4,7 +4,7 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="security-pod-scan-cso_{context}"]
-= Installing the {rhq-cso}
+= Install the {rhq-cso}
 
 [role="_abstract"]
 You can install the {rhq-cso} from the {product-title} web console OperatorHub, or by using the CLI.
@@ -50,7 +50,6 @@ $ oc get packagemanifests container-security-operator \
 ----
 +
 .Example output
-+
 [source,terminal]
 ----
 STARTING_CSV=container-security-operator.v3.8.9 CHANNEL=stable-3.8

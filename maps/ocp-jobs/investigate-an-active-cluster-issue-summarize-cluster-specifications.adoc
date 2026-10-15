@@ -1,0 +1,18 @@
+:_mod-docs-content-type: MAP
+:context: investigate-an-active-cluster-issue-summarize-cluster-specifications
+
+// TODO: This job is partially mapped.
+
+// TODO: Match score: 1. Keywords: 
+include::modules/understanding-oc-log-levels.adoc[leveloffset=+0]
+
+// TODO: Match score: 1. Keywords: 
+include::modules/specifying-oc-log-levels.adoc[leveloffset=+1]
+
+// TODO: Match score: 1. Keywords: 
+include::modules/inspecting-pod-and-container-logs.adoc[leveloffset=+1]
+
+// Decomposed from support/summarizing-cluster-specifications.adoc
+include::modules/cluster-resources.adoc[leveloffset=+1]
+
+include::modules/summarizing-cluster-specifications-through-clusterversion.adoc[leveloffset=+1]

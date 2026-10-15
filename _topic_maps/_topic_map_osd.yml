@@ -89,6 +89,8 @@ Topics:
   File: cloud-experts-osd-update-component-routes
 - Name: Limit egress with Google Cloud Next Generation Firewall
   File: cloud-experts-osd-create-new-limit-egress
+- Name: Retrofit Bring Your Own (BYO) firewall rules for OpenShift Dedicated on Google Cloud
+  File: cloud-experts-osd-gcp-byo-firewall
 ---
 Name: Red Hat OpenShift Cluster Manager
 Dir: ocm
@@ -123,22 +125,22 @@ Distros: openshift-dedicated
 Topics:
 - Name: Private Service Connect overview
   File: creating-a-gcp-psc-enabled-private-cluster
-- Name: Creating a cluster on Google Cloud with Workload Identity Federation authentication
+- Name: Create a cluster on Google Cloud with Workload Identity Federation authentication
   File: creating-a-gcp-cluster-with-workload-identity-federation
-- Name: Creating a cluster on Google Cloud with Service Account authentication
+- Name: Create a cluster on Google Cloud with Service Account authentication
   File: creating-a-gcp-cluster-sa
-- Name: Creating a cluster on Google Cloud with a Red Hat cloud account
+- Name: Create a cluster on Google Cloud with a Red Hat cloud account
   File: creating-a-gcp-cluster-redhat-account
 #- Name: Revoking privileges and access to an OpenShift Dedicated cluster
 #  File: osd-revoking-cluster-privileges
-- Name: Deleting an OpenShift Dedicated cluster on Google Cloud
+- Name: Delete an OpenShift Dedicated cluster on Google Cloud
   File: osd-deleting-a-cluster-gcp
 ---
 Name: OpenShift Dedicated clusters on AWS
 Dir: osd_aws_clusters
 Distros: openshift-dedicated
 Topics:
-- Name: Creating a cluster on AWS
+- Name: Create a cluster on AWS
   File: creating-an-aws-cluster
 - Name: Deleting an OpenShift Dedicated cluster on AWS
   File: osd-deleting-a-cluster-aws
@@ -859,7 +861,7 @@ Topics:
     File: quotas-setting-across-multiple-projects
 - Name: Using config maps with applications
   File: config-maps
-- Name: Monitoring project and application metrics using the Developer perspective
+- Name: Monitoring project and application metrics by using the Developer perspective
   File: odc-monitoring-project-and-application-metrics-using-developer-perspective
 - Name: Monitoring application health
   File: application-health
@@ -1427,10 +1429,12 @@ Topics:
     Distros: openshift-dedicated
   - Name: Uninstalling OpenShift Virtualization
     File: uninstalling-virt
-- Name: Post-installation configuration
+- Name: Postinstallation configuration
   Dir: post_installation_configuration
   Topics:
-  - Name: Post-installation configuration
+  - Name: Run automated postinstallation configuration
+    File: virt-platform-autopilot
+  - Name: Postinstallation configuration
     File: virt-post-install-config
   - Name: Node placement rules
     File: virt-node-placement-virt-components
@@ -1454,24 +1458,18 @@ Topics:
 - Name: Creating virtual machines
   Dir: creating_vm
   Topics:
+  - Name: Create virtual machines by using the web console
+    File: virt-creating-vms-web
   - Name: Creating virtual machines by using the CLI
     File: virt-creating-vms-from-cli
-  - Name: Creating VMs by importing images from web pages
-    File: virt-creating-vms-from-web-images
-  - Name: Creating VMs by uploading images
-    File: virt-creating-vms-uploading-images
-  - Name: Creating VMs by using container disks
-    File: virt-creating-vms-from-container-disks
-  - Name: Creating VMs by cloning PVCs
-    File: virt-creating-vms-by-cloning-pvcs
-  - Name: Creating VMs from instance types
+  - Name: Instance types
     File: virt-creating-vms-from-instance-types
-  - Name: Creating VMs from templates
+  - Name: Managing VM templates
     File: virt-creating-vms-from-templates
-  - Name: Creating VMs from Red Hat images
+  - Name: Managing boot sources
     File: virt-creating-vms-from-rh-images-overview
-  - Name: Cloning VMs
-    File: virt-cloning-vms
+  - Name: Import a virtual machine image using the DataVolume API
+    File: virt-import-dv-vms
 - Name: Managing VMs
   Dir: managing_vms
   Topics:

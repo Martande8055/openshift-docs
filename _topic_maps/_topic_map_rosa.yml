@@ -231,7 +231,7 @@ Topics:
   File: rosa-govcloud-account-management
 - Name: Installing a Red Hat OpenShift Service on AWS (classic architecture) cluster in AWS GovCloud
   File: rosa-install-govcloud-cluster
-- Name: Red Hat{OCP} FedRAMP Rev5 Secure Configuration Guidance
+- Name: Red Hat OpenShift Container Platform FedRAMP Rev5 Secure Configuration Guidance
   File: rosa-fedramp-security-config
 ---
 Name: Install ROSA Classic clusters
@@ -1077,7 +1077,7 @@ Topics:
     File: quotas-setting-across-multiple-projects
 - Name: Using config maps with applications
   File: config-maps
-- Name: Monitoring project and application metrics using the Developer perspective
+- Name: Monitoring project and application metrics by using the Developer perspective
   File: odc-monitoring-project-and-application-metrics-using-developer-perspective
 - Name: Monitoring application health
   File: application-health
@@ -1708,10 +1708,12 @@ Topics:
     File: installing-virt
   - Name: Uninstalling OpenShift Virtualization
     File: uninstalling-virt
-- Name: Post-installation configuration
+- Name: Postinstallation configuration
   Dir: post_installation_configuration
   Topics:
-  - Name: Post-installation configuration
+  - Name: Run automated postinstallation configuration
+    File: virt-platform-autopilot
+  - Name: Postinstallation configuration
     File: virt-post-install-config
   - Name: Node placement rules
     File: virt-node-placement-virt-components
@@ -1735,26 +1737,20 @@ Topics:
 - Name: Creating virtual machines
   Dir: creating_vm
   Topics:
+  - Name: Create virtual machines by using the web console
+    File: virt-creating-vms-web
   - Name: Creating virtual machines by using the CLI
     File: virt-creating-vms-from-cli
-  - Name: Creating VMs by importing images from web pages
-    File: virt-creating-vms-from-web-images
-  - Name: Creating VMs by uploading images
-    File: virt-creating-vms-uploading-images
-  - Name: Creating VMs by using container disks
-    File: virt-creating-vms-from-container-disks
-  - Name: Creating VMs by cloning PVCs
-    File: virt-creating-vms-by-cloning-pvcs
   - Name: Creating AWS EC2 Windows License Included (LI) compliant VMs
     File: virt-creating-vms-aws-li-windows
-  - Name: Creating VMs from instance types
+  - Name: Instance types
     File: virt-creating-vms-from-instance-types
-  - Name: Creating VMs from templates
+  - Name: Managing VM templates
     File: virt-creating-vms-from-templates
-  - Name: Creating virtual machines from Red Hat images
+  - Name: Managing boot sources
     File: virt-creating-vms-from-rh-images-overview
-  - Name: Cloning VMs
-    File: virt-cloning-vms
+  - Name: Import a virtual machine image using the DataVolume API
+    File: virt-import-dv-vms
 - Name: Managing VMs
   Dir: managing_vms
   Topics:

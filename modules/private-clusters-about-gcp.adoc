@@ -7,7 +7,7 @@
 = Private clusters in {gcp-short}
 
 [role="_abstract"]
-To create a private cluster on {gcp-first}, you must provide an existing VPC network and subnets to host the cluster, and you must specify `publish: Internal` in your `install-config.yaml` file. The installation program must also be able to resolve the DNS records that the cluster requires. The installation program configures the Ingress Operator and API server for only internal traffic.
+To create a private cluster on {gcp-first}, provide an existing VPC network and subnets, and specify `publish: Internal` in your `install-config.yaml` file. The installation program resolves required DNS records and configures the Ingress Operator and API server for internal traffic only.
 
 The cluster still requires access to internet to access the {gcp-short} APIs.
 
@@ -25,7 +25,7 @@ The internal load balancer relies on instance groups rather than the target pool
 
 * The cluster IP address is internal only.
 * One forwarding rule manages both the Kubernetes API and machine config server ports.
-* The backend service is comprised of each zone's instance group and, while it exists, the bootstrap instance group.
+* The backend service consists of each zone's instance group and, while it exists, the bootstrap instance group.
 * The firewall uses a single rule that is based on only internal source ranges.
 
 [id="private-clusters-limitations-gcp_{context}"]

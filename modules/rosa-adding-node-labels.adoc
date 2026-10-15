@@ -6,10 +6,12 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="rosa-adding-node-labels_{context}"]
-= Add node labels to a machine pool
+= Add node labels to control scheduling
 
 [role="_abstract"]
 Add or edit labels for compute nodes at any time to manage the nodes in a manner that is relevant to you. For example, you can assign types of workloads to specific nodes. Each key must be unique to the object it is assigned to.
+
+A label is a key-value pair applied to a `Node` object. You can use labels to organize sets of objects and control the scheduling of pods. You can add labels during or after cluster creation, and you can update them at any time.
 
 .Prerequisites
 
@@ -33,8 +35,7 @@ ifdef::openshift-rosa,openshift-rosa-hcp[]
 $ rosa list machinepools --cluster=<cluster_name>
 ----
 +
-*Example output*
-+
+.Example output
 ifdef::openshift-rosa[]
 [source,terminal]
 ----
@@ -72,8 +73,7 @@ The following example adds labels to the `db-nodes-mp` machine pool:
 $ rosa edit machinepool --cluster=mycluster --replicas=2 --labels=app=db,tier=backend db-nodes-mp
 ----
 +
-*Example output*
-+
+.Example output
 [source,terminal]
 ----
 I: Updated machine pool 'db-nodes-mp' on cluster 'mycluster'
@@ -86,8 +86,7 @@ I: Updated machine pool 'db-nodes-mp' on cluster 'mycluster'
 $ rosa describe machinepool --cluster=<cluster_name> --machinepool=<machine-pool-name>
 ----
 +
-*Example output*
-+
+.Example output
 ifdef::openshift-rosa[]
 [source,terminal]
 ----
@@ -119,6 +118,7 @@ Tags:
 Taints:
 Availability zone:             us-east-2a
 Subnet:                        subnet-0df2ec3377847164f
+Spot instances:                No
 Disk size:                     300 GiB
 Version:                       4.16.6
 EC2 Metadata Http Tokens:      optional
@@ -134,8 +134,10 @@ Management upgrade:
 Message:
 ----
 endif::openshift-rosa-hcp[]
+ifndef::openshift-dedicated[]
 +
 . Verify that the labels are included for your machine pool in the output.
+endif::openshift-dedicated[]
 endif::openshift-rosa,openshift-rosa-hcp[]
 ifdef::openshift-dedicated[]
 . Navigate to {cluster-manager-url} and select your cluster.

@@ -1,0 +1,22 @@
+:_mod-docs-content-type: MAP
+:context: understand-the-shared-responsibility-model
+
+// Understand the shared responsibility model
+include::modules/osd-understand-shared-responsibility-model.adoc[leveloffset=+0,chunk="to-content"]
+
+// Sub-jobs
+
+// Job: Understand Red Hat, cloud provider, and customer responsibilities
+include::understand-red-hat-cloud-provider-and-customer-responsibilities.adoc[leveloffset=+1,toc="no"]
+
+// Job: Understand process and security for OpenShift Dedicated
+include::understand-process-and-security-for-openshift-dedicated.adoc[leveloffset=+1,toc="no"]
+
+// Job: Understand SRE and service account access
+include::understand-sre-and-service-account-access.adoc[leveloffset=+1,toc="no"]
+
+// Job: Understand availability for OpenShift Dedicated
+include::understand-availability-for-openshift-dedicated.adoc[leveloffset=+1,toc="no"]
+
+// Job: OpenShift Dedicated update life cycle
+include::openshift-dedicated-update-life-cycle.adoc[leveloffset=+1,toc="no"]

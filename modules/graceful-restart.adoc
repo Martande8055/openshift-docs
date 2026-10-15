@@ -61,9 +61,9 @@ The control plane nodes are ready if the status is `Ready`, as shown in the foll
 [source,terminal]
 ----
 NAME                           STATUS   ROLES                  AGE   VERSION
-ip-10-0-168-251.ec2.internal   Ready    control-plane,master   75m   v1.35.0
-ip-10-0-170-223.ec2.internal   Ready    control-plane,master   75m   v1.35.0
-ip-10-0-211-16.ec2.internal    Ready    control-plane,master   75m   v1.35.0
+ip-10-0-168-251.ec2.internal   Ready    control-plane,master   75m   v1.36.3
+ip-10-0-170-223.ec2.internal   Ready    control-plane,master   75m   v1.36.3
+ip-10-0-211-16.ec2.internal    Ready    control-plane,master   75m   v1.36.3
 ----
 
 . If the control plane nodes are not ready, then check whether there are any pending CSRs that must be approved.
@@ -125,9 +125,9 @@ The compute nodes are ready if the status is `Ready`, as shown in the following 
 [source,terminal]
 ----
 NAME                           STATUS   ROLES    AGE   VERSION
-ip-10-0-179-95.ec2.internal    Ready    worker   64m   v1.35.0
-ip-10-0-182-134.ec2.internal   Ready    worker   64m   v1.35.0
-ip-10-0-250-100.ec2.internal   Ready    worker   64m   v1.35.0
+ip-10-0-179-95.ec2.internal    Ready    worker   64m   v1.36.3
+ip-10-0-182-134.ec2.internal   Ready    worker   64m   v1.36.3
+ip-10-0-250-100.ec2.internal   Ready    worker   64m   v1.36.3
 ----
 
 . If the compute nodes are not ready, then check whether there are any pending CSRs that must be approved.
@@ -187,9 +187,9 @@ $ oc adm certificate approve <csr_name>
 $ for node in $(oc get nodes -o jsonpath='{.items[*].metadata.name}'); do echo ${node} ; oc adm uncordon ${node} ; done
 ----
 
-. Verify that the cluster started properly.
+.Verification
 
-.. Check that there are no degraded cluster Operators by running the following command:
+. Check that there are no degraded cluster Operators by running the following command:
 +
 [source,terminal]
 ----
@@ -211,7 +211,7 @@ etcd                                       {product-version}.0    True        Fa
 ...
 ----
 
-.. Check that all nodes are in the `Ready` state by running the following command:
+. Check that all nodes are in the `Ready` state by running the following command:
 +
 [source,terminal]
 ----
@@ -222,12 +222,51 @@ $ oc get nodes
 [source,terminal]
 ----
 NAME                           STATUS   ROLES                  AGE   VERSION
-ip-10-0-168-251.ec2.internal   Ready    control-plane,master   82m   v1.35.0
-ip-10-0-170-223.ec2.internal   Ready    control-plane,master   82m   v1.35.0
-ip-10-0-179-95.ec2.internal    Ready    worker                 70m   v1.35.0
-ip-10-0-182-134.ec2.internal   Ready    worker                 70m   v1.35.0
-ip-10-0-211-16.ec2.internal    Ready    control-plane,master   82m   v1.35.0
-ip-10-0-250-100.ec2.internal   Ready    worker                 69m   v1.35.0
+ip-10-0-168-251.ec2.internal   Ready    control-plane,master   82m   v1.36.3
+ip-10-0-170-223.ec2.internal   Ready    control-plane,master   82m   v1.36.3
+ip-10-0-179-95.ec2.internal    Ready    worker                 70m   v1.36.3
+ip-10-0-182-134.ec2.internal   Ready    worker                 70m   v1.36.3
+ip-10-0-211-16.ec2.internal    Ready    control-plane,master   82m   v1.36.3
+ip-10-0-250-100.ec2.internal   Ready    worker                 69m   v1.36.3
 ----
 +
-If the cluster did not start properly, follow the steps in "Restoring to an earlier cluster state".
+If the cluster did not start properly, you might need to restore your cluster by using an etcd backup. For more information, see "Restoring to an earlier cluster state".
+
+. If the CSRs for new compute nodes that are trying to join the cluster are not approved, investigate the problem:
++
+** Check the Machine Approver logs by entering the following command:
++
+[source,terminal]
+----
+$ oc logs -n openshift-cluster-machine-approver -l app=machine-approver
+----
++
+** To list all CSRs, enter the following command:
++
+[source,terminal]
+----
+$ oc get csr -A
+----
+
+. If CSRs are pending, you can manually approve them. Manual approval is needed when certificates expired during extended downtime or after cluster recovery scenarios.
++
+.. List any pending CSR requests by entering the following command:
++
+[source,terminal]
+----
+$ oc get csr | grep Pending
+----
++
+.. Approve pending CSRs by entering the following command:
++
+[source,terminal]
+----
+$ oc adm certificate approve csrName
+----  
+
+. To troubleshoot other errors related to CSRs, check the Kube Controller Manager logs by entering the following command:
++
+[source,terminal]
+----
+$ oc logs -n openshift-kube-controller-manager -l app=kube-controller-manager
+----

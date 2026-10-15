@@ -4,7 +4,7 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="nodes-nodes-working-evacuating_{context}"]
-= Evacuating pods on nodes
+= Evacuate pods on nodes
 
 [role="_abstract"]
 You can remove, or evacuate, pods from a given node or nodes. Evacuating pods allows you to migrate all or selected pods to other nodes.
@@ -44,7 +44,7 @@ $ oc get node <node1>
 [source,terminal]
 ----
 NAME        STATUS                     ROLES     AGE       VERSION
-<node1>     Ready,SchedulingDisabled   worker    1d        v1.35.4
+<node1>     Ready,SchedulingDisabled   worker    1d        v1.36.3
 ----
 
 . Evacuate the pods by using one of the following methods:

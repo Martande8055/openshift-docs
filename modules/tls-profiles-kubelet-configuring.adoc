@@ -9,7 +9,7 @@ endif::[]
 
 :_mod-docs-content-type: PROCEDURE
 [id="tls-profiles-kubelet-configuring_{context}"]
-= Configuring the TLS security profile for the kubelet
+= Configure the TLS security profile for the kubelet
 
 [role="_abstract"]
 To configure TLS ciphers and minimum versions for the kubelet HTTP server in {product-title}, apply a predefined or custom TLS security profile through a `KubeletConfig` custom resource (CR). Without a custom profile, the kubelet defaults to the `Intermediate` profile.
@@ -18,7 +18,8 @@ ifdef::tls[]
 * The kubelet uses its HTTP/GRPC server to communicate with the Kubernetes API server, which sends commands to pods, gathers logs, and run exec commands on pods through the kubelet.
 endif::[]
 
-.Sample `KubeletConfig` CR that configures the `Old` TLS security profile on worker nodes
+The following example is a `KubeletConfig` CR that configures the `Old` TLS security profile on worker nodes:
+
 [source,yaml]
 ----
 apiVersion: machineconfiguration.openshift.io/v1

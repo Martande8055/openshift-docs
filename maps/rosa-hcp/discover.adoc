@@ -1,0 +1,9 @@
+:_mod-docs-content-type: MAP
+
+= Discover
+
+include::hcm-jobs/rosa-learn-about-benefits-and-use-cases.adoc[leveloffset=+1]
+
+include::hcm-jobs/rosa-evaluate-shared-responsibilities.adoc[leveloffset=+1]
+
+include::hcm-jobs/rosa-review-the-service-definition.adoc[leveloffset=+1]

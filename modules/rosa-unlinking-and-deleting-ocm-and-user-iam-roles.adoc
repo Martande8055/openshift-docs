@@ -3,13 +3,9 @@
 // * rosa_install_access_delete_clusters/rosa-sts-deleting-cluster.adoc
 // * rosa_hcp/rosa-hcp-deleting-cluster.adoc
 
-ifeval::["{context}" == "rosa-hcp-deleting-cluster"]
-:hcp:
-endif::[]
-
 :_mod-docs-content-type: PROCEDURE
 [id="rosa-unlinking-and-deleting-ocm-and-user-iam-roles_{context}"]
-= Unlinking and deleting the {cluster-manager} and user IAM roles
+= Unlink and delete the {cluster-manager} and user IAM roles
 
 [role="_abstract"]
 When you install a {product-title} cluster by using {cluster-manager-first}, you also create {cluster-manager} and user Identity and Access Management (IAM) roles linked to your Red{nbsp}Hat organization. After deleting your cluster, you can unlink and delete the roles by using the {rosa-cli-first}.
@@ -22,7 +18,7 @@ The {cluster-manager} and user IAM roles are required to install and manage othe
 .Prerequisites
 
 * You created {cluster-manager} and user IAM roles and linked them to your Red{nbsp}Hat organization.
-* You have installed and configured the latest ROSA CLI (`rosa`) on your installation host.
+* You have installed and configured the latest {rosa-cli} on your installation host.
 * You have organization administrator privileges in your Red{nbsp}Hat organization.
 
 .Procedure
@@ -35,7 +31,7 @@ The {cluster-manager} and user IAM roles are required to install and manage othe
 $ rosa list ocm-roles
 ----
 +
-ifndef::hcp[]
+ifndef::openshift-rosa-hcp[]
 .Example output
 [source,terminal]
 ----
@@ -44,8 +40,8 @@ ROLE NAME                           ROLE ARN                                    
 ManagedOpenShift-OCM-Role-<red_hat_organization_external_id>  arn:aws:iam::<aws_account_id>:role/ManagedOpenShift-OCM-Role-<red_hat_organization_external_id>  Yes     Yes
 ----
 +
-endif::hcp[]
-ifdef::hcp[]
+endif::openshift-rosa-hcp[]
+ifdef::openshift-rosa-hcp[]
 .Example output
 [source,terminal]
 ----
@@ -53,7 +49,7 @@ I: Fetching ocm roles
 ROLE NAME                                                     ROLE ARN                                                                                         LINKED  ADMIN  AWS Managed
 ManagedOpenShift-OCM-Role-<red_hat_organization_external_id>  arn:aws:iam::<aws_account_id>:role/ManagedOpenShift-OCM-Role-<red_hat_organization_external_id>  Yes      Yes     Yes
 ----
-endif::hcp[]
+endif::openshift-rosa-hcp[]
 +
 .. If your {cluster-manager} IAM role is listed as linked, unlink it from your Red{nbsp}Hat organization by running the following command:
 +
@@ -89,7 +85,7 @@ I: Deleting OCM role
 I: Successfully deleted the OCM role
 ----
 +
-The `OCM role deletion mode` field specifies the deletion mode. You can use `auto` mode to automatically delete the {cluster-manager} IAM role and policies. In `manual` mode, the ROSA CLI generates the `aws` commands needed to delete the role and policies. `manual` mode enables you to review the details before running the `aws` commands manually.
+The `OCM role deletion mode` field specifies the deletion mode. You can use `auto` mode to automatically delete the {cluster-manager} IAM role and policies. In `manual` mode, the {rosa-cli} generates the `aws` commands needed to delete the role and policies. `manual` mode enables you to review the details before running the `aws` commands manually.
 
 . Unlink the user IAM role from your Red{nbsp}Hat organization and delete the role:
 .. List the user IAM roles in your AWS account:
@@ -140,4 +136,4 @@ I: Deleting user role
 ? User role deletion mode: auto
 I: Successfully deleted the user role
 ----
-The `User role deletion mode` field specifies the deletion mode. You can use `auto` mode to automatically delete the user IAM role. In `manual` mode, the ROSA CLI generates the `aws` command needed to delete the role. `manual` mode enables you to review the details before running the `aws` command manually.
+The `User role deletion mode` field specifies the deletion mode. You can use `auto` mode to automatically delete the user IAM role. In `manual` mode, the {rosa-cli} generates the `aws` command needed to delete the role. `manual` mode enables you to review the details before running the `aws` command manually.

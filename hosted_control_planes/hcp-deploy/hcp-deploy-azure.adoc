@@ -9,9 +9,6 @@ toc::[]
 [role="_abstract"]
 With {hcp} on {azure-first}, you can reduce the cost associated with dedicated control-plane node VMs for each cluster. You can provision compute nodes as {azure-short} Virtual Machine Scale sets for dynamic scaling, and ensure credential isolation with per-cluster {azure-short} service principals.
 
-:FeatureName: {hcp-capital} on {azure-short}
-include::snippets/technology-preview.adoc[]
-
 include::modules/hcp-azure-overview.adoc[leveloffset=+1]
 
 [role="_additional-resources"]
@@ -49,6 +46,7 @@ include::modules/hcp-cluster-capabilities-ref.adoc[leveloffset=+2]
 
 include::modules/hcp-cluster-capabilities-proc.adoc[leveloffset=+2]
 
+//Private cluster docs
 include::modules/hcp-azure-private.adoc[leveloffset=+1]
 
 include::modules/hcp-azure-private-subnet.adoc[leveloffset=+2]
@@ -107,6 +105,22 @@ include::modules/hcp-azure-private-ts.adoc[leveloffset=+2]
 
 include::modules/hcp-azure-autoscaling.adoc[leveloffset=+1]
 
+//DR docs
+include::modules/hcp-azure-etcd-snapshot.adoc[leveloffset=+1]
+
+include::modules/hcp-azure-etcd-snapshot-setup.adoc[leveloffset=+2]
+
+include::modules/hcp-azure-etcd-snapshot-restore.adoc[leveloffset=+2]
+
+include::modules/hcp-azure-etcd-snapshot-ts.adoc[leveloffset=+2]
+
+include::modules/hcp-azure-automated-dr.adoc[leveloffset=+1]
+
+include::modules/hcp-azure-automated-dr-setup.adoc[leveloffset=+2]
+
+include::modules/hcp-azure-automated-dr-restore.adoc[leveloffset=+2]
+
+//Deletion docs
 include::modules/hcp-azure-delete.adoc[leveloffset=+1]
 
 include::modules/hcp-azure-cluster-delete.adoc[leveloffset=+2]

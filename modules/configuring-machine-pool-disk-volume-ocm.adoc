@@ -3,35 +3,36 @@
 // * rosa_cluster_admin/rosa_nodes/rosa-managing-worker-nodes.adoc
 
 :_mod-docs-content-type: PROCEDURE
-ifdef::openshift-rosa[]
 [id="configuring-machine-pool-disk-volume-ocm_{context}"]
-= Configuring machine pool disk volume using OpenShift Cluster Manager
+= Configure machine pool disk volume using {cluster-manager}
 
-endif::openshift-rosa[]
-.Prerequisite for cluster creation
-* You have the option to select the node disk sizing for the default machine pool during cluster installation.
+[role="_abstract"]
+Configure the disk volume size for machine pools during cluster creation or when adding new machine pools by using {cluster-manager-first}.
 
-.Procedure for cluster creation
+.Prerequisites
 
-. From the {product-title} cluster wizard, navigate to *Cluster settings*.
+* You have access to {cluster-manager-url}.
 
-. Navigate to *Machine pool* step.
+.Procedure
 
-. Select the desired *Root disk size*.
+* To configure disk volume during cluster creation:
 
-. Select *Next* to continue creating your cluster.
+.. From the {product-title} cluster wizard, navigate to *Cluster settings*.
 
-.Prerequisite for machine pool creation
-* You have the option to select the node disk sizing for the new machine pool after the cluster has been installed.
+.. Navigate to *Machine pool* step.
 
-.Procedure for machine pool creation
+.. Select the desired *Root disk size*.
 
-. Navigate to {cluster-manager-url} and select your cluster.
+.. Select *Next* to continue creating your cluster.
 
-. Navigate to *Machine pool tab*.
+* To configure disk volume for a new machine pool after cluster installation:
 
-. Click *Add machine pool*.
+.. Navigate to {cluster-manager-url} and select your cluster.
 
-. Select the desired *Root disk size*.
+.. Navigate to *Machine pool tab*.
 
-. Select *Add machine pool* to create the machine pool.
+.. Click *Add machine pool*.
+
+.. Select the desired *Root disk size*.
+
+.. Select *Add machine pool* to create the machine pool.

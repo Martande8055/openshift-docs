@@ -5,7 +5,7 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="osd-create-aws-cluster-ccs_{context}"]
-= Creating a cluster on AWS
+= Create a cluster on AWS
 
 [role="_abstract"]
 Deploy a {product-title} cluster with the Customer Cloud Subscription (CCS) or Red{nbsp}Hat cloud account billing model to get more financial control. By configuring AWS Identity and Access Management (IAM) roles, Virtual Private Clouds (VPC) networking, and PrivateLink, you integrate your clusters into existing infrastructure while ensuring security.  
@@ -211,8 +211,3 @@ By default, clusters are created with the delete protection feature disabled.
 .Verification
 
 * You can monitor the progress of the installation in the *Overview* page for your cluster. You can view the installation logs on the same page. Your cluster is ready when the *Status* in the *Details* section of the page is listed as *Ready*.
-
-ifeval::["{context}" == "osd-creating-a-cluster-on-aws"]
-:!osd-on-aws:
-endif::[]
-

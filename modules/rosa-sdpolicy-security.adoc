@@ -3,26 +3,15 @@
 // * rosa_architecture/rosa_policy_service_definition/rosa-service-definition.adoc
 // * rosa_architecture/rosa_policy_service_definition/rosa-hcp-service-definition.adoc
 
-ifeval::["{context}" == "rosa-hcp-service-definition"]
-:rosa-with-hcp:
-endif::[]
-
 :_mod-docs-content-type: CONCEPT
 [id="rosa-sdpolicy-security_{context}"]
 = Security
 
-This section provides information about the service definition for
-ifdef::openshift-rosa-hcp[]
-{hcp-title-first}
-endif::openshift-rosa-hcp[]
-ifndef::openshift-rosa-hcp[]
-{product-title}
-endif::openshift-rosa-hcp[]
-security.
+This section provides information about the service definition for {product-title} security.
 
 [id="rosa-sdpolicy-auth-provider_{context}"]
 == Authentication provider
-Authentication for the cluster can be configured using either {cluster-manager-url} or cluster creation process or using the ROSA CLI, `rosa`. ROSA is not an identity provider, and all access to the cluster must be managed by the customer as part of their integrated solution. The use of multiple identity providers provisioned at the same time is supported. The following identity providers are supported:
+Authentication for the cluster can be configured using either {cluster-manager-url} or cluster creation process or using the {rosa-cli-first}. {product-title} is not an identity provider, and all access to the cluster must be managed by the customer as part of their integrated solution. The use of multiple identity providers provisioned at the same time is supported. The following identity providers are supported:
 
 - GitHub or GitHub Enterprise
 - GitLab
@@ -37,21 +26,7 @@ Privileged containers are available for users with the `cluster-admin` role. Usa
 
 [id="rosa-sdpolicy-customer-admin-user_{context}"]
 == Customer administrator user
-In addition to normal users,
-ifdef::openshift-rosa-hcp[]
-{hcp-title-first}
-endif::openshift-rosa-hcp[]
-ifndef::openshift-rosa-hcp[]
-{product-title}
-endif::openshift-rosa-hcp[]
-provides access to a
-ifdef::openshift-rosa-hcp[]
-{hcp-title}-specific
-endif::openshift-rosa-hcp[]
-ifndef::openshift-rosa-hcp[]
-ROSA-specific
-endif::openshift-rosa-hcp[]
-group called `dedicated-admin`. Any users on the cluster that are members of the `dedicated-admin` group:
+In addition to normal users, {product-title} provides access to a {product-title}-specific group called `dedicated-admin`. Any users on the cluster that are members of the `dedicated-admin` group:
 
 - Have administrator access to all customer-created projects on the cluster.
 - Can manage resource quotas and limits on the cluster.
@@ -62,14 +37,7 @@ group called `dedicated-admin`. Any users on the cluster that are members of the
 
 [id="rosa-sdpolicy-cluster-admin-role_{context}"]
 == Cluster administration role
-The administrator of
-ifdef::openshift-rosa-hcp[]
-{hcp-title-first}
-endif::openshift-rosa-hcp[]
-ifndef::openshift-rosa-hcp[]
-{product-title}
-endif::openshift-rosa-hcp[]
-has default access to the `cluster-admin` role for your organization's cluster. While logged into an account with the `cluster-admin` role, users have increased permissions to run privileged security contexts.
+The administrator of {product-title} has default access to the `cluster-admin` role for your organization's cluster. While logged into an account with the `cluster-admin` role, users have increased permissions to run privileged security contexts.
 
 [id="rosa-sdpolicy-project-self-service_{context}"]
 == Project self-service
@@ -87,12 +55,11 @@ $ oc adm policy add-cluster-role-to-group self-provisioner system:authenticated:
 
 [id="rosa-sdpolicy-regulatory-compliance_{context}"]
 == Regulatory compliance
-//removing conditionals and first sentence as rosa-with-hcp has now obtained compliance certifications
 See the _Compliance_ table in _Understanding process and security for ROSA_ for the latest compliance information.
 
 [id="rosa-sdpolicy-network-security_{context}"]
 == Network security
-With {product-title}, AWS provides a standard DDoS protection on all load balancers, called AWS Shield. This provides 95% protection against most commonly used level 3 and 4 attacks on all the public facing load balancers used for ROSA. A 10-second timeout is added for HTTP requests coming to the `haproxy` router to receive a response or the connection is closed to provide additional protection.
+With {product-title}, AWS provides a standard DDoS protection on all load balancers, called AWS Shield. This provides 95% protection against most commonly used level 3 and 4 attacks on all the public facing load balancers used for {product-title}. A 10-second timeout is added for HTTP requests coming to the `haproxy` router to receive a response or the connection is closed to provide additional protection.
 
 [id="rosa-sdpolicy-etcd-encryption_{context}"]
 == etcd encryption
@@ -122,7 +89,3 @@ The etcd encryption feature is not enabled by default and it can be enabled only
 By enabling etcd encryption for the key values in etcd, you will incur a performance overhead of approximately 20%. The overhead is a result of introducing this second layer of encryption, in addition to the default control plane storage encryption that encrypts the etcd volumes. Red{nbsp}Hat recommends that you enable etcd encryption only if you specifically require it for your use case.
 ====
 endif::openshift-rosa-hcp[]
-
-ifeval::["{context}" == "rosa-hcp-service-definition"]
-:!rosa-with-hcp:
-endif::[]

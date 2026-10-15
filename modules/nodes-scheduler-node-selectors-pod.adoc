@@ -4,7 +4,7 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="nodes-scheduler-node-selectors-pod_{context}"]
-= Using node selectors to control pod placement
+= Use node selectors to control pod placement
 
 [role="_abstract"]
 You can use node selectors on pods and labels on nodes to control where the pod is scheduled. With node selectors, {product-title} schedules the pods on nodes that contain matching labels.
@@ -182,7 +182,7 @@ $ oc get nodes -l type=user-node,region=east
 [source,terminal]
 ----
 NAME                          STATUS   ROLES    AGE   VERSION
-ip-10-0-142-25.ec2.internal   Ready    worker   17m   v1.35.4
+ip-10-0-142-25.ec2.internal   Ready    worker   17m   v1.36.3
 ----
 
 . Add the matching node selector to a pod:

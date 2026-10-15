@@ -195,6 +195,8 @@ Topics:
   Topics:
   - Name: Creating a default Red Hat OpenShift Service on AWS cluster with Terraform
     File: rosa-hcp-creating-a-cluster-quickly-terraform
+  - Name: Configuring AWS Spot instances for Red Hat OpenShift Service on AWS with Terraform
+    File: rosa-hcp-config-aws-spot-instances-terraform
 - Name: Creating ROSA clusters using a custom AWS KMS encryption key
   File: rosa-hcp-creating-cluster-with-aws-kms-key
 - Name: Deploying Red Hat OpenShift Service on AWS clusters using FIPS encryption
@@ -207,6 +209,8 @@ Topics:
   File: rosa-hcp-egress-zero-install
 - Name: Creating a ROSA cluster that uses direct authentication with an external OIDC identity provider
   File: rosa-hcp-sts-creating-a-cluster-ext-auth
+- Name: Configuring AWS Spot instances for Red Hat OpenShift Service on AWS clusters using the CLI
+  File: rosa-hcp-config-aws-spot-instances-cli
 - Name: Creating ROSA clusters without a CNI plugin
   File: rosa-hcp-cluster-no-cni
 - Name: Deleting a ROSA cluster
@@ -893,7 +897,7 @@ Topics:
     File: quotas-setting-across-multiple-projects
 - Name: Using config maps with applications
   File: config-maps
-- Name: Monitoring project and application metrics using the Developer perspective
+- Name: Monitoring project and application metrics by using the Developer perspective
   File: odc-monitoring-project-and-application-metrics-using-developer-perspective
 - Name: Monitoring application health
   File: application-health
@@ -1102,6 +1106,19 @@ Topics:
         File: nw-configuring-routes
       - Name: Securing routes through ingress objects
         File: creating-advanced-routes
+- Name: Advanced networking
+  Dir: advanced_networking
+  Distros: openshift-rosa-hcp
+  Topics:
+  - Name: BGP routing
+    Dir: bgp_routing
+    Topics:
+    - Name: About BGP routing
+      File: about-bgp-routing
+    - Name: Enabling BGP routing
+      File: enabling-bgp-routing
+    - Name: Disabling BGP routing
+      File: disabling-bgp-routing
 ---
 Name: Nodes
 Dir: nodes
@@ -1607,10 +1624,12 @@ Topics:
     File: installing-virt
   - Name: Uninstalling OpenShift Virtualization
     File: uninstalling-virt
-- Name: Post-installation configuration
+- Name: Postinstallation configuration
   Dir: post_installation_configuration
   Topics:
-  - Name: Post-installation configuration
+  - Name: Run automated postinstallation configuration
+    File: virt-platform-autopilot
+  - Name: Postinstallation configuration
     File: virt-post-install-config
   - Name: Node placement rules
     File: virt-node-placement-virt-components
@@ -1634,26 +1653,20 @@ Topics:
 - Name: Creating virtual machines
   Dir: creating_vm
   Topics:
+  - Name: Create virtual machines by using the web console
+    File: virt-creating-vms-web
   - Name: Creating virtual machines by using the CLI
     File: virt-creating-vms-from-cli
-  - Name: Creating VMs by importing images from web pages
-    File: virt-creating-vms-from-web-images
-  - Name: Creating VMs by uploading images
-    File: virt-creating-vms-uploading-images
-  - Name: Creating VMs by using container disks
-    File: virt-creating-vms-from-container-disks
-  - Name: Creating VMs by cloning PVCs
-    File: virt-creating-vms-by-cloning-pvcs
   - Name: Creating AWS EC2 Windows License Included (LI) compliant VMs
     File: virt-creating-vms-aws-li-windows
-  - Name: Creating VMs from instance types
+  - Name: Instance types
     File: virt-creating-vms-from-instance-types
-  - Name: Creating VMs from templates
+  - Name: Managing VM templates
     File: virt-creating-vms-from-templates
-  - Name: Creating virtual machines from Red Hat images
+  - Name: Managing boot sources
     File: virt-creating-vms-from-rh-images-overview
-  - Name: Cloning VMs
-    File: virt-cloning-vms
+  - Name: Import a virtual machine image using the DataVolume API
+    File: virt-import-dv-vms
 - Name: Managing VMs
   Dir: managing_vms
   Topics:

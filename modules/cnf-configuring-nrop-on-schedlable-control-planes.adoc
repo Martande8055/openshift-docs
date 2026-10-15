@@ -5,7 +5,7 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="cnf-configuring-nrop-on-schedulable-cp-nodes_{context}"]
-= Configuring NUMA Resources Operator on schedulable control plane nodes
+= Configure NUMA Resources Operator on schedulable control plane nodes
 
 [role="_abstract"]
 To run workloads on control plane nodes, configure the NUMA Resources Operator (NROP) to manage them as schedulable. This configuration is ideal for compact clusters and multi-node OpenShift (MNO) environments where control plane nodes also function as compute nodes.
@@ -122,12 +122,12 @@ $ oc get nodes
 [source,terminal]
 ----
 NAME                STATUS   ROLES                         AGE     VERSION
-worker-0            Ready    worker,worker-cnf             100m    v1.35.4
-worker-1            Ready    worker                        93m     v1.35.4
-master-0            Ready    control-plane,master,worker   108m    v1.35.4
-master-1            Ready    control-plane,master,worker   107m    v1.35.4
-master-2            Ready    control-plane,master,worker   107m    v1.35.4
-worker-2            Ready    worker                        100m    v1.35.4
+worker-0            Ready    worker,worker-cnf             100m    v1.36.3
+worker-1            Ready    worker                        93m     v1.36.3
+master-0            Ready    control-plane,master,worker   108m    v1.36.3
+master-1            Ready    control-plane,master,worker   107m    v1.36.3
+master-2            Ready    control-plane,master,worker   107m    v1.36.3
+worker-2            Ready    worker                        100m    v1.36.3
 ----
 
 . Verify that the NUMA Resources Operator’s pods are running on the intended nodes by running the following command. You should see a numaresourcesoperator pod for each node group you specified in the CR:

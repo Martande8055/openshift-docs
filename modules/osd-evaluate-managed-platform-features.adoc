@@ -1,0 +1,15 @@
+// Module included in the following assemblies:
+//
+// * maps/jobs/evaluate-managed-platform-features-and-infrastructure.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="osd-evaluate-managed-platform-features_{context}"]
+= Managed platform features and infrastructure
+
+[role="_abstract"]
+Evaluate the core platform features and infrastructure capabilities of {product-title} to determine how the managed service meets your requirements.
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:../support/remote_health_monitoring/about-remote-health-monitoring.adoc#about-remote-health-monitoring[About remote health monitoring]

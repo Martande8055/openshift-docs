@@ -1,0 +1,8 @@
+:_mod-docs-content-type: MAP
+:context: troubleshoot-common-update-failures
+
+// TODO: This job is partially mapped.
+
+// This module should almost certainly be added to Pan's gap analysis, they are assigned to all the other modules in the assembly where this module sits in, as well as all the oadp content in general
+include::modules/about-oadp-update-channels.adoc[leveloffset=+0]
+

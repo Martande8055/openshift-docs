@@ -4,7 +4,7 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="infrastructure-moving-router_{context}"]
-= Moving the router
+= Move the router
 
 [role="_abstract"]
 Deploying the router pod on an infrastructure node can reduce your {product-title} subscription size. Move the router pod by editing the `IngressController` object in the `openshift-ingress-operator` namespace. By default, the pod is deployed to a worker node.
@@ -115,7 +115,7 @@ Specify the `<node_name>` that you obtained from the pod list.
 [source,terminal]
 ----
 NAME                          STATUS  ROLES         AGE   VERSION
-ip-10-0-217-226.ec2.internal  Ready   infra,worker  17h   v1.35.4
+ip-10-0-217-226.ec2.internal  Ready   infra,worker  17h   v1.36.3
 ----
 +
 Because the role list includes `infra`, the pod is running on the correct node.

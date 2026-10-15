@@ -1,0 +1,7 @@
+:_mod-docs-content-type: MAP
+:context: evaluate-managed-platform-features-and-infrastructure
+
+// Evaluate managed platform features and infrastructure
+include::modules/osd-evaluate-managed-platform-features.adoc[leveloffset=+0,chunk="to-content",toc="no"]
+
+include::modules/osd-intro.adoc[leveloffset=+1,chunk="to-content"]

@@ -13,8 +13,7 @@ endif::[]
 
 :_mod-docs-content-type: REFERENCE
 [id="cluster-bare-metal-operator_{context}"]
-ifdef::operator-ref[= Cluster Baremetal Operator]
-ifdef::cluster-caps[= Bare-metal capability]
+= Cluster Baremetal Operator
 
 [role="_abstract"]
 ifdef::operator-ref[]
@@ -26,7 +25,9 @@ ifdef::cluster-caps[]
 The Cluster Baremetal Operator provides the features for the `baremetal` capability.
 endif::cluster-caps[]
 
-The Cluster Baremetal Operator (CBO) deploys all the components necessary to take a bare-metal server to a fully functioning worker node ready to run {product-title} compute nodes. The CBO ensures that the metal3 deployment, which consists of the Bare Metal Operator (BMO) and Ironic containers, runs on one of the control plane nodes within the {product-title} cluster. The CBO also listens for {product-title} updates to resources that it watches and takes appropriate action.
+The Cluster Baremetal Operator (CBO) deploys all the components necessary to take a bare-metal server to a fully functioning worker node ready to run {product-title} compute nodes. 
+
+The CBO ensures that the metal3 deployment, which consists of the Bare Metal Operator (BMO) and Ironic containers, runs on one of the control plane nodes within the {product-title} cluster. The CBO also listens for {product-title} updates to resources that it watches and takes appropriate action.
 
 ifdef::cluster-caps[]
 The bare-metal capability is required for deployments using installer-provisioned infrastructure. Disabling the bare-metal capability can result in unexpected problems with these deployments.
@@ -42,16 +43,10 @@ Red{nbsp}Hat recommends that cluster administrators only disable the bare-metal 
 ====
 endif::cluster-caps[]
 
-ifdef::operator-ref[]
-Project::
-
-link:https://github.com/openshift/cluster-baremetal-operator[cluster-baremetal-operator]
-endif::operator-ref[]
-
 ifeval::["{context}" == "operator-reference"]
 :!operator-ref:
 endif::[]
 
-ifeval::["{context}" == "cluster-caps"]
+ifeval::["{context}" == "cluster-capabilities"]
 :!cluster-caps:
 endif::[]

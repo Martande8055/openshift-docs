@@ -1,0 +1,17 @@
+:_mod-docs-content-type: MAP
+:context: enable-cpu-manager-and-topology-manager
+
+include::modules/enable-cpu-manager-and-topology-manager-con.adoc[leveloffset=+0]
+
+// Decomposed from scalability_and_performance/using-cpu-manager.adoc
+include::modules/setting-up-cpu-manager.adoc[leveloffset=+1]
+
+include::modules/topology-manager-policies.adoc[leveloffset=+1]
+
+include::modules/setting-up-topology-manager.adoc[leveloffset=+1]
+
+include::modules/pod-interactions-with-topology-manager.adoc[leveloffset=+1]
+
+// Decomposed from post_installation_configuration/node-tasks.adoc
+// TODO: day-2 pointer only
+include::modules/post-install-topology-manager.adoc[leveloffset=+1]

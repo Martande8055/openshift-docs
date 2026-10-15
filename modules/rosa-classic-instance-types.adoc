@@ -1,0 +1,15 @@
+// Module included in the following assemblies:
+//
+// * maps/jobs/instance-types.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="rosa-classic-instance-types_{context}"]
+= Instance types
+
+[role="_abstract"]
+{product-title} offers the following worker node instance types and sizes. Choose the instance type that matches your workload requirements for compute capacity and memory.
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://aws.amazon.com/ec2/instance-types[AWS Instance Types]

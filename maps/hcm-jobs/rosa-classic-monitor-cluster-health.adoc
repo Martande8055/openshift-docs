@@ -1,0 +1,14 @@
+:_mod-docs-content-type: MAP
+:context: rosa-classic-monitor-cluster-health
+
+// Monitor cluster health
+include::modules/rosa-classic-monitor-cluster-health.adoc[leveloffset=+0,chunk="to-content"]
+
+// View cluster notifications using the Hybrid Cloud Console
+include::modules/managed-cluster-notification-view-in-hcc.adoc[leveloffset=+1,toc="no"]
+
+// Add notification contacts to your cluster
+include::modules/managed-cluster-add-notification-contacts.adoc[leveloffset=+1,toc="no"]
+
+// Troubleshooting cluster notifications
+include::modules/rosa-troubleshooting-cluster-notifications.adoc[leveloffset=+1,toc="no"]

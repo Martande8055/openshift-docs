@@ -5,7 +5,7 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="nodes-nodes-rtkernel-arguments_{context}"]
-= Adding a real-time kernel to nodes
+= Add a real-time kernel to nodes
 
 [role="_abstract"]
 If your {product-title} workloads require real-time operating system characteristics, you can switch your machines to the Linux real-time kernel. Switching to the real-time kernel provides a higher degree of determinism for your {product-title} workloads. 
@@ -61,9 +61,9 @@ $ oc get nodes
 [source,terminal]
 ----
 NAME                                        STATUS  ROLES    AGE   VERSION
-ip-10-0-143-147.us-east-2.compute.internal  Ready   worker   103m  v1.35.4
-ip-10-0-146-92.us-east-2.compute.internal   Ready   worker   101m  v1.35.4
-ip-10-0-169-2.us-east-2.compute.internal    Ready   worker   102m  v1.35.4
+ip-10-0-143-147.us-east-2.compute.internal  Ready   worker   103m  v1.36.3
+ip-10-0-146-92.us-east-2.compute.internal   Ready   worker   101m  v1.36.3
+ip-10-0-169-2.us-east-2.compute.internal    Ready   worker   102m  v1.36.3
 ----
 +
 [source,terminal]

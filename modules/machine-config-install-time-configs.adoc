@@ -4,7 +4,7 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="machine-config-install-time-configs_{context}"]
-= Overriding storage or partition setup
+= Override storage or partition setup
 
 [role="_abstract"]
 You can use a `MachineConfig` object to change the disk partition schema, file systems, and RAID configurations that were established during the cluster installation. This allows you to make specific configuration changes that are different from the initial cluster state.
@@ -21,18 +21,6 @@ Configuration changes made through this process apply to new nodes only.
 For example, you might want to override your default storage configuration to add new hardware that uses a different storage partitioning schema or storage file system to your cluster. In this case, you can modify the storage configuration for any new nodes in your cluster.
 
 Or, if you used Ignition to modify the storage configuration as a post-installation task, your cluster might be reporting an `irreconcilableChanges` status in the `MachineConfigNode` object status fields. This messaging can alert you to these differences, so that you can determine if you want new hardware with the new configurations.  
-
-:FeatureName: Overriding irreconcilable fields
-include::snippets/technology-preview.adoc[]
-
-.Prerequisites
-
-* You enabled the required Technology Preview features for your cluster by adding the `TechPreviewNoUpgrade` feature set to the `FeatureGate` CR named `cluster`. For information about enabling Feature Gates, see _Enabling features using feature gates_.
-+
-[WARNING]
-====
-Enabling the `TechPreviewNoUpgrade` feature set on your cluster cannot be undone and prevents minor version updates. This feature set allows you to enable these Technology Preview features on test clusters, where you can fully test them. Do not enable this feature set on production clusters.
-====
 
 .Procedure
 

@@ -3,8 +3,9 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="builds-strategy-s2i-override-builder-image-scripts_{context}"]
-= Overriding source-to-image builder image scripts
+= Override source-to-image builder image scripts
 
+[role="_abstract"]
 You can override the `assemble`, `run`, and `save-artifacts` source-to-image (S2I) scripts provided by the builder image.
 
 .Procedure
@@ -21,9 +22,10 @@ strategy:
     from:
       kind: "ImageStreamTag"
       name: "builder-image:latest"
-    scripts: "http://somehost.com/scripts_directory" # <1>
+    scripts: "http://somehost.com/scripts_directory"
 ----
-<1> The build process appends `run`, `assemble`, and `save-artifacts` to the path. If any or all scripts with these names exist, the build process uses these scripts in place of scripts with the same name that are provided in the image.
++
+The build process appends `run`, `assemble`, and `save-artifacts` to the path. If any or all scripts with these names exist, the build process uses these scripts in place of scripts with the same name that are provided in the image.
 +
 [NOTE]
 ====

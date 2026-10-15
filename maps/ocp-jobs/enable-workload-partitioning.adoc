@@ -1,0 +1,12 @@
+:_mod-docs-content-type: MAP
+:context: enable-workload-partitioning
+
+include::modules/enable-workload-partitioning-con.adoc[leveloffset=+0]
+
+// Decomposed from scalability_and_performance/enabling-workload-partitioning.adoc
+include::modules/enabling-workload-partitioning.adoc[leveloffset=+1]
+
+include::modules/create-perf-profile-workload-partitioning.adoc[leveloffset=+1]
+
+// Decomposed from edge_computing/ztp-reference-cluster-configuration-for-vdu.adoc
+include::modules/ztp-enabling-workload-partitioning-sno.adoc[leveloffset=+1]

@@ -1,0 +1,11 @@
+:_mod-docs-content-type: MAP
+:context: rosa-classic-create-the-cluster
+
+// Create the cluster
+include::modules/rosa-classic-create-the-cluster.adoc[leveloffset=+0]
+
+// Creating a cluster quickly using the CLI
+include::modules/rosa-sts-creating-a-cluster-quickly-cli.adoc[leveloffset=+1]
+
+// Create a cluster with customizations using the CLI
+include::modules/rosa-sts-creating-a-cluster-with-customizations-cli.adoc[leveloffset=+1]

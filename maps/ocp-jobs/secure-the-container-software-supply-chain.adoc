@@ -1,0 +1,28 @@
+:_mod-docs-content-type: MAP
+:context: secure-the-container-software-supply-chain
+
+include::modules/secure-the-container-software-supply-chain-con.adoc[leveloffset=+0]
+
+// Decomposed from security/container_security/security-container-content.adoc
+include::modules/security-container-content-inside.adoc[leveloffset=+1]
+
+include::modules/security-container-content-universal.adoc[leveloffset=+1]
+
+include::modules/security-container-content-scanning.adoc[leveloffset=+1]
+
+include::modules/security-container-content-external-scanning.adoc[leveloffset=+1]
+include::modules/security-image-metadata.adoc[leveloffset=+2]
+include::modules/security-example-annotation-keys.adoc[leveloffset=+3]
+include::modules/security-example-annotation-values.adoc[leveloffset=+3]
+include::modules/security-annotating-image-objects.adoc[leveloffset=+2]
+include::modules/security-example-annotate-cli.adoc[leveloffset=+3]
+include::modules/controlling-pod-execution.adoc[leveloffset=+2]
+include::modules/security-controlling-pod-execution-example-annotation.adoc[leveloffset=+3]
+include::modules/security-integration-reference.adoc[leveloffset=+2]
+include::modules/security-integration-reference-example-api-call.adoc[leveloffset=+3]
+
+// Sub-jobs. Included last: each sets its own :context:, which would
+// otherwise apply to any module included after it.
+include::secure-container-content-using-red-hat-universal-base-images-ubi.adoc[leveloffset=+1]
+include::secure-the-build-pipeline-and-automate-image-updates.adoc[leveloffset=+1]
+include::control-image-deployment-using-trusted-sources-and-signature-verification.adoc[leveloffset=+1]

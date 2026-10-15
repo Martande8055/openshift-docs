@@ -1,0 +1,10 @@
+:_mod-docs-content-type: MAP
+:context: understand-service-definitions
+
+// Understand service definitions
+include::modules/osd-understand-service-definitions.adoc[leveloffset=+0,chunk="to-content"]
+
+// Sub-jobs
+
+// Job: Review account management and cluster subscription options
+include::review-account-management-and-cluster-subscription-options.adoc[leveloffset=+1,toc="no"]

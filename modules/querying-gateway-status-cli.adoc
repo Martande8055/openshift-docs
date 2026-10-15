@@ -1,10 +1,10 @@
 // Module included in the following assemblies:
 //
-// * networking/ingress_load_balancing/configuring_ingress_cluster_traffic/verifying-gateway-infrastructure-status.adoc
+// * networking/ingress_load_balancing/configuring_gateway_api/verifying-gateway-infrastructure-status.adoc
 //
 :_mod-docs-content-type: PROCEDURE
 [id="querying-gateway-status-cli_{context}"]
-= Query Gateway infrastructure status using the CLI
+= Querying Gateway infrastructure status using the CLI
 
 [role="_abstract"]
 To quickly check the health of your gateway infrastructure, query specific `status` fields using the {product-title} CLI. You can validate your deployment, check route attachments, and retrieve IP addresses without parsing lengthy YAML manifests.

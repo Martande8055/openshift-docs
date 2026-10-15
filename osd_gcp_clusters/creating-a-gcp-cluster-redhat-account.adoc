@@ -1,7 +1,7 @@
 :_mod-docs-content-type: ASSEMBLY
 include::_attributes/attributes-openshift-dedicated.adoc[]
 [id="osd-creating-a-gcp-cluster-rh-account"]
-= Creating a cluster on {gcp-short} with a Red Hat cloud account
+= Create a cluster on {gcp-short} with a Red Hat cloud account
 :context: osd-creating-a-gcp-cluster-rh-account
 
 toc::[]
@@ -18,8 +18,9 @@ Through {cluster-manager-url}, you can create an {product-title} cluster on {GCP
 include::modules/osd-create-cluster-red-hat-account.adoc[leveloffset=+1]
 include::modules/osd-configure-machine-pool-root-disk.adoc[leveloffset=+1]
 
-[id="next-steps-rh-account_{context}"]
-== Next steps
-* xref:../authentication/sd-configuring-identity-providers.adoc#sd-configuring-identity-providers[Configuring Identity Providers]
+[role="_additional-resources"]
+[id="additional-resources-rh-account_{context}"]
+== Additional resources
+* xref:../authentication/sd-configuring-identity-providers.adoc#sd-configuring-identity-providers[Configuring identity providers]
 
 * xref:../osd_getting_started/osd-getting-started.adoc#osd-grant-admin-privileges_osd-getting-started[Granting administrator privileges to a user]

@@ -4,7 +4,7 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="ztp-site-cleanup_{context}"]
-= Removing a managed cluster site from the {ztp} pipeline
+= Remove a managed cluster site from the {ztp} pipeline
 
 [role="_abstract"]
 You can remove a managed site and the associated installation and configuration policy CRs from the {ztp-first} pipeline.
@@ -32,6 +32,6 @@ spec:
 +
 When you run the {ztp} pipeline again, the generated CRs are removed.
 
-. Optional: If you want to permanently remove a site, you should also remove the `ClusterInstance` and site-specific `PolicyGenerator` or `PolicyGentemplate` files from the Git repository.
+. Optional: If you want to permanently remove a site, you should also remove the `ClusterInstance` and any group or site-specific `ConfigMap` resources from the `template-values/` directory in the Git repository.
 
-. Optional: If you want to remove a site temporarily, for example when redeploying a site, you can leave the `ClusterInstance` and site-specific `PolicyGenerator` or `PolicyGentemplate` CRs in the Git repository.
+. Optional: If you want to remove a site temporarily, for example when redeploying a site, you can leave the `ClusterInstance` and group or site-specific `ConfigMap` resources in the Git repository.

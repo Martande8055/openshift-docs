@@ -1,0 +1,32 @@
+:_mod-docs-content-type: MAP
+:context: evaluate-platform-architecture-and-components
+
+// NOTE: This job was decomposed from 7 assemblies. Its modules have since been
+// split into the sub-jobs below; this map now holds only the job intro and the
+// sub-job includes. No module was dropped in the split.
+
+// Evaluate platform architecture and components
+include::modules/osd-evaluate-platform-architecture.adoc[leveloffset=+0,chunk="to-content"]
+
+// Sub-jobs
+
+// Job: Learn key architectural terms and concepts
+include::learn-key-architectural-terms-and-concepts.adoc[leveloffset=+1,toc="no"]
+
+// Job: Understand OpenShift Dedicated architecture and deployment concepts
+include::understand-openshift-dedicated-architecture-and-deployment-concepts.adoc[leveloffset=+1,toc="no"]
+
+// Job: Choose the Google Cloud architectural model for deployment
+include::choose-the-google-cloud-architectural-model-for-deployment.adoc[leveloffset=+1,toc="no"]
+
+// Job: Understand control plane architecture and core services
+include::understand-control-plane-architecture-and-core-services.adoc[leveloffset=+1,toc="no"]
+
+// Job: Explore NVIDIA GPU architecture and acceleration features
+include::explore-nvidia-gpu-architecture-and-acceleration-features.adoc[leveloffset=+1,toc="no"]
+
+// Job: Understand application development workflows and tooling
+include::understand-application-development-workflows-and-tooling.adoc[leveloffset=+1,toc="no"]
+
+// Job: Understand admission plugins for API request regulation
+include::understand-admission-plugins-for-api-request-regulation.adoc[leveloffset=+1,toc="no"]

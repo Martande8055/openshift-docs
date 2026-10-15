@@ -1,0 +1,11 @@
+:_mod-docs-content-type: MAP
+:context: reduce-nic-queues-for-low-core-nodes
+
+include::modules/reduce-nic-queues-for-low-core-nodes-con.adoc[leveloffset=+0]
+
+// Decomposed from scalability_and_performance/cnf-tuning-low-latency-nodes-with-perf-profile.adoc
+include::modules/cnf-adjusting-nic-queues-with-the-performance-profile.adoc[leveloffset=+1]
+
+include::modules/cnf-verifying-queue-status.adoc[leveloffset=+2]
+
+include::modules/cnf-logging-associated-with-adjusting-nic-queues.adoc[leveloffset=+2]

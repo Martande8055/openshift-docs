@@ -1,0 +1,15 @@
+:_mod-docs-content-type: MAP
+:context: gather-data-about-a-cluster-update
+
+// TODO: This job is partially mapped.
+
+include::modules/gathering-data-cluster-update-con.adoc[leveloffset=+0]
+
+include::modules/changing-cvo-log-level.adoc[leveloffset=+1]
+
+include::modules/gathering-clusterversion-history.adoc[leveloffset=+1]
+
+include::modules/gathering-clusterversion-history-console.adoc[leveloffset=+2]
+
+include::modules/gathering-clusterversion-history-cli.adoc[leveloffset=+2]
+

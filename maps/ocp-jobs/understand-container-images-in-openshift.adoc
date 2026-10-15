@@ -1,0 +1,13 @@
+:_mod-docs-content-type: MAP
+:context: understand-container-images-in-openshift
+
+// Decomposed from openshift_images/images-understand.adoc
+include::modules/images-about.adoc[leveloffset=+0]
+
+include::modules/containers-about.adoc[leveloffset=+1]
+
+include::core-image-concepts.adoc[leveloffset=+1]
+
+include::image-tags-and-streams-overview.adoc[leveloffset=+1]
+
+include::cluster-samples-operator-introduction.adoc[leveloffset=+1]

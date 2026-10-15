@@ -1,0 +1,5 @@
+:_mod-docs-content-type: MAP
+:context: understand-mco-rollout-behavior
+
+// Decomposed from openshift_images/image-configuration.adoc
+include::modules/images-configuration-mco-and-registry-changes.adoc[leveloffset=+0]

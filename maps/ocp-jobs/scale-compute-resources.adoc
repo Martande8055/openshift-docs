@@ -1,0 +1,74 @@
+:_mod-docs-content-type: MAP
+:context: scale-compute-resources
+
+// This job covers scaling workloads, not machines.
+//
+// It previously opened with 13 machine management modules that duplicate three
+// jobs already in Optimize: scale-compute-capacity.adoc (manual scaling, delete
+// policy, machine set modifying), configure-automated-machine-scaling-in-an-ocp-cluster.adoc
+// (cluster and machine autoscaler), and accelerate-workloads-with-gpus.adoc via
+// label-gpu-machine-sets-for-autoscaler.adoc (GPU autoscaler labelling). Those
+// includes were removed here so the three machine management jobs own that
+// content. The pod autoscaling modules below are unchanged, including their
+// leveloffsets, and a concept module was added at +0 so nothing had to shift.
+
+include::modules/scale-compute-resources-con.adoc[leveloffset=+0]
+
+// Decomposed from nodes/pods/nodes-pods-autoscaling.adoc
+include::modules/nodes-pods-autoscaling-about.adoc[leveloffset=+1]
+
+include::modules/nodes-pods-autoscaling-workflow-hpa.adoc[leveloffset=+1]
+
+include::modules/nodes-pods-autoscaling-requests-and-limits-hpa.adoc[leveloffset=+1]
+
+include::modules/nodes-pods-autoscaling-best-practices-hpa.adoc[leveloffset=+1]
+
+include::modules/nodes-pods-autoscaling-policies.adoc[leveloffset=+2]
+
+include::modules/nodes-pods-autoscaling-creating-web-console.adoc[leveloffset=+1]
+
+include::modules/nodes-pods-autoscaling-creating-web-console-edit.adoc[leveloffset=+2]
+
+include::modules/nodes-pods-autoscaling-creating-web-console-remove.adoc[leveloffset=+2]
+
+include::modules/nodes-pods-autoscaling-creating-cpu.adoc[leveloffset=+1]
+
+include::modules/nodes-pods-autoscaling-creating-cpu-percent.adoc[leveloffset=+2]
+
+include::modules/nodes-pods-autoscaling-creating-cpu-specific.adoc[leveloffset=+2]
+
+include::modules/nodes-pods-autoscaling-creating-memory-percent.adoc[leveloffset=+2]
+
+include::modules/nodes-pods-autoscaling-creating-memory-specific.adoc[leveloffset=+2]
+
+include::modules/nodes-pods-autoscaling-status-about.adoc[leveloffset=+1]
+
+include::modules/nodes-pods-autoscaling-status-viewing.adoc[leveloffset=+2]
+
+// Decomposed from nodes/pods/nodes-pods-vertical-autoscaler.adoc
+include::modules/nodes-pods-vertical-autoscaler-about.adoc[leveloffset=+1]
+
+include::modules/nodes-pods-vertical-autoscaler-in-place.adoc[leveloffset=+2]
+
+include::modules/nodes-pods-vertical-autoscaler-install.adoc[leveloffset=+1]
+
+// context borrowed from nodes/pods/nodes-pods-vertical-autoscaler.adoc so
+// that the ifeval block in nodes-pods-vertical-autoscaler-moving-vpa.adoc
+// fires.
+:context: nodes-pods-vertical-autoscaler
+include::modules/nodes-pods-vertical-autoscaler-moving-vpa.adoc[leveloffset=+1]
+:context: scale-compute-resources
+
+include::modules/nodes-pods-vertical-autoscaler-using-about.adoc[leveloffset=+1]
+
+include::modules/nodes-pods-vertical-autoscaler-tuning.adoc[leveloffset=+2]
+
+include::modules/nodes-pods-vertical-autoscaler-oom.adoc[leveloffset=+2]
+
+include::modules/nodes-pods-vertical-autoscaler-custom.adoc[leveloffset=+2]
+
+include::modules/nodes-pods-vertical-autoscaler-configuring.adoc[leveloffset=+1]
+
+include::modules/nodes-pods-vertical-autoscaler-custom-resource.adoc[leveloffset=+2]
+
+include::modules/nodes-pods-vertical-autoscaler-uninstall.adoc[leveloffset=+1]

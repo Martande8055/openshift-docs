@@ -4,8 +4,9 @@
 
 :_mod-docs-content-type: PROCEDURE
 [id="installing-nbde-tang-server-operator-using-web-console_{context}"]
-= Installing the NBDE Tang Server Operator using the web console
+= Install the NBDE Tang Server Operator using the web console
 
+[role="_abstract"]
 You can install the NBDE Tang Server Operator from the software catalog using the web console.
 
 .Prerequisites

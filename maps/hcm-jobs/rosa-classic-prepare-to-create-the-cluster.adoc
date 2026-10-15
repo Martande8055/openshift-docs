@@ -1,0 +1,83 @@
+:_mod-docs-content-type: MAP
+:context: rosa-classic-prepare-to-create-the-cluster
+
+// TODO: This job is partially mapped. See module_note in
+// install_coverage_map_rosa-classic.csv for the module that needs review.
+
+// Prepare to create the cluster
+include::modules/rosa-classic-prepare-to-create-the-cluster.adoc[leveloffset=+0]
+
+// CLI requirements
+include::modules/mos-checklist-cli-requirements.adoc[leveloffset=+1]
+
+// AWS CLI (`aws`)
+include::modules/mos-checklist-aws-cli.adoc[leveloffset=+1]
+
+// {rosa-cli-first}
+include::modules/mos-checklist-rosa-cli.adoc[leveloffset=+1]
+
+// OpenShift CLI (`oc`)
+include::modules/mos-checklist-oc-cli.adoc[leveloffset=+1]
+
+// AWS infrastructure prerequisites
+include::modules/mos-checklist-aws-infra-prereqs.adoc[leveloffset=+1]
+
+// Service Control Policy (SCP) prerequisites
+include::modules/mos-checklist-scp-prereqs.adoc[leveloffset=+1]
+
+// Setting up the environment for STS
+include::modules/rosa-sts-setting-up-environment.adoc[leveloffset=+1]
+
+// VPC requirements for PrivateLink clusters
+include::modules/mos-checklist-vpc-privatelink.adoc[leveloffset=+1]
+
+// Firewall prerequisites for {product-title}
+include::modules/rosa-hcp-firewall-prerequisites.adoc[leveloffset=+1]
+
+// Firewall allowlist requirements for {product-title} clusters using STS
+include::modules/osd-aws-privatelink-firewall-prerequisites.adoc[leveloffset=+1]
+
+// Additional custom security groups
+include::modules/mos-checklist-add-custom-sgs.adoc[leveloffset=+1]
+
+// Custom DNS and domains
+include::modules/mos-checklist-custom-dns-domains.adoc[leveloffset=+1]
+
+// Tagging your subnets
+include::modules/rosa-hcp-vpc-subnet-tagging.adoc[leveloffset=+1]
+
+// Step One - VPC Owner: Configuring a VPC to share within your AWS organization
+include::modules/rosa-sharing-vpc-creation-and-sharing.adoc[leveloffset=+1]
+
+// Step Two - Cluster Creator: Reserving your DNS and creating cluster operator roles
+include::modules/rosa-sharing-vpc-dns-and-roles.adoc[leveloffset=+1]
+
+// Step Three - VPC Owner: Updating the shared VPC role and creating hosted zones
+include::modules/rosa-sharing-vpc-hosted-zones.adoc[leveloffset=+1]
+
+// Create an ocm-role IAM role
+include::modules/rosa-sts-ocm-role-creation.adoc[leveloffset=+1]
+
+// Creating a user-role IAM role
+include::modules/rosa-sts-user-role-creation.adoc[leveloffset=+1]
+
+// Associating your AWS account with IAM roles
+include::modules/rosa-sts-aws-requirements-creating-association.adoc[leveloffset=+1]
+
+// Associating multiple AWS accounts with your Red{nbsp}Hat organization
+include::modules/rosa-sts-aws-requirements-creating-multi-association.adoc[leveloffset=+1]
+
+// Permission boundaries for the installer role
+include::modules/rosa-sts-aws-requirements-attaching-boundary-policy.adoc[leveloffset=+1]
+
+// Create an OpenID Connect configuration
+include::modules/rosa-sts-byo-oidc.adoc[leveloffset=+1]
+
+// Create an OIDC provider using the {rosa-cli}
+include::modules/rosa-sts-oidc-provider-command.adoc[leveloffset=+1]
+
+// Parameter options for creating your own OpenID Connect configuration
+include::modules/rosa-sts-byo-oidc-options.adoc[leveloffset=+1]
+
+// Create an AWS KMS encryption key
+include::modules/aws-encryption-key.adoc[leveloffset=+1]

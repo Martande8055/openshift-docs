@@ -1,0 +1,17 @@
+:_mod-docs-content-type: MAP
+:context: osd-prepare-to-create-a-ccs-cluster-on-google-cloud
+
+// Prepare to create a CCS cluster on Google Cloud
+include::modules/osd-prepare-to-create-a-ccs-cluster-on-google-cloud.adoc[leveloffset=+0]
+
+// Understanding Private Service Connect
+include::modules/osd-understanding-private-service-connect.adoc[leveloffset=+1]
+
+// Prerequisites
+include::modules/private-service-connect-prereqs.adoc[leveloffset=+1]
+
+// Private Service Connect architecture
+include::modules/private-service-connect-psc-architecture.adoc[leveloffset=+1]
+
+// {gcp-short} account limits
+include::modules/gcp-limits.adoc[leveloffset=+1]

@@ -1,0 +1,8 @@
+:_mod-docs-content-type: MAP
+:context: rosa-classic-cluster-configuration-properties-reference
+
+// Cluster configuration properties reference
+include::modules/rosa-classic-cluster-configuration-properties-reference.adoc[leveloffset=+0]
+
+// Interactive cluster creation mode options
+include::modules/rosa-sts-interactive-cluster-creation-mode-options.adoc[leveloffset=+1]

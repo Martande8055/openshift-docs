@@ -11,10 +11,11 @@ ifndef::openshift-rosa,openshift-rosa-hcp[]
 
 endif::openshift-rosa,openshift-rosa-hcp[]
 ifdef::openshift-rosa,openshift-rosa-hcp[]
-= Deleting a machine pool using {cluster-manager}
+= Delete a machine pool using {cluster-manager}
 
 endif::openshift-rosa,openshift-rosa-hcp[]
 
+[role="_abstract"]
 You can delete a machine pool for your {product-title} cluster by using {cluster-manager-first}.
 
 .Prerequisites

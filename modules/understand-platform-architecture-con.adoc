@@ -1,0 +1,10 @@
+// Module included in the following assemblies:
+//
+// * maps/ocp-jobs/understand-platform-architecture.adoc
+
+:_mod-docs-content-type: CONCEPT
+[id="understand-platform-architecture-con_{context}"]
+= Understand platform architecture
+
+[role="_abstract"]
+{product-title} is a cloud-based Kubernetes platform for building, deploying, and managing enterprise container workloads. Understanding how the control plane, the node operating system, and the cluster Operators interact helps you design a reliable cluster.

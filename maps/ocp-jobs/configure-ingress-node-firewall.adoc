@@ -1,0 +1,17 @@
+:_mod-docs-content-type: MAP
+:context: configure-ingress-node-firewall
+
+include::modules/configure-ingress-node-firewall-con.adoc[leveloffset=+0]
+
+// Decomposed from networking/networking_operators/ingress-node-firewall-operator.adoc
+include::modules/nw-infw-operator-config-object.adoc[leveloffset=+1]
+
+include::modules/nw-infw-operator-rules-object.adoc[leveloffset=+2]
+
+include::modules/nw-bpfman-infw-about.adoc[leveloffset=+1]
+
+include::modules/nw-bpfman-infw-configure.adoc[leveloffset=+1]
+
+include::modules/nw-infw-operator-viewing.adoc[leveloffset=+1]
+
+include::modules/nw-infw-operator-troubleshooting.adoc[leveloffset=+1]
